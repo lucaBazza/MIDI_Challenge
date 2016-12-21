@@ -60,10 +60,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void leggiFile(){
-        // 1. Open up a MIDI file
-        File sdcard = Environment.getExternalStorageDirectory();
-        //File input = new File(sdcard,"campanella.mid");
-        File input = new File(sdcard,"happyBirthD.mid");
+        File sdcard = Environment.getExternalStorageDirectory();         // 1. Open up a MIDI file
+        File input = new File(sdcard,"campanella.mid");
+        //input = new File(sdcard,"happyBirthD.mid");
 
         try
         {
