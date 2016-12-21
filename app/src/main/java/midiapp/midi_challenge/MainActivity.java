@@ -3,6 +3,8 @@ package midiapp.midi_challenge;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.pdrogfer.mididroid.MidiFile;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
