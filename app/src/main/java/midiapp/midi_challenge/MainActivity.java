@@ -60,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
     void leggiFile(){
         // 1. Open up a MIDI file
         File sdcard = Environment.getExternalStorageDirectory();
-        File input = new File(sdcard,"campanella.mid");
+        //File input = new File(sdcard,"campanella.mid");
+        File input = new File(sdcard,"happyBirthD.mid");
 
         try
         {
@@ -75,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // 2. Do some editing to the file
-        // 2a. Strip out anything but notes from track 1
+        // 2a. Strip out anything but notes from track 1 //sostituoti con traccia 0
+
         MidiTrack T = mf.getTracks().get(0);
 
         // It's a bad idea to modify a set while iterating, so we'll collect
@@ -86,12 +88,17 @@ public class MainActivity extends AppCompatActivity {
         while(it.hasNext())
         {
             MidiEvent E = it.next();
-
             if(!E.getClass().equals(NoteOn.class) && !E.getClass().equals(NoteOff.class))
             {
                 eventsToRemove.add(E);
-                tv.append(E.toString());
+
             }
+            if(E.getClass().equals(NoteOn.class))
+            {
+                tv.append(E.toString());
+
+            }
+
         }
 
         for(MidiEvent E : eventsToRemove)
