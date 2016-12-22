@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import android.os.*;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 import com.pdrogfer.mididroid.MidiFile;
 import com.pdrogfer.mididroid.MidiTrack;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         mf = new MidiFile();
 
         tv = (TextView)findViewById(R.id.textView);  //Find the view by its id
+        tv.setMovementMethod(new ScrollingMovementMethod());
         log = (TextView)findViewById(R.id.textViewLog);
         log.setTextColor(Color.RED);
 
@@ -83,47 +85,30 @@ public class MainActivity extends AppCompatActivity {
         // It's a bad idea to modify a set while iterating, so we'll collect
         // the events first, then remove them afterwards
         Iterator<MidiEvent> it = T.getEvents().iterator();
-        ArrayList<MidiEvent> eventsToRemove = new ArrayList<MidiEvent>();
 
+        int count =0;
         while(it.hasNext())
         {
             MidiEvent E = it.next();
-            if(!E.getClass().equals(NoteOn.class) && !E.getClass().equals(NoteOff.class))
-            {
-                eventsToRemove.add(E);
-
-            }
             if(E.getClass().equals(NoteOn.class))
             {
-                tv.append(E.toString());
-
+                int i = ((NoteOn)E).getNoteValue();
+                if(((NoteOn) E).getVelocity()!=0) { //non è bellissimo, solo perchè ci sono note "fantasma"
+                    String vel =Integer.toString(((NoteOn) E).getVelocity());
+                    tv.append("\t\t"+ Integer.toString(count)+ " : "+ convIntStrNota(i)+"\t\t\t" + E.toString() +"\t\t vel: "+ vel);
+                    //if(count%4==0) //organizzazione a tabella
+                        tv.append("\n");
+                    count++;
+                }
             }
 
         }
+    }
 
-        for(MidiEvent E : eventsToRemove)
-        {
-            T.removeEvent(E);
-        }
-
-        /*// 2b. Completely remove track 2
-        mf.removeTrack(2);
-
-        // 2c. Reduce the tempo by half
-        T = mf.getTracks().get(0);
-
-        it = T.getEvents().iterator();
-        while(it.hasNext())
-        {
-            MidiEvent E = it.next();
-
-            if(E.getClass().equals(Tempo.class))
-            {
-
-                Tempo tempo = (Tempo) E;
-                tempo.setBpm(tempo.getBpm() / 2);
-            }
-        }*/
-
+    String convIntStrNota(int i){
+        String[] note = {"C","C#","D","D#","E","F","F#","G","G#","A","A#","B"};
+        String result = note[(i)%12];
+        String octave = Integer.toString((i/12)-2);
+        return result+octave;
     }
 }
