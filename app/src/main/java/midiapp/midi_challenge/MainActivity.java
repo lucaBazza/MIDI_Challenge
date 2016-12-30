@@ -59,55 +59,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void leggiFile(){
+    void leggiFile() {
         File sdcard = Environment.getExternalStorageDirectory();         // 1. Open up a MIDI file
-        File input = new File(sdcard,"campanella.mid");
+        File input = new File(sdcard, "campanella.mid");
         //input = new File(sdcard,"happyBirthD.mid");
 
-        try
-        {
+        try {
             mf = new MidiFile(input);
-        }
-        catch(IOException e)
-        {
+        } catch (IOException e) {
             System.err.println("Error parsing MIDI file:");
             e.printStackTrace();
             log.setText(e.toString());
             return;
         }
-
+        AlgoritmoMidi Am = new AlgoritmoMidi();
+        Am.loadFile(mf);
+        Am.calc();
         // 2. Do some editing to the file
         // 2a. Strip out anything but notes from track 1 //sostituoti con traccia 0
 
-        MidiTrack T = mf.getTracks().get(0);
-
-        // It's a bad idea to modify a set while iterating, so we'll collect
-        // the events first, then remove them afterwards
-        Iterator<MidiEvent> it = T.getEvents().iterator();
-
-        int count =0;
-        while(it.hasNext())
-        {
-            MidiEvent E = it.next();
-            if(E.getClass().equals(NoteOn.class))
-            {
-                int i = ((NoteOn)E).getNoteValue();
-                if(((NoteOn) E).getVelocity()!=0) { //non è bellissimo, solo perchè ci sono note "fantasma"
-                    String vel =Integer.toString(((NoteOn) E).getVelocity());
-                    tv.append("\t\t"+ Integer.toString(count)+ " : "+ convIntStrNota(i)+"\t\t\t" + E.toString() +"\t\t vel: "+ vel);
-                    //if(count%4==0) //organizzazione a tabella
-                        tv.append("\n");
-                    count++;
-                }
-            }
-
-        }
-    }
-
-    String convIntStrNota(int i){
-        String[] note = {"C","C#","D","D#","E","F","F#","G","G#","A","A#","B"};
-        String result = note[(i)%12];
-        String octave = Integer.toString((i/12)-2);
-        return result+octave;
     }
 }
