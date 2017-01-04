@@ -2,6 +2,7 @@ package midiapp.midi_challenge;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -16,11 +17,11 @@ public class DatabaseApp extends SQLiteOpenHelper {
 
     private static String NOME_DB = "databaseApp";
 
-    private static String CREATE_USERS = "CREATE TABLE utenti (idUtente INTEGER NOT NULL PRIMARY KEY, nickname VARCHAR NOT NULL, foto VARCHAR, punteggioMassimo INTEGER DEFAULT -1, punteggioMedio INTEGER DEFAULT -1);";
+    private static String CREATE_USERS = "CREATE TABLE utente (idUtente INTEGER NOT NULL PRIMARY KEY, nickname VARCHAR NOT NULL, foto VARCHAR, punteggioMassimo INTEGER DEFAULT -1, punteggioMedio INTEGER DEFAULT -1);";
 
-    private static String CREATE_BRANI = "CREATE TABLE brani (idBrano INTEGER NOT NULL PRIMARY KEY, titolo VARCHAR NOT NULL, nomeFile VARCHAR, difficoltà INTEGER DEFAULT -1 NOT NULL);";
+    private static String CREATE_BRANI = "CREATE TABLE brano (idBrano INTEGER NOT NULL PRIMARY KEY, titolo VARCHAR NOT NULL, nomeFile VARCHAR, difficoltà INTEGER DEFAULT -1 NOT NULL);";
 
-    private static String CREATE_REL_UTENTE_BRANO = "CREATE TABLE relUtenteBrani (idUtente INTEGER FOREIGN KEY REFERENCES (utenti.idUtente) , idBrano INTEGER FOREIGN KEY REFERENCES (brani.idBrano));";
+    private static String CREATE_REL_UTENTE_BRANO = "CREATE TABLE relUtenteBrano (idUtente int(32), idBrano int(32), FOREIGN KEY (idBrano) REFERENCES brano(idBrano), FOREIGN KEY (idUtente) REFERENCES  utente(idUtente));";
 
     public DatabaseApp(Context context){
         super(context, NOME_DB,null, 1);
@@ -35,7 +36,7 @@ public class DatabaseApp extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE utenti, brani, relUtentiBrani;");
+        sqLiteDatabase.execSQL("DROP TABLE utente, brano, relUtentiBrano;");
         onCreate(sqLiteDatabase);
     }
 
@@ -51,10 +52,28 @@ public class DatabaseApp extends SQLiteOpenHelper {
 
         try{
             db.insert("utenti",null,c);
+            Log.println(Log.ASSERT,"sql","Insert andata a buon fine. IDUtente: " + u.getIdUtente());
         }catch (SQLException e){
             Log.println(Log.ERROR,"sql",e.toString());
         }finally {
             db.close();
         }
+    }
+
+    public String selectUtenteById(int id){
+        Cursor cursor = null;
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            cursor = db.query("utenti", new String[]{"nickname"}, "idUtente = ?", new String[]{Integer.toString(id)}, null, null, null);
+            Log.println(Log.ASSERT,"sql","Lettura andata a buon fine.");
+           // cursor.moveToNext();
+           // return cursor.getString(0);
+            return "";
+        }catch(SQLException e){
+            Log.println(Log.ERROR,"sql",e.toString());
+            return "";
+        }
+        //Utente tmp = new Utente(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getInt(3),cursor.getInt(4));
+
     }
 }

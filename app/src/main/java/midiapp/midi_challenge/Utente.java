@@ -11,7 +11,7 @@ public class Utente {
     int punteggioMassimo;
     int punteggioMedio;
 
-    public Utente(String foto, int idUtente, String nickName, int punteggioMassimo, int punteggioMedio) {
+    public Utente(int idUtente, String nickName, String foto, int punteggioMassimo, int punteggioMedio) {
         this.foto = foto;
         this.idUtente = idUtente;
         this.nickName = nickName;

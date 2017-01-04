@@ -38,6 +38,12 @@ public class MainActivity extends AppCompatActivity {
         log.setTextColor(Color.RED);
 
         ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+
+        //Codice testing databsae
+
+        DatabaseApp dbHandler = new DatabaseApp(this);
+        dbHandler.addUtente(new Utente(6,"Paolo","foto.jpg",-1,-1));
+        dbHandler.selectUtenteById(4);
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
