@@ -24,7 +24,7 @@ import com.pdrogfer.mididroid.event.NoteOn;
 import com.pdrogfer.mididroid.event.meta.Tempo;
 
 public class MainActivity extends AppCompatActivity {
-    TextView log, tv;
+    static TextView log, tv;
     MidiFile mf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +39,15 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
-        //Codice testing databsae
 
+
+
+        //Codice testing databsae                               ++++++++++++++++++++++++++++++++++++++++++++++
         DatabaseApp dbHandler = new DatabaseApp(this);
-        dbHandler.addUtente(new Utente(6,"Paolo","foto.jpg",-1,-1));
-        dbHandler.selectUtenteById(4);
+        dbHandler.addUtente(new Utente(7,"Paolo","foto.jpg",-1,-1));
+        dbHandler.selectUtenteById(7);
+
+
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {

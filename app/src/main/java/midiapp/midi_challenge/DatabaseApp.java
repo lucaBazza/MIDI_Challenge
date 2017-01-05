@@ -51,8 +51,9 @@ public class DatabaseApp extends SQLiteOpenHelper {
         c.put("punteggioMedio",u.getPunteggioMedio());
 
         try{
-            db.insert("utenti",null,c);
-            Log.println(Log.ASSERT,"sql","Insert andata a buon fine. IDUtente: " + u.getIdUtente());
+            db.insert("utente",null,c);
+            //Log.println(Log.ASSERT,"sql","Insert andata a buon fine. IDUtente: " + u.getIdUtente());
+            MainActivity.tv.setText("Insert andata a buon fine. IDUtente: " + u.getIdUtente());
         }catch (SQLException e){
             Log.println(Log.ERROR,"sql",e.toString());
         }finally {
@@ -64,15 +65,24 @@ public class DatabaseApp extends SQLiteOpenHelper {
         Cursor cursor = null;
         try {
             SQLiteDatabase db = this.getReadableDatabase();
-            cursor = db.query("utenti", new String[]{"nickname"}, "idUtente = ?", new String[]{Integer.toString(id)}, null, null, null);
+
+            String [] qrColoumn ={ "idUtente, nickname, foto, punteggioMassimo, punteggioMedio"};
+            cursor = db.query("utente", qrColoumn, "idUtente = ?", new String[] { String.valueOf(id) }, null, null, null);
             Log.println(Log.ASSERT,"sql","Lettura andata a buon fine.");
-           // cursor.moveToNext();
-           // return cursor.getString(0);
-            return "";
-        }catch(SQLException e){
-            Log.println(Log.ERROR,"sql",e.toString());
+
+        }
+        catch(SQLException e){ Log.println(Log.ERROR,"sql",e.toString());            MainActivity.tv.append("\n errore select: "+e.toString());        }
+
+        try{
+            if(cursor.getCount()==0){ MainActivity.tv.append("\n cursor vuoto!"); return "";}
+            if(cursor != null)
+                cursor.moveToFirst();
+
+            MainActivity.tv.append("\n\t Select andata a buon fine. IDUtente: " + cursor.getString(1));
+            //return cursor.getString(0);
             return "";
         }
+        catch(SQLException e){ MainActivity.tv.append("\n errore select: "+e.toString()); return "";  }
         //Utente tmp = new Utente(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getInt(3),cursor.getInt(4));
 
     }
