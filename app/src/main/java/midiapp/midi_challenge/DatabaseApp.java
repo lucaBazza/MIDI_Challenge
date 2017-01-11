@@ -47,7 +47,7 @@ public class DatabaseApp extends SQLiteOpenHelper {
 
     public void addUtente(Utente u){
 
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues c = new ContentValues();
         c.put("idUtente",u.getIdUtente());
         c.put("nickname",u.getNickName());
