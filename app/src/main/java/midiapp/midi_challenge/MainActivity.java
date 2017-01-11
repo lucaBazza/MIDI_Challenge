@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -42,9 +43,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //Codice testing databsae                               ++++++++++++++++++++++++++++++++++++++++++++++
+        //Codice testing database
         DatabaseApp dbHandler = new DatabaseApp(this);
-        dbHandler.addUtente(new Utente(7,"Paolo","foto.jpg",-1,-1));
+        SQLiteDatabase db = dbHandler.getWritableDatabase();
+        dbHandler.addUtente(new Utente(7,"FooBar","foto.jpg",-1,-1));
         dbHandler.selectUtenteById(7);
 
 
