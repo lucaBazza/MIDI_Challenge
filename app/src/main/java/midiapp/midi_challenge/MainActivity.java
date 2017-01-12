@@ -47,21 +47,17 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
-
-
-
-        //Codice testing database
-        DatabaseApp dbHandler = new DatabaseApp(this);
-        SQLiteDatabase db = dbHandler.getWritableDatabase();
-       /* dbHandler.addUtente(new Utente(7,"FooBar","foto.jpg",-18,-1));
-        dbHandler.addUtente(new Utente(8,"FooBar","foto.jp",2,-51));
-        dbHandler.addUtente(new Utente(9,"eueueuue","foto.jpg",-2,24)); */
+        //Testing databse
+        long  idNuovaRiga = funzioniDatabase.inserisci(new Utente("Meta","url/foto/foto.jpg",10,0));
+        long  idNuovaRiga2 = funzioniDatabase.inserisci(new Utente("Meta","url/foto/foto.jpg",10,0));
 
         //TESTS. Forse è meglio spostarli nelle assert. Un giorno.
-        Utente test = funzioniDatabase.trovaUtente(7);
+        /*Utente test = funzioniDatabase.trovaUtente(7);
         Utente test1 = funzioniDatabase.trovaUtente(8);
         Utente test2 = funzioniDatabase.trovaUtente(9);
-        Utente testNull = funzioniDatabase.trovaUtente(1);
+        Utente testNull = funzioniDatabase.trovaUtente(1);*/
+        Utente testNuovoInserimento = funzioniDatabase.trovaUtente(idNuovaRiga);
+        Utente test241 = funzioniDatabase.trovaUtente(idNuovaRiga2);
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {

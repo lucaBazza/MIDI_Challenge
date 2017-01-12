@@ -30,10 +30,9 @@ public class DatabaseApp extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         //DROP TABLE usate per il test del database. Eliminare una volta stabile
-      /*  sqLiteDatabase.execSQL("DROP TABLE IF EXISTS utente");
+        /*sqLiteDatabase.execSQL("DROP TABLE IF EXISTS utente");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS brano");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS relUtenteBrano"); */
-
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS relUtenteBrano");*/
         sqLiteDatabase.execSQL(CREATE_USERS);
         sqLiteDatabase.execSQL(CREATE_BRANI);
         sqLiteDatabase.execSQL(CREATE_REL_UTENTE_BRANO);
@@ -43,52 +42,5 @@ public class DatabaseApp extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE utente, brano, relUtentiBrano;");
         onCreate(sqLiteDatabase);
-    }
-
-    public void addUtente(Utente u){
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues c = new ContentValues();
-        c.put("idUtente",u.getIdUtente());
-        c.put("nickname",u.getNickName());
-        c.put("foto",u.getFoto());
-        c.put("punteggioMassimo",u.getPunteggioMassimo());
-        c.put("punteggioMedio",u.getPunteggioMedio());
-
-        try{
-            db.insert("utente",null,c);
-            //Log.println(Log.ASSERT,"sql","Insert andata a buon fine. IDUtente: " + u.getIdUtente());
-            MainActivity.tv.setText("Insert andata a buon fine. IDUtente: " + u.getIdUtente());
-        }catch (SQLException e){
-            Log.println(Log.ERROR,"sql",e.toString());
-        }finally {
-            db.close();
-        }
-    }
-
-    public String selectUtenteById(int id){
-        Cursor cursor = null;
-        try {
-            SQLiteDatabase db = this.getReadableDatabase();
-
-            String [] qrColoumn ={ "idUtente, nickname, foto, punteggioMassimo, punteggioMedio"};
-            cursor = db.query("utente", qrColoumn, "idUtente = ?", new String[] { String.valueOf(id) }, null, null, null);
-            Log.println(Log.ASSERT,"sql","Lettura andata a buon fine.");
-
-        }
-        catch(SQLException e){ Log.println(Log.ERROR,"sql",e.toString());            MainActivity.tv.append("\n errore select: "+e.toString());        }
-
-        try{
-            if(cursor.getCount()==0){ MainActivity.tv.append("\n cursor vuoto!"); return "";}
-            if(cursor != null)
-                cursor.moveToFirst();
-
-            MainActivity.tv.append("\n\t Select andata a buon fine. IDUtente: " + cursor.getString(1));
-            //return cursor.getString(0);
-            return "";
-        }
-        catch(SQLException e){ MainActivity.tv.append("\n errore select: "+e.toString()); return "";  }
-        //Utente tmp = new Utente(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getInt(3),cursor.getInt(4));
-
     }
 }

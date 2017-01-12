@@ -32,9 +32,9 @@ public class FunzioniDatabase {
         cv.put("foto",u.foto);
         cv.put("punteggioMassimo",u.punteggioMassimo);
         cv.put("punteggioMedio",u.punteggioMedio);
-        long result = database.insert("utente","",cv);
+        long newRowId = database.insert("utente","",cv);
 
-        return result;
+        return newRowId;
     }
 
     public long inserisci(Brano b){
@@ -49,9 +49,9 @@ public class FunzioniDatabase {
     }
 
 
-    public Utente trovaUtente(int id){
+    public Utente trovaUtente(long id){
         String[] colums = {"idUtente","nickname","foto","punteggioMassimo","punteggioMedio"};
-        Cursor res = database.query(true,"utente",colums,"idUtente = ?",new String[] {Integer.toString(id)},"","","","");
+        Cursor res = database.query(true,"utente",colums,"idUtente = ?",new String[] {Long.toString(id)},"","","","");
 
         if (res.moveToFirst()){
             return new Utente(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3),res.getInt(4));
