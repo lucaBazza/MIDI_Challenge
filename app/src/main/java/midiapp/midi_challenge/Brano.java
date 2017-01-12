@@ -10,6 +10,13 @@ public class Brano {
     String nomeFile;
     int difficoltà;
 
+    public Brano(int idBrano, String titolo, String nomeFile, int difficoltà) {
+        this.idBrano = idBrano;
+        this.titolo = titolo;
+        this.nomeFile = nomeFile;
+        this.difficoltà = difficoltà;
+    }
+
     public int getDifficoltà() {
         return difficoltà;
     }

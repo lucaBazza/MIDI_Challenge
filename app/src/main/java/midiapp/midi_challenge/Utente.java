@@ -19,6 +19,13 @@ public class Utente {
         this.punteggioMedio = punteggioMedio;
     }
 
+    public Utente(String nickName, String foto, int punteggioMassimo, int punteggioMedio) {
+        this.foto = foto;
+        this.nickName = nickName;
+        this.punteggioMassimo = punteggioMassimo;
+        this.punteggioMedio = punteggioMedio;
+    }
+
     public int getIdUtente() {
         return idUtente;
     }

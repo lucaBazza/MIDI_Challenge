@@ -25,11 +25,18 @@ import com.pdrogfer.mididroid.event.NoteOn;
 import com.pdrogfer.mididroid.event.meta.Tempo;
 
 public class MainActivity extends AppCompatActivity {
+    //Static Declarations
     static TextView log, tv;
+
+    static FunzioniDatabase funzioniDatabase = null;
+
     MidiFile mf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        funzioniDatabase = new FunzioniDatabase(this.getBaseContext());
+
         setContentView(R.layout.activity_main);
         mf = new MidiFile();
 
@@ -46,10 +53,15 @@ public class MainActivity extends AppCompatActivity {
         //Codice testing database
         DatabaseApp dbHandler = new DatabaseApp(this);
         SQLiteDatabase db = dbHandler.getWritableDatabase();
-        dbHandler.addUtente(new Utente(7,"FooBar","foto.jpg",-1,-1));
-        dbHandler.selectUtenteById(7);
+       /* dbHandler.addUtente(new Utente(7,"FooBar","foto.jpg",-18,-1));
+        dbHandler.addUtente(new Utente(8,"FooBar","foto.jp",2,-51));
+        dbHandler.addUtente(new Utente(9,"eueueuue","foto.jpg",-2,24)); */
 
-
+        //TESTS. Forse è meglio spostarli nelle assert. Un giorno.
+        Utente test = funzioniDatabase.trovaUtente(7);
+        Utente test1 = funzioniDatabase.trovaUtente(8);
+        Utente test2 = funzioniDatabase.trovaUtente(9);
+        Utente testNull = funzioniDatabase.trovaUtente(1);
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
