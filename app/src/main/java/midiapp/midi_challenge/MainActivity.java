@@ -13,6 +13,7 @@ import java.io.*;
 import java.security.Permissions;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import android.os.*;
 import android.text.method.ScrollingMovementMethod;
@@ -46,22 +47,6 @@ public class MainActivity extends AppCompatActivity {
         log.setTextColor(Color.RED);
 
         ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-
-        //Testing databse
-        long  idNuovaRiga = funzioniDatabase.inserisci(new Utente("Meta","url/foto/foto.jpg",10,0));
-        long  idNuovaRiga2 = funzioniDatabase.inserisci(new Utente("Meta","url/foto/foto.jpg",10,0));
-
-        long idNuovoBrano = funzioniDatabase.inserisci(new Brano("Stairway","location/system/m.mp3",5));
-
-
-
-        //TESTS. Forse è meglio spostarli nelle assert. Un giorno.
-        /*Utente test = funzioniDatabase.trovaUtente(7);
-        Utente test1 = funzioniDatabase.trovaUtente(8);
-        Utente test2 = funzioniDatabase.trovaUtente(9);
-        Utente testNull = funzioniDatabase.trovaUtente(1);*/
-        Utente testNuovoInserimento = funzioniDatabase.trovaUtente(idNuovaRiga);
-        Utente test241 = funzioniDatabase.trovaUtente(idNuovaRiga2);
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {

@@ -59,7 +59,7 @@ public class FunzioniDatabase {
         if (res.moveToFirst()){
             return new Utente(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3),res.getInt(4));
         }else{
-            return  null;
+            return  new Utente(-1,"","",0,0);
         }
     }
 
@@ -70,18 +70,18 @@ public class FunzioniDatabase {
         if (res.moveToFirst()){
             return new Utente(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3),res.getInt(4));
         }else{
-            return  null;
+            return  new Utente(-1,"","",0,0);
         }
     }
 
-    public Brano trovaBrano(int id){
+    public Brano trovaBrano(long id){
         String[] colums = {"idBrano","titolo","nomeFile","difficoltà"};
-        Cursor res = database.query(true,"brano",colums,"idBrano = ?",new String[] {Integer.toString(id)},"","","","");
+        Cursor res = database.query(true,"brano",colums,"idBrano = ?",new String[] {Long.toString(id)},"","","","");
 
         if (res.moveToFirst()){
             return new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3));
         }else{
-            return  null;
+            return  new Brano(-1,"","",0);
         }
     }
 
@@ -92,13 +92,13 @@ public class FunzioniDatabase {
         if (res.moveToFirst()){
             return new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3));
         }else{
-            return  null;
+            return  new Brano(-1,"","",0);
         }
     }
 
     public List<Brano> braniUtente(long idUtente){
         List<Brano> tmpList = new ArrayList<>();
-        String selectionQuery = "SELECT idBrano,titolo,nomeFile,difficoltà, FROM Brano JOIN relUtenteBrano WHERE idUtente = ?";
+        String selectionQuery = "SELECT Brano.idBrano,titolo,nomeFile,difficoltà FROM Brano JOIN relUtenteBrano WHERE idUtente = ?";
 
         Cursor res = database.rawQuery(selectionQuery,new String[]{Long.toString(idUtente)});
         while(res.moveToNext()){
@@ -110,7 +110,7 @@ public class FunzioniDatabase {
 
     public List<Brano> braniUtente(String nickName){
         List<Brano> tmpList = new ArrayList<>();
-        String selectionQuery = "SELECT idBrano,titolo,nomeFile,difficoltà, FROM Brano JOIN relUtenteBrano JOIN Utente WHERE nickname = ?";
+        String selectionQuery = "SELECT Brano.idBrano,titolo,nomeFile,difficoltà FROM Brano JOIN relUtenteBrano JOIN Utente WHERE nickname = ?";
 
         Cursor res = database.rawQuery(selectionQuery,new String[]{nickName});
         while(res.moveToNext()){

@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 public class Utente {
-    int idUtente;
+    long idUtente;
     String nickName;
     String foto;
     int punteggioMassimo;
@@ -16,7 +16,7 @@ public class Utente {
 
     List<Brano> braniUtente;
 
-    public Utente(int idUtente, String nickName, String foto, int punteggioMassimo, int punteggioMedio) {
+    public Utente(long idUtente, String nickName, String foto, int punteggioMassimo, int punteggioMedio) {
         this.foto = foto;
         this.idUtente = idUtente;
         this.nickName = nickName;
@@ -33,11 +33,11 @@ public class Utente {
         this.braniUtente = new ArrayList<>();
     }
 
-    public int getIdUtente() {
+    public long getIdUtente() {
         return idUtente;
     }
 
-    public void setIdUtente(int idUtente) {
+    public void setIdUtente(long idUtente) {
         this.idUtente = idUtente;
     }
 

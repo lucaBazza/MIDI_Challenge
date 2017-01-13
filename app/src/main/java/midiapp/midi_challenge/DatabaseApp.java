@@ -30,9 +30,10 @@ public class DatabaseApp extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         //DROP TABLE usate per il test del database. Eliminare una volta stabile
-        /*sqLiteDatabase.execSQL("DROP TABLE IF EXISTS utente");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS utente");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS brano");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS relUtenteBrano");*/
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS relUtenteBrano");
+
         sqLiteDatabase.execSQL(CREATE_USERS);
         sqLiteDatabase.execSQL(CREATE_BRANI);
         sqLiteDatabase.execSQL(CREATE_REL_UTENTE_BRANO);

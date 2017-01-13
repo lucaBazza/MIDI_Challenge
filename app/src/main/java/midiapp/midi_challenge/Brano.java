@@ -5,12 +5,12 @@ package midiapp.midi_challenge;
  */
 
 public class Brano {
-    int idBrano;
+    long idBrano;
     String titolo;
     String nomeFile;
     int difficoltà;
 
-    public Brano(int idBrano, String titolo, String nomeFile, int difficoltà) {
+    public Brano(long idBrano, String titolo, String nomeFile, int difficoltà) {
         this.idBrano = idBrano;
         this.titolo = titolo;
         this.nomeFile = nomeFile;
@@ -33,11 +33,11 @@ public class Brano {
         this.difficoltà = difficoltà;
     }
 
-    public int getIdBrano() {
+    public long getIdBrano() {
         return idBrano;
     }
 
-    public void setIdBrano(int idBrano) {
+    public void setIdBrano(long idBrano) {
         this.idBrano = idBrano;
     }
 
