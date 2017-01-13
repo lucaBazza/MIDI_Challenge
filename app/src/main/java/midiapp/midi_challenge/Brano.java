@@ -17,6 +17,14 @@ public class Brano {
         this.difficoltà = difficoltà;
     }
 
+
+    public Brano(String titolo, String nomeFile, int difficoltà) {
+        this.idBrano = -1;
+        this.titolo = titolo;
+        this.nomeFile = nomeFile;
+        this.difficoltà = difficoltà;
+    }
+
     public int getDifficoltà() {
         return difficoltà;
     }

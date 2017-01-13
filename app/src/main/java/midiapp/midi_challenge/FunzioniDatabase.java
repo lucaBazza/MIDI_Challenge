@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.hardware.camera2.params.StreamConfigurationMap;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Paolo on 12/01/2017.
  */
@@ -93,4 +96,35 @@ public class FunzioniDatabase {
         }
     }
 
+    public List<Brano> braniUtente(long idUtente){
+        List<Brano> tmpList = new ArrayList<>();
+        String selectionQuery = "SELECT idBrano,titolo,nomeFile,difficoltà, FROM Brano JOIN relUtenteBrano WHERE idUtente = ?";
+
+        Cursor res = database.rawQuery(selectionQuery,new String[]{Long.toString(idUtente)});
+        while(res.moveToNext()){
+            tmpList.add(new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3)));
+        }
+
+        return tmpList;
+    }
+
+    public List<Brano> braniUtente(String nickName){
+        List<Brano> tmpList = new ArrayList<>();
+        String selectionQuery = "SELECT idBrano,titolo,nomeFile,difficoltà, FROM Brano JOIN relUtenteBrano JOIN Utente WHERE nickname = ?";
+
+        Cursor res = database.rawQuery(selectionQuery,new String[]{nickName});
+        while(res.moveToNext()){
+            tmpList.add(new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3)));
+        }
+
+        return tmpList;
+    }
+
+    public long inserisciBranoPerUtente(Utente u, Brano b){
+        ContentValues cv = new ContentValues();
+        cv.put("idUtente",u.idUtente);
+        cv.put("idBrano",b.idBrano);
+
+        return database.insert("relUtenteBrano","",cv);
+    }
 }

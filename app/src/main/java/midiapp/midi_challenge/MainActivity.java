@@ -51,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
         long  idNuovaRiga = funzioniDatabase.inserisci(new Utente("Meta","url/foto/foto.jpg",10,0));
         long  idNuovaRiga2 = funzioniDatabase.inserisci(new Utente("Meta","url/foto/foto.jpg",10,0));
 
+        long idNuovoBrano = funzioniDatabase.inserisci(new Brano("Stairway","location/system/m.mp3",5));
+
+
+
         //TESTS. Forse è meglio spostarli nelle assert. Un giorno.
         /*Utente test = funzioniDatabase.trovaUtente(7);
         Utente test1 = funzioniDatabase.trovaUtente(8);

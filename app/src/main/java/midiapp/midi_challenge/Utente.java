@@ -1,5 +1,8 @@
 package midiapp.midi_challenge;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by luca on 04/01/17.
  */
@@ -11,12 +14,15 @@ public class Utente {
     int punteggioMassimo;
     int punteggioMedio;
 
+    List<Brano> braniUtente;
+
     public Utente(int idUtente, String nickName, String foto, int punteggioMassimo, int punteggioMedio) {
         this.foto = foto;
         this.idUtente = idUtente;
         this.nickName = nickName;
         this.punteggioMassimo = punteggioMassimo;
         this.punteggioMedio = punteggioMedio;
+        this.braniUtente = new ArrayList<>();
     }
 
     public Utente(String nickName, String foto, int punteggioMassimo, int punteggioMedio) {
@@ -24,6 +30,7 @@ public class Utente {
         this.nickName = nickName;
         this.punteggioMassimo = punteggioMassimo;
         this.punteggioMedio = punteggioMedio;
+        this.braniUtente = new ArrayList<>();
     }
 
     public int getIdUtente() {
@@ -64,5 +71,13 @@ public class Utente {
 
     public void setPunteggioMassimo(int punteggioMassimo) {
         this.punteggioMassimo = punteggioMassimo;
+    }
+
+    public List<Brano> getBraniUtente() {
+        return braniUtente;
+    }
+
+    public void setBraniUtente(List<Brano> braniUtente) {
+        this.braniUtente = braniUtente;
     }
 }
