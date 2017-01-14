@@ -17,6 +17,8 @@ public class FunzioniDatabase {
     SQLiteDatabase database = null;
     DatabaseApp dbHelper = null;
 
+    private Context internalContextDatabase = null;
+
     /*
         Database Schema:
         Utente(rowid,nickname,foto,punteggioMassimo,punteggioMedio)
@@ -27,12 +29,21 @@ public class FunzioniDatabase {
     public FunzioniDatabase(Context context) {
         dbHelper = new DatabaseApp(context);
         database = dbHelper.getWritableDatabase();
+        internalContextDatabase = context;
+    }
+
+    //resetta il db e lo ricrea. Usare con cautela.
+    public void dropAllTables(){
+        database.execSQL("DROP TABLE IF EXISTS utente");
+        database.execSQL("DROP TABLE IF EXISTS brano");
+        database.execSQL("DROP TABLE IF EXISTS relUtenteBrano");
     }
 
     public long inserisci(Utente u){
         ContentValues cv = new ContentValues();
         cv.put("nickname",u.nickName);
         cv.put("foto",u.foto);
+        cv.put("strumento",u.strumento);
         cv.put("punteggioMassimo",u.punteggioMassimo);
         cv.put("punteggioMedio",u.punteggioMedio);
         long newRowId = database.insert("utente","",cv);
@@ -53,24 +64,24 @@ public class FunzioniDatabase {
 
 
     public Utente trovaUtente(long id){
-        String[] colums = {"idUtente","nickname","foto","punteggioMassimo","punteggioMedio"};
+        String[] colums = {"idUtente","nickname","foto","strumento","punteggioMassimo","punteggioMedio"};
         Cursor res = database.query(true,"utente",colums,"idUtente = ?",new String[] {Long.toString(id)},"","","","");
 
         if (res.moveToFirst()){
-            return new Utente(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3),res.getInt(4));
+            return new Utente(res.getInt(0),res.getString(1),res.getString(2),res.getString(3),res.getInt(4),res.getInt(5));
         }else{
-            return  new Utente(-1,"","",0,0);
+            return  new Utente(-1,"","","",0,0);
         }
     }
 
     public Utente trovaUtente(String nome){
-        String[] colums = {"idUtente","nickname","foto","punteggioMassimo","punteggioMedio"};
+        String[] colums = {"idUtente","nickname","foto","strumento","punteggioMassimo","punteggioMedio"};
         Cursor res = database.query(true,"utente",colums,"nickname = ?",new String[] {nome},"","","","");
 
         if (res.moveToFirst()){
-            return new Utente(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3),res.getInt(4));
+            return new Utente(res.getInt(0),res.getString(1),res.getString(2),res.getString(3),res.getInt(4),res.getInt(5));
         }else{
-            return  new Utente(-1,"","",0,0);
+            return  new Utente(-1,"","","",0,0);
         }
     }
 
@@ -98,11 +109,11 @@ public class FunzioniDatabase {
 
     public List<Brano> braniUtente(long idUtente){
         List<Brano> tmpList = new ArrayList<>();
-        String selectionQuery = "SELECT Brano.idBrano,titolo,nomeFile,difficoltà FROM Brano JOIN relUtenteBrano WHERE idUtente = ?";
+        String selectionQuery = "SELECT Brano.idBrano,titolo,nomeFile,difficoltà,autovalutazione FROM Brano JOIN relUtenteBrano WHERE idUtente = ?";
 
         Cursor res = database.rawQuery(selectionQuery,new String[]{Long.toString(idUtente)});
         while(res.moveToNext()){
-            tmpList.add(new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3)));
+            tmpList.add(new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3),res.getInt(4)));
         }
 
         return tmpList;
@@ -110,20 +121,21 @@ public class FunzioniDatabase {
 
     public List<Brano> braniUtente(String nickName){
         List<Brano> tmpList = new ArrayList<>();
-        String selectionQuery = "SELECT Brano.idBrano,titolo,nomeFile,difficoltà FROM Brano JOIN relUtenteBrano JOIN Utente WHERE nickname = ?";
+        String selectionQuery = "SELECT Brano.idBrano,titolo,nomeFile,difficoltà,autovalutazione FROM Brano JOIN relUtenteBrano JOIN Utente WHERE nickname = ?";
 
         Cursor res = database.rawQuery(selectionQuery,new String[]{nickName});
         while(res.moveToNext()){
-            tmpList.add(new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3)));
+            tmpList.add(new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3),res.getInt(4)));
         }
 
         return tmpList;
     }
 
-    public long inserisciBranoPerUtente(Utente u, Brano b){
+    public long inserisciBranoPerUtente(Utente u, Brano b, int autovalutazione){
         ContentValues cv = new ContentValues();
         cv.put("idUtente",u.idUtente);
         cv.put("idBrano",b.idBrano);
+        cv.put("autovalutazione",autovalutazione);
 
         return database.insert("relUtenteBrano","",cv);
     }

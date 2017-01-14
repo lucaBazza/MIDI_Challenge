@@ -9,12 +9,30 @@ public class Brano {
     String titolo;
     String nomeFile;
     int difficoltà;
+    int autovalutazione;
+
+    public Brano(long idBrano, String titolo, String nomeFile, int difficoltà,int autovalutazione) {
+        this.idBrano = idBrano;
+        this.titolo = titolo;
+        this.nomeFile = nomeFile;
+        this.difficoltà = difficoltà;
+        this.autovalutazione = autovalutazione;
+    }
 
     public Brano(long idBrano, String titolo, String nomeFile, int difficoltà) {
         this.idBrano = idBrano;
         this.titolo = titolo;
         this.nomeFile = nomeFile;
         this.difficoltà = difficoltà;
+        this.autovalutazione = -1;
+    }
+
+    public Brano(String titolo, String nomeFile, int difficoltà,int autovalutazione) {
+        this.idBrano = -1;
+        this.titolo = titolo;
+        this.nomeFile = nomeFile;
+        this.difficoltà = difficoltà;
+        this.autovalutazione = autovalutazione;
     }
 
 
@@ -23,6 +41,15 @@ public class Brano {
         this.titolo = titolo;
         this.nomeFile = nomeFile;
         this.difficoltà = difficoltà;
+        this.autovalutazione = -1;
+    }
+
+    public int getAutovalutazione() {
+        return autovalutazione;
+    }
+
+    public void setAutovalutazione(int autovalutazione) {
+        this.autovalutazione = autovalutazione;
     }
 
     public int getDifficoltà() {

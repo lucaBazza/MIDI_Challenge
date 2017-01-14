@@ -13,24 +13,27 @@ public class Utente {
     String foto;
     int punteggioMassimo;
     int punteggioMedio;
+    String strumento;
 
     List<Brano> braniUtente;
 
-    public Utente(long idUtente, String nickName, String foto, int punteggioMassimo, int punteggioMedio) {
+    public Utente(long idUtente, String nickName, String foto, String strumento, int punteggioMassimo, int punteggioMedio) {
         this.foto = foto;
         this.idUtente = idUtente;
         this.nickName = nickName;
         this.punteggioMassimo = punteggioMassimo;
         this.punteggioMedio = punteggioMedio;
         this.braniUtente = new ArrayList<>();
+        this.strumento = strumento;
     }
 
-    public Utente(String nickName, String foto, int punteggioMassimo, int punteggioMedio) {
+    public Utente(String nickName, String foto, String strumento, int punteggioMassimo, int punteggioMedio) {
         this.foto = foto;
         this.nickName = nickName;
         this.punteggioMassimo = punteggioMassimo;
         this.punteggioMedio = punteggioMedio;
         this.braniUtente = new ArrayList<>();
+        this.strumento = strumento;
     }
 
     public long getIdUtente() {
@@ -39,6 +42,14 @@ public class Utente {
 
     public void setIdUtente(long idUtente) {
         this.idUtente = idUtente;
+    }
+
+    public String getStrumento() {
+        return strumento;
+    }
+
+    public void setStrumento(String strumento) {
+        this.strumento = strumento;
     }
 
     public String getFoto() {
