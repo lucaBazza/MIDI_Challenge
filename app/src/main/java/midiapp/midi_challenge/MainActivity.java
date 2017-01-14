@@ -10,6 +10,7 @@ import android.os.Bundle;
 import java.io.*;
 import android.os.*;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
-        mActivityTitles = new String[]{"act1,act2,act3"};
+        mActivityTitles = new String[]{"act1","act2","act3"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.println(Log.ASSERT,"error","messaggio");
                 Toast t = Toast.makeText(getBaseContext(),"EHEH",Toast.LENGTH_LONG);
             }
         });
