@@ -51,7 +51,7 @@ public class AlgoritmoMidi {
                     long when = EveNota.getTick();
                     long durata = EveNota.getDelta();
                     LN.add(EveNota);
-                    aggiornaTonalita();
+                    //aggiornaTonalita();
 
 
 

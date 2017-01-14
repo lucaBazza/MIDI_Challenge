@@ -1,39 +1,37 @@
 package midiapp.midi_challenge;
 
 import android.Manifest;
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import java.io.*;
-import java.security.Permissions;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import android.os.*;
 import android.text.method.ScrollingMovementMethod;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.pdrogfer.mididroid.MidiFile;
-import com.pdrogfer.mididroid.MidiTrack;
-import com.pdrogfer.mididroid.event.MidiEvent;
-import com.pdrogfer.mididroid.event.NoteOff;
-import com.pdrogfer.mididroid.event.NoteOn;
-import com.pdrogfer.mididroid.event.meta.Tempo;
 
 public class MainActivity extends AppCompatActivity {
     //Static Declarations
     static TextView log, tv;
 
+    private String[] mActivityTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+
     static FunzioniDatabase funzioniDatabase = null;
 
     MidiFile mf;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         funzioniDatabase = new FunzioniDatabase(this.getBaseContext());
@@ -47,6 +45,25 @@ public class MainActivity extends AppCompatActivity {
         log.setTextColor(Color.RED);
 
         ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+
+        mActivityTitles = new String[]{"act1,act2,act3"};
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+
+        // Set the adapter for the list view
+        ArrayAdapter<String> xxxx  = new ArrayAdapter<String>(this, R.layout.drawer_list_item, mActivityTitles);
+        mDrawerList.setAdapter(xxxx);
+        // Set the list's click listener
+        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast t = Toast.makeText(getBaseContext(),"EHEH",Toast.LENGTH_LONG);
+            }
+        });
+
+
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
