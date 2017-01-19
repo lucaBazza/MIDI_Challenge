@@ -1,6 +1,7 @@
 package midiapp.midi_challenge;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.support.v4.app.ActivityCompat;
@@ -51,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-
         // Set the adapter for the list view
         ArrayAdapter<String> xxxx  = new ArrayAdapter<String>(this, R.layout.drawer_list_item, mActivityTitles);
         mDrawerList.setAdapter(xxxx);
@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.println(Log.ASSERT,"error","messaggio");
-                Toast t = Toast.makeText(getBaseContext(),"EHEH",Toast.LENGTH_LONG);
+                Intent testIntent = new Intent(getApplicationContext(),Login_Activity.class);
+                startActivity(testIntent);
             }
         });
 

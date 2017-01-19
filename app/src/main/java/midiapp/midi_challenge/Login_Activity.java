@@ -26,7 +26,7 @@ public class Login_Activity extends AppCompatActivity {
         List<Utente> listaUtenti = db.prendiTuttiUtenti();
 
         if (!listaUtenti.isEmpty()) {
-            ArrayAdapter ad = new ArrayAdapter(this,R.layout.users_grid_element ,R.id.txt_NomeUtenteLogin, listaUtenti);
+            ArrayAdapter ad = new ArrayAdapter(this,R.layout.users_grid_element,R.id.txt_NomeUtenteLogin, listaUtenti);
 
             grigliaUtenti.setAdapter(ad);
 
