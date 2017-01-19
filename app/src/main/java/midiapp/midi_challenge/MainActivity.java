@@ -1,6 +1,7 @@
 package midiapp.midi_challenge;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.support.v4.app.ActivityCompat;
@@ -28,12 +29,17 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
 
+    private Utente utente; //utente corrente
+
     static FunzioniDatabase funzioniDatabase = null;
 
     MidiFile mf;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //public Utente(String nickName, String foto, String strumento, int punteggioMassimo, int punteggioMedio)
+        utente = new Utente("Paolo","URLfoto","SEX",1205,324);                                                      //UTENTE DI DEBUG
 
         funzioniDatabase = new FunzioniDatabase(this.getBaseContext());
 
@@ -47,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
-        mActivityTitles = new String[]{"act1","act2","act3"};
+        mActivityTitles = new String[]{"act1","act2","act3","Tuner"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -59,13 +65,22 @@ public class MainActivity extends AppCompatActivity {
         //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.println(Log.ASSERT,"error","messaggio");
-                Toast t = Toast.makeText(getBaseContext(),"EHEH",Toast.LENGTH_LONG);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {      // EVENTO BARRA LATERALE
+
+                startActivity(new Intent(MainActivity.this, AccordatoreActivity.class));
+
+                //Toast t = Toast.makeText(getBaseContext(),"EHEH",Toast.LENGTH_LONG);
+                String pos = (String) mDrawerList.getSelectedItem();
+                Log.println(Log.ASSERT,"error","messaggio: "+pos);
+                if(pos==null) return;
+                switch (pos){
+                    case "Tuner": break;
+                    default: break;
+                }
             }
         });
 
-
+        setTitle("Pagina Principale di "+utente.getNickName());
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {  //chiede permessi lettura SD
