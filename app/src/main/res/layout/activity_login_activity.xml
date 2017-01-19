@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:id="@+id/activity_login_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,4 +11,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="midiapp.midi_challenge.login_activity">
 
-</RelativeLayout>
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_griglia_utenti">
+    </GridView>
+
+</LinearLayout>

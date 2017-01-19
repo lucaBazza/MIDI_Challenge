@@ -139,4 +139,17 @@ public class FunzioniDatabase {
 
         return database.insert("relUtenteBrano","",cv);
     }
+
+    public List<Utente> prendiTuttiUtenti() {
+        List<Utente> tmpList = new ArrayList<>();
+
+        String[] colums = {"idUtente","nickname","foto","strumento","punteggioMassimo","punteggioMedio"};
+        Cursor res = database.query(true,"utente",colums,"",new String[] {},"","","","");
+
+        while(res.moveToNext()){
+            tmpList.add(new Utente(res.getInt(0),res.getString(1),res.getString(2),res.getString(3),res.getInt(4),res.getInt(5)));
+        }
+
+        return tmpList;
+    }
 }

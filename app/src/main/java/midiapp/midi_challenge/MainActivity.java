@@ -80,7 +80,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+<<<<<<< HEAD
         setTitle("Pagina Principale di "+utente.getNickName());
+=======
+        setTitle("Meh");
+>>>>>>> origin/master
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {  //chiede permessi lettura SD
