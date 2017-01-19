@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(testIntent);
             }
         });
-
         setTitle("Pagina Principale di "+utente.getNickName());
     }
     @Override
