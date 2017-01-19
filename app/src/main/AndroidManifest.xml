@@ -17,10 +17,15 @@
                 <category android:name="android.intent.categoy.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".PaginaPrincipale_Activity" />
         <activity android:name=".Dettagli_Brano_Activity" />
         <activity android:name=".Aggiunta_Brano_Activity" />
+        <!-- <activity android:name=".Registratore_Activity" /> -->
+        <activity android:name=".AccordatoreActivity">
+            android:name="AccordatoreActivity"
+            android:label="@string/app_name">
+        </activity>
+
         <activity android:name=".Login_Activity" />
 
     </application>
