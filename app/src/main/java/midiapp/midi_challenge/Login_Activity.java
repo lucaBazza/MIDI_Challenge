@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -20,12 +21,14 @@ public class Login_Activity extends AppCompatActivity {
 
         db = new FunzioniDatabase(getBaseContext());
 
-        GridLayout grigliaUtenti = (GridLayout) findViewById(R.id.layout_griglia_utenti);
+        GridView grigliaUtenti = (GridView) findViewById(R.id.layout_griglia_utenti);
 
         List<Utente> listaUtenti = db.prendiTuttiUtenti();
 
         if (!listaUtenti.isEmpty()) {
             ArrayAdapter ad = new ArrayAdapter(this,R.layout.users_grid_element ,R.id.txt_NomeUtenteLogin, listaUtenti);
+
+            grigliaUtenti.setAdapter(ad);
 
             setTitle("Selezione Utente");
         }

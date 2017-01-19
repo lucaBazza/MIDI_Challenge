@@ -11,10 +11,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="midiapp.midi_challenge.login_activity">
 
-    <GridLayout
+    <GridView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/layout_griglia_utenti">
-    </GridLayout>
+    </GridView>
 
 </LinearLayout>
