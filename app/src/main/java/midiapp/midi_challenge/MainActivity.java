@@ -104,8 +104,7 @@ public class MainActivity extends AppCompatActivity {
             log.setText(e.toString());
             return;
         }
-        AlgoritmoMidi Am = new AlgoritmoMidi();
-        Am.loadFile(mf);
+        AlgoritmoMidi Am = new AlgoritmoMidi(mf);
         Am.calc();
         // 2. Do some editing to the file
         // 2a. Strip out anything but notes from track 1 //sostituoti con traccia 0
