@@ -4,7 +4,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.content.Intent;
 
 public class Impostazioni_Activity extends AppCompatActivity {
 
@@ -18,9 +18,8 @@ public class Impostazioni_Activity extends AppCompatActivity {
         ac.setDisplayHomeAsUpEnabled(true);
     }
 
-    public void buttonOnClick(View v) {
-        Button button = (Button) v;
-        ((Button) v).setText("CLICCATO!"); //TEST
+    public void openNewActivity(View view) {
+        Intent startActivity = new Intent(this, Activity_info.class);
+        startActivity(startActivity);
     }
-
 }

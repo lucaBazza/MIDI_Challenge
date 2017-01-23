@@ -27,7 +27,7 @@
         android:id="@+id/btn_sviluppatori"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:onClick="buttonOnClick" />
+        android:onClick="openNewActivity"/>
 
     <Button
         android:text="IMPORTA DATI"
