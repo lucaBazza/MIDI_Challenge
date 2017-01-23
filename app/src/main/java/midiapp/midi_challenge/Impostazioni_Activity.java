@@ -3,6 +3,8 @@ package midiapp.midi_challenge;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 public class Impostazioni_Activity extends AppCompatActivity {
 
@@ -15,4 +17,10 @@ public class Impostazioni_Activity extends AppCompatActivity {
         ActionBar ac = this.getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
     }
+
+    public void buttonOnClick(View v) {
+        Button button = (Button) v;
+        ((Button) v).setText("CLICCATO!"); //TEST
+    }
+
 }
