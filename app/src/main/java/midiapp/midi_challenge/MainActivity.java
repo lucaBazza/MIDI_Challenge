@@ -12,6 +12,10 @@ import java.io.*;
 import android.os.*;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -53,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
-        mActivityTitles = new String[]{"act1","act2","act3","Tuner"};
+        mActivityTitles = new String[]{"act1","act2","act3","Tuner","Accordatore"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -70,7 +74,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         setTitle("Pagina Principale di "+utente.getNickName());
+
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inf = getMenuInflater();
+        inf.inflate(R.menu.button_action_bar,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.show_navigation_drawer :
+                    DrawerLayout drw = (DrawerLayout)findViewById(R.id.drawer_layout);
+                    drw.openDrawer(Gravity.LEFT);
+                break;
+
+        }
+        return true;
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {  //chiede permessi lettura SD
         switch (requestCode) {
