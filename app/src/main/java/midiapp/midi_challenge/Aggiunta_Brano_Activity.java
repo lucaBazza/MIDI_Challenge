@@ -13,5 +13,6 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
 
         ActionBar ac = this.getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
+        ac.setTitle("Aggiugi Brano...");
     }
 }

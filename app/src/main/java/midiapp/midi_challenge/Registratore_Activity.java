@@ -8,9 +8,14 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -171,6 +176,13 @@ import java.io.IOException;
 
         ActionBar ac = this.getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
+        ac.setTitle("Registratore");
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inf = getMenuInflater();
+        inf.inflate(R.menu.button_action_bar,menu);
+        return true;
     }
 
     @Override

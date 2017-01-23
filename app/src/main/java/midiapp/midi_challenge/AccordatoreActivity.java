@@ -1,9 +1,12 @@
 package midiapp.midi_challenge;
 
 import android.media.MediaPlayer;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 
@@ -26,7 +29,17 @@ public class AccordatoreActivity extends AppCompatActivity {
             }
         });
 
+        ActionBar ac = this.getSupportActionBar();
+        ac.setDisplayHomeAsUpEnabled(true);
+        ac.setTitle("Registratore");
     }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inf = getMenuInflater();
+        inf.inflate(R.menu.button_action_bar,menu);
+        return true;
+    }
+
     public void onDestroy() {
         mPlayer.stop();
         super.onDestroy();
