@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
-        mActivityTitles = new String[]{"act1","act2","act3","Tuner","Accordatore"};
+        mActivityTitles = new String[]{"Home","Profilo","Registratore","Metronomo","Accordatore, Impostazioni","Logout"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -69,8 +69,20 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent testIntent = new Intent(getApplicationContext(),Login_Activity.class);
-                startActivity(testIntent);
+                Intent testIntent;
+                int posizione =0;
+                switch (posizione){ // "Home","Profilo","Registratore","Metronomo","Accordatore, Impostazioni","Logout"
+                    case 0: testIntent = new Intent(getApplicationContext(),MainActivity.class); break;
+                    //case 1: testIntent = new Intent(getApplicationContext(),Login_Activity.class); break;
+                    //case 2: testIntent = new Intent(getApplicationContext(),Registratore_Activity.class); break;
+                    //case 3: testIntent = new Intent(getApplicationContext(),MetronomoActivity.class); break;
+                    case 4: testIntent = new Intent(getApplicationContext(),AccordatoreActivity.class); break;
+                    //case 5: testIntent = new Intent(getApplicationContext(),AccordatoreActivity.class); break; //IMPOSTAZIONI ACTIVITY
+                    case 6: testIntent = new Intent(getApplicationContext(),Login_Activity.class); break; //Domanda prima di uscire!
+                    default: testIntent = null;
+                }
+                if(testIntent!= null) startActivity(testIntent);
+                
             }
         });
         setTitle("Pagina Principale di "+utente.getNickName());
