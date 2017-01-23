@@ -4,8 +4,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import java.io.*;
@@ -87,7 +89,9 @@ public class MainActivity extends AppCompatActivity {
                 
             }
         });
-        setTitle("Pagina Principale di "+utente.getNickName());
+        setTitle(utente.getNickName());
+        ActionBar ac = this.getSupportActionBar();
+        ac.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

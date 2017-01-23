@@ -8,6 +8,7 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -167,6 +168,9 @@ import java.io.IOException;
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
         setContentView(ll);
+
+        ActionBar ac = this.getSupportActionBar();
+        ac.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
