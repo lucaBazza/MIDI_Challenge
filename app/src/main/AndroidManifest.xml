@@ -25,9 +25,8 @@
             android:name="AccordatoreActivity"
             android:label="@string/app_name">
         </activity>
-
         <activity android:name=".Login_Activity" />
-
+        <activity android:name=".Impostazioni_Activity"></activity>
     </application>
 
 </manifest>

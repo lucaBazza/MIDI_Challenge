@@ -1,6 +1,5 @@
 package midiapp.midi_challenge;
 
-/**
 
 import android.Manifest;
 import android.content.Context;
@@ -185,7 +184,4 @@ import java.io.IOException;
         }
     }
 }
-
-
-*/
 
