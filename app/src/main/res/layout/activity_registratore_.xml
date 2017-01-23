@@ -10,14 +10,4 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="midiapp.midi_challenge.Registratore_Activity">
 
-    <Button
-        android:text="REGISTRA"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="119dp"
-        android:id="@+id/btn_registra"
-        android:width="150dp"
-        android:height="60dp" />
 </RelativeLayout>

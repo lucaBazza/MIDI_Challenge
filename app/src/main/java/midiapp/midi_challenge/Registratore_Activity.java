@@ -116,7 +116,7 @@ import java.io.IOException;
 
         public RecordButton(Context ctx) {
             super(ctx);
-            setText("Start recording");
+            setText("Inizia Registrazione");
             setOnClickListener(clicker);
         }
     }
@@ -138,7 +138,7 @@ import java.io.IOException;
 
         public PlayButton(Context ctx) {
             super(ctx);
-            setText("Start playing");
+            setText("Riproduci Registrazione");
             setOnClickListener(clicker);
         }
     }
