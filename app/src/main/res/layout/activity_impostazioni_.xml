@@ -10,4 +10,39 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="midiapp.midi_challenge.Impostazioni_Activity">
 
+    <Button
+        android:text="IMPORTA DATI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        android:id="@+id/btn_import"
+        android:layout_below="@+id/btn_sviluppatori"
+        android:layout_alignStart="@+id/btn_sviluppatori" />
+
+    <Button
+        android:text="ESPORTA DATI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        android:id="@+id/btn_export"
+        android:layout_below="@+id/btn_import"
+        android:layout_alignStart="@+id/btn_import" />
+
+    <Button
+        android:text="VERSIONE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
+        android:id="@+id/btn_versione"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="SVILUPPATORI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="49dp"
+        android:id="@+id/btn_sviluppatori"
+        android:layout_below="@+id/btn_versione"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
