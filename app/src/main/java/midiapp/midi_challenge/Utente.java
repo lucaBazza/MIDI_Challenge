@@ -36,6 +36,11 @@ public class Utente {
         this.strumento = strumento;
     }
 
+    @Override
+    public String toString() {
+        return nickName.toUpperCase();
+    }
+
     public long getIdUtente() {
         return idUtente;
     }
