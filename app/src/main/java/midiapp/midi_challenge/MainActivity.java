@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         });
         setTitle(utente.getNickName());
         ActionBar ac = this.getSupportActionBar();
-        ac.setDisplayHomeAsUpEnabled(true);
+        //ac.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

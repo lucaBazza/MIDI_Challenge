@@ -1,5 +1,6 @@
 package midiapp.midi_challenge;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -10,5 +11,8 @@ public class Impostazioni_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_impostazioni_);
         this.setTitle("Impostazioni");
+
+        ActionBar ac = this.getSupportActionBar();
+        ac.setDisplayHomeAsUpEnabled(true);
     }
 }
