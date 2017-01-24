@@ -1,25 +1,29 @@
 package midiapp.midi_challenge;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.pdrogfer.mididroid.MidiFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author lucabazzanella
  */
 public class Dettagli_Brano_Activity extends AppCompatActivity {
-    Brano b;
-    Utente u;
+    public Brano brano = null;
+    public Utente utente =null;
     AlgoritmoMidi alMidi;
     MidiFile mf;
 
@@ -28,17 +32,33 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettagli__brano);
-        setTitle("Dettagli brano: ");
+
+        Button btnBrano = (Button) findViewById(R.id.buttonProvaCaricaBrano);
+        btnBrano.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Log.println(Log.ASSERT,"OnlickPorva","OnlickPorva");
+                eseguiAlgo();
+            }
+        });
+
+        if(brano!=null) setTitle("Dettagli brano: "+brano.getTitolo());
+        else setTitle("Dettagli brano: non disponibile!");
     }
     public void caricaBranoUtente(Brano brano, Utente utente){
-        b= brano;
-        u=utente;
-
+        this.brano= brano;
+        this.utente=utente;
+    }
+    private void eseguiAlgo(){
         ActivityCompat.requestPermissions( this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         if(mf!=null) {
             alMidi = new AlgoritmoMidi(mf);
             List<String> out = alMidi.calc();
+            Iterator i = out.iterator();
+            Log.println(Log.ASSERT,"Out Algo", "Algo Concluso!");
+            while(i.hasNext()) Log.println(Log.ASSERT,"Out Algo", i.toString());
         }
+
     }
 
     @Override

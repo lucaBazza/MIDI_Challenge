@@ -11,6 +11,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import java.io.*;
+import java.util.List;
+
 import android.os.*;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -21,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,26 +39,45 @@ public class MainActivity extends AppCompatActivity {
     private ListView mDrawerList;
 
     private Utente utente; //utente corrente
-
+    private Brano brano; //BRANO DI PROVA  -- DEBUG
     static FunzioniDatabase funzioniDatabase = null;
     //MidiFile mf;
-    
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //public Utente(String nickName, String foto, String strumento, int punteggioMassimo, int punteggioMedio)
-        utente = new Utente("Paolo","URLfoto","SEX",1205,324);                                                      //UTENTE DI DEBUG
-
         funzioniDatabase = new FunzioniDatabase(this.getBaseContext());
         setContentView(R.layout.activity_main);
-        //mf = new MidiFile();
+
+        //====================================================================================================================
+        //public Utente(String nickName, String foto, String strumento, int punteggioMassimo, int punteggioMedio)
+        utente = new Utente("Paolo","URLfoto","SEX",1205,324);                                                      //UTENTE DI DEBUG
+        //public Brano(long idBrano, String titolo, String nomeFile, int difficoltà,int autovalutazione) {
+        brano = new Brano(0,"campanella","campanella.mid",-1,-1);                                                   //BRANO DI DEBUG
+        funzioniDatabase.inserisciBranoPerUtente(utente,brano,-1);                                                  //LINK UTENTE-BRANO DI DEBUG
+        Button btnBrano = (Button) findViewById(R.id.buttonProvaBrano);
+        btnBrano.setText("Dettagli brano: "+brano.getTitolo());
+        btnBrano.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Log.println(Log.ASSERT,"OnlickPorva","OnlickPorva");
+                Dettagli_Brano_Activity dba = new Dettagli_Brano_Activity();
+                dba.caricaBranoUtente(new Brano(0,"campanella","campanella.mid",-1,-1),utente); //dba.utente = utente; dba.brano = brano;
+                startActivity(new Intent(getApplicationContext(),dba.getClass()));
+            }
+        });
+        //====================================================================================================================
+
+
+
+
 
         tv = (TextView)findViewById(R.id.textView);  //Find the view by its id
         tv.setMovementMethod(new ScrollingMovementMethod());
         log = (TextView)findViewById(R.id.textViewLog);
         log.setTextColor(Color.RED);
 
+        //mf = new MidiFile();
         //ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
         mActivityTitles = new String[]{"Home","Profilo","Registratore","Metronomo","Accordatore", "Impostazioni","Logout"};
@@ -63,10 +85,8 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // Set the adapter for the list view
-        ArrayAdapter<String> xxxx  = new ArrayAdapter<String>(this, R.layout.drawer_list_item, mActivityTitles);
-        mDrawerList.setAdapter(xxxx);
-        // Set the list's click listener
-        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        ArrayAdapter<String> xxxx  = new ArrayAdapter<String>(this, R.layout.drawer_list_item, mActivityTitles);        mDrawerList.setAdapter(xxxx);
+        // Set the list's click listener    //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -104,11 +124,11 @@ public class MainActivity extends AppCompatActivity {
                     DrawerLayout drw = (DrawerLayout)findViewById(R.id.drawer_layout);
                     drw.openDrawer(Gravity.LEFT);
                 break;
-
         }
         return true;
     }
 
+    /*
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {  //chiede permessi lettura SD
         switch (requestCode) {
@@ -128,8 +148,7 @@ public class MainActivity extends AppCompatActivity {
             // permissions this app might request
         }
     }
-
-    /*void leggiFile() {
+    void leggiFile() {
         File sdcard = Environment.getExternalStorageDirectory();         // 1. Open up a MIDI file
         File input = new File(sdcard, "campanella.mid");
         //input = new File(sdcard,"happyBirthD.mid");

@@ -50,11 +50,11 @@ public class AlgoritmoMidi {
                 long when = EveNota.getTick();
                 long durata = EveNota.getDelta();
 
-                ln.add(EveNota);                //aggiungo la nota nel vettore temporaneo
-                contNoteMod12[nota%12]++;       //aggiungo la nota nel vettore totale
+                //ln.add(EveNota);                //aggiungo la nota nel vettore temporaneo
+                contNoteMod12[nota%11]++;       //aggiungo la nota nel vettore totale
 
-                combo += punteggioNota() * punteggioVelocita();
-                if(combo>bestCombo) outPut.add("Fraseggio difficile a: " + when/1000+" sec.");
+                //combo += punteggioNota() * punteggioVelocita();
+                //if(combo>bestCombo) outPut.add("Fraseggio difficile a: " + when/1000+" sec.");
                 punteggio +=  durata * nota;
             }
         }

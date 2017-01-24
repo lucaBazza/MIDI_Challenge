@@ -12,6 +12,14 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="midiapp.midi_challenge.Dettagli_Brano_Activity">
 
+        <Button
+            android:text="Carica Brano"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonProvaCaricaBrano"
+            android:elevation="0dp"
+            android:layout_marginTop="150dp" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
