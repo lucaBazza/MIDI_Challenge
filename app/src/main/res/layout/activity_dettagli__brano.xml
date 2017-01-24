@@ -1,91 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:id="@+id/activity_dettagli__brano"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="midiapp.midi_challenge.Dettagli_Brano_Activity">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="30px">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:id="@+id/activity_dettagli__brano"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="midiapp.midi_challenge.Dettagli_Brano_Activity">
 
-        <TextView
-            android:id="@+id/lbl_Titolo"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Titolo : "/>
+            android:orientation="horizontal"
+            android:paddingTop="30px">
+            <TextView
+                android:id="@+id/lbl_Titolo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Titolo : "/>
+            <TextView
+                android:id="@+id/txt_TitoloBrano"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/txt_TitoloBrano"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="30px">
-
-        <TextView
-            android:id="@+id/lbl_Autore"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Autore : "/>
+            android:orientation="horizontal"
+            android:paddingTop="30px">
+            <TextView
+                android:id="@+id/lbl_Autore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Autore : "/>
+            <TextView
+                android:id="@+id/txt_Autore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/txt_Autore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="30px">
-
-        <TextView
-            android:id="@+id/lbl_Info1"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Etc : "/>
+            android:orientation="horizontal"
+            android:paddingTop="30px">
+            <TextView
+                android:id="@+id/lbl_Info1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Etc : "/>
+            <TextView
+                android:id="@+id/txt_Info1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/txt_Info1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="30px">
-
-        <TextView
-            android:id="@+id/lbl_Info2"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Etc : "/>
-
-        <TextView
-            android:id="@+id/txt_Info2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+            android:orientation="horizontal"
+            android:paddingTop="30px">
+            <TextView
+                android:id="@+id/lbl_Info2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Etc : "/>
+            <TextView
+                android:id="@+id/txt_Info2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
-
-
-</LinearLayout>

@@ -19,7 +19,7 @@ public class Impostazioni_Activity extends AppCompatActivity {
     }
 
     public void openNewActivity(View view) {
-        Intent startActivity = new Intent(this, Activity_info.class);
-        startActivity(startActivity);
+        //Intent startActivity = new Intent(this, Activity_info.class);
+        //startActivity(startActivity);
     }
 }

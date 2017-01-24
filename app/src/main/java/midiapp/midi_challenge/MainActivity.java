@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private Utente utente; //utente corrente
 
     static FunzioniDatabase funzioniDatabase = null;
-
-    MidiFile mf;
+    //MidiFile mf;
+    
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,16 +48,15 @@ public class MainActivity extends AppCompatActivity {
         utente = new Utente("Paolo","URLfoto","SEX",1205,324);                                                      //UTENTE DI DEBUG
 
         funzioniDatabase = new FunzioniDatabase(this.getBaseContext());
-
         setContentView(R.layout.activity_main);
-        mf = new MidiFile();
+        //mf = new MidiFile();
 
         tv = (TextView)findViewById(R.id.textView);  //Find the view by its id
         tv.setMovementMethod(new ScrollingMovementMethod());
         log = (TextView)findViewById(R.id.textViewLog);
         log.setTextColor(Color.RED);
 
-        ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        //ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
         mActivityTitles = new String[]{"Home","Profilo","Registratore","Metronomo","Accordatore", "Impostazioni","Logout"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -82,11 +81,9 @@ public class MainActivity extends AppCompatActivity {
                     case 6: testIntent = new Intent(getApplicationContext(),Login_Activity.class); break; //Domanda prima di uscire!
                     default: testIntent = null;
                 }
-                if(testIntent!= null) {
-                    //Log.println(Log.ASSERT,"activity","Pos: "+ position+"  activity: "+testIntent.toString());
+                if(testIntent!= null) {  //Log.println(Log.ASSERT,"activity","Pos: "+ position+"  activity: "+testIntent.toString());
                     startActivity(testIntent);
                 }
-                
             }
         });
         setTitle(utente.getNickName());
@@ -132,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void leggiFile() {
+    /*void leggiFile() {
         File sdcard = Environment.getExternalStorageDirectory();         // 1. Open up a MIDI file
         File input = new File(sdcard, "campanella.mid");
         //input = new File(sdcard,"happyBirthD.mid");
@@ -150,5 +147,5 @@ public class MainActivity extends AppCompatActivity {
         // 2. Do some editing to the file
         // 2a. Strip out anything but notes from track 1 //sostituoti con traccia 0
 
-    }
+    }*/
 }
