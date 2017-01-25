@@ -10,4 +10,21 @@ android:paddingRight="@dimen/activity_horizontal_margin"
 android:paddingTop="@dimen/activity_vertical_margin"
 tools:context="midiapp.midi_challenge.Registratore_Activity">
 
+    <Button
+        android:text="Registra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="168dp"
+        android:id="@+id/recordButton" />
+
+    <Button
+        android:text="Riproduci"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recordButton"
+        android:layout_alignEnd="@+id/recordButton"
+        android:layout_marginTop="79dp"
+        android:id="@+id/playButton" />
 </RelativeLayout>

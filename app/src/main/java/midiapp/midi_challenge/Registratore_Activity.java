@@ -29,11 +29,17 @@ import java.io.IOException;
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String mFileName = null;
 
+
     private RecordButton mRecordButton = null;
     private MediaRecorder mRecorder = null;
 
-    private PlayButton   mPlayButton = null;
-    private MediaPlayer   mPlayer = null;
+    private PlayButton mPlayButton = null;
+    private MediaPlayer mPlayer = null;
+
+
+    //LINK BOTTONI XML
+    //private Button mioRecordButton = (Button) findViewById(R.id.recordButton);
+    //private Button mioPlayButton = (Button) findViewById(R.id.playButton);
 
     // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
