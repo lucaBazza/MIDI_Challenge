@@ -20,11 +20,7 @@
 
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"><![CDATA[
-        android:layout_width="wrap_content"  >
-
-
-        ]]>
+        android:orientation="vertical">
 
         <TextView
             android:text="..."
@@ -34,6 +30,11 @@
             android:maxLines = "9000000"
             android:scrollbars = "vertical"
             android:layout_alignParentTop="true" />
+        
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:id="@+id/lista_brani_utente"></ListView>
 
         <TextView
             android:text="....log..."

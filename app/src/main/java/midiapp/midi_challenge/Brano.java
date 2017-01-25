@@ -44,6 +44,11 @@ public class Brano {
         this.autovalutazione = -1;
     }
 
+    @Override
+    public String toString() {
+        return this.titolo;
+    }
+
     public int getAutovalutazione() {
         return autovalutazione;
     }

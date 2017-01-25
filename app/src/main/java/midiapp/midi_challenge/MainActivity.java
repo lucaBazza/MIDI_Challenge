@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         utente = new Utente("Paolo","URLfoto","SEX",1205,324);                                                      //UTENTE DI DEBUG
         //public Brano(long idBrano, String titolo, String nomeFile, int difficoltà,int autovalutazione) {
         brano = new Brano(0,"campanella","campanella.mid",-1,-1);                                                   //BRANO DI DEBUG
+        funzioniDatabase.inserisci(utente);
+        funzioniDatabase.inserisci(brano);
         funzioniDatabase.inserisciBranoPerUtente(utente,brano,-1);                                                  //LINK UTENTE-BRANO DI DEBUG
         Button btnBrano = (Button) findViewById(R.id.buttonProvaBrano);
         btnBrano.setText("Dettagli brano: "+brano.getTitolo());
@@ -68,9 +70,11 @@ public class MainActivity extends AppCompatActivity {
         });
         //====================================================================================================================
 
+        ListView lista_brani = (ListView) findViewById(R.id.lista_brani_utente);
+        List braniUtente = funzioniDatabase.braniUtente(utente.getIdUtente());
+        ArrayAdapter<Brano> bn = new ArrayAdapter<Brano>(this,R.layout.brani_list_element,braniUtente);
 
-
-
+        lista_brani.setAdapter(bn);
 
         tv = (TextView)findViewById(R.id.textView);  //Find the view by its id
         tv.setMovementMethod(new ScrollingMovementMethod());
