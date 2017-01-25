@@ -28,14 +28,19 @@ import java.util.Iterator;
 public class AlgoritmoMidi {
     MidiTrack midiTrack;
     private static ArrayList <NoteOn> ln = new ArrayList<NoteOn>();  // la lista sarebbe meglio se dinamica in base al delta time
+    private static int sizeOfLN=20;
     //static int [] tonalita = {1,3,5,6,8,10,11};                      // scala maggiore %12
-    static int [] contNoteMod12 = new int[11];
+    //static int [] contNoteMod12 = new int[11];
     static long punteggio = 0;
+    int contatorenNoteTotale=0;
+    int contatoreAppoggiature =0;
+    int contatoreAccordi =0;
     long bestCombo =0;
 
     AlgoritmoMidi(MidiFile x){
         midiTrack = x.getTracks().get(0);
     }
+
     public ArrayList<String> calc(){
         Iterator<MidiEvent> it = midiTrack.getEvents().iterator();
         ArrayList<String> outPut = new ArrayList<>();
@@ -50,16 +55,21 @@ public class AlgoritmoMidi {
                 long when = EveNota.getTick();
                 long durata = EveNota.getDelta();
 
-                //ln.add(EveNota);                //aggiungo la nota nel vettore temporaneo
-                contNoteMod12[nota%11]++;       //aggiungo la nota nel vettore totale
+                if(ln.size()>sizeOfLN) ln.clear();      //ogni X note viene resettato il contatore, deve (in più) cancellare dimanicaente in base a nota.tick
+                ln.add(EveNota);                        //aggiungo la nota nel vettore temporaneo
+                contatorenNoteTotale++;
 
                 //combo += punteggioNota() * punteggioVelocita();
                 //if(combo>bestCombo) outPut.add("Fraseggio difficile a: " + when/1000+" sec.");
-                punteggio +=  durata * nota;
+                punteggio +=  punteggioVelocita() * punteggioMelArm();
             }
         }
-        punteggio = punteggio /1000;            //miniaturizzazione
+        punteggio /= 1000*1000*10;            //miniaturizzazione
         outPut.add("Punteggio totale realizzato: \t"+ Long.toString(punteggio));
+        Log.println(Log.ASSERT,"Algoritmo midi","numero di note in totale: "+contatorenNoteTotale);
+        Log.println(Log.ASSERT,"Algoritmo midi","numero di appoggiature in totale: "+contatoreAppoggiature);
+        Log.println(Log.ASSERT,"Algoritmo midi","numero di accordi in totale: "+contatoreAccordi);
+        Log.println(Log.ASSERT,"Algoritmo midi","Punteggio totale realizzato: 	"+ Long.toString(punteggio));
         return outPut;
     }
 
@@ -69,13 +79,10 @@ public class AlgoritmoMidi {
         String octave = Integer.toString((i/12)-2);
         return result+octave;
     }
-    private int salto(int notaPartenza, int notaArrivo){
-        return notaPartenza - notaArrivo;
-    }
-    private void aggiornaTonalita(){    //confronta l'ultima nota inserita con il vettore ton e dopo il vettore last, e decide se una nota è diatonica, non, o se è avvenuto un cambio ton
+
+    /*private void aggiornaTonalita(){    //confronta l'ultima nota inserita con il vettore ton e dopo il vettore last, e decide se una nota è diatonica, non, o se è avvenuto un cambio ton
         NoteOn lastNota = ln.get(ln.size());
         boolean diatonica = true;
-
         for(int i=0;i<7;i++)   {} //controllo se diatonica
             //if(lastNota.getNoteValue()%12 == tonalita[i]) diatonica = false;
 
@@ -86,14 +93,44 @@ public class AlgoritmoMidi {
                 }
             }
     }
+    */
 
     private int punteggioVelocita(){
-        return 0;
+        return 1;
     }
+    /**
+     *  Questo metodo analizza l'ultima nota processata, la confronta con il vettore ln -> note recenti:
+     *      -> assegna un punto per ogni semitono che c'è di differenza fra la nota precendente e quella successiva
+     *      ->se la nota viene suonata contemporaneamente -o quasi- a quella precendente (o precedenti) viene dato un bonus di 0.2x per ogni voce aggiunta
+     * @return punteggio della nota processata
+     */
+    private int punteggioMelArm(){
+        int points =0;
+        int salto = 0;
+        float moltAcco =1;
+        int vociAccordo = 0;
 
-    private int punteggioNota(){
-
-        return 0;
+        NoteOn notaCorrente =ln.get(ln.size()-1);
+        if(ln.size()>1) { //se il vettore non contiene  più di una nota
+            NoteOn notaPrec = ln.get(ln.size() - 2);
+            salto += notaCorrente.getNoteValue() - notaPrec.getNoteValue();
+            Iterator<NoteOn> it = ln.iterator();
+            while (it.hasNext()){
+                if ((notaCorrente.getTick() - it.next().getTick()) < 1) {  //se c'è meno di 5ms fra la nota corrente e la precendente c'è un possibile accordo/appoggio
+                    moltAcco += 0.1;
+                    contatoreAppoggiature++;
+                    vociAccordo++;
+                    if(vociAccordo>=3) { moltAcco += 0.1; break;}
+                }
+                else vociAccordo=0;
+            }
+        }
+        if(vociAccordo>=3) {   //aggiorno contatore accordi e lo notifico nel log e/o output
+            contatoreAccordi++;
+            //Log.println(Log.ASSERT,"Algoritmo midi","Trovato un accordo a: "+notaCorrente.getTick());
+        }
+        points =  Float.floatToIntBits(salto*moltAcco);
+        return points;
     }
 
 }
