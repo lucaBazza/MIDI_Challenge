@@ -54,32 +54,25 @@ public class MainActivity extends AppCompatActivity {
         utente = new Utente("Paolo","URLfoto","SEX",1205,324);                                                      //UTENTE DI DEBUG
         //public Brano(long idBrano, String titolo, String nomeFile, int difficoltà,int autovalutazione) {
         brano = new Brano(0,"campanella","campanella.mid",-1,-1);                                                   //BRANO DI DEBUG
-        funzioniDatabase.inserisci(utente);
-        funzioniDatabase.inserisci(brano);
+
         funzioniDatabase.inserisciBranoPerUtente(utente,brano,-1);                                                  //LINK UTENTE-BRANO DI DEBUG
-        Button btnBrano = (Button) findViewById(R.id.buttonProvaBrano);
-        btnBrano.setText("Dettagli brano: "+brano.getTitolo());
-        btnBrano.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Log.println(Log.ASSERT,"OnlickPorva","OnlickPorva");
-                Dettagli_Brano_Activity dba = new Dettagli_Brano_Activity();
-                dba.caricaBranoUtente(new Brano(0,"campanella","campanella.mid",-1,-1),utente); //dba.utente = utente; dba.brano = brano;
-                startActivity(new Intent(getApplicationContext(),dba.getClass()));
-            }
-        });
         //====================================================================================================================
 
         ListView lista_brani = (ListView) findViewById(R.id.lista_brani_utente);
         List braniUtente = funzioniDatabase.braniUtente(utente.getIdUtente());
         ArrayAdapter<Brano> bn = new ArrayAdapter<Brano>(this,R.layout.brani_list_element,braniUtente);
 
+        lista_brani.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getBaseContext(),"uh",Toast.LENGTH_LONG);
+            }
+        });
+
         lista_brani.setAdapter(bn);
 
         tv = (TextView)findViewById(R.id.textView);  //Find the view by its id
         tv.setMovementMethod(new ScrollingMovementMethod());
-        log = (TextView)findViewById(R.id.textViewLog);
-        log.setTextColor(Color.RED);
 
         //mf = new MidiFile();
         //ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
@@ -110,9 +103,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         setTitle(utente.getNickName());
-        ActionBar ac = this.getSupportActionBar();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
