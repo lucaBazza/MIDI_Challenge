@@ -20,21 +20,22 @@
         android:layout_alignStart="@+id/btn_import" />
 
     <Button
-        android:text="INFO"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:id="@+id/btn_sviluppatori"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="openNewActivity"/>
-
-    <Button
         android:text="IMPORTA DATI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:id="@+id/btn_import"
-        android:layout_below="@+id/btn_sviluppatori"
+        android:layout_below="@+id/btn_info"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="INFO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:id="@+id/btn_info"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="openNewActivity"/>
+
 </RelativeLayout>
