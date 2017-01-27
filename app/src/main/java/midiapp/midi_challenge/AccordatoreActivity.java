@@ -29,6 +29,8 @@ public class AccordatoreActivity extends AppCompatActivity {
             }
         });
 
+        mPlayer = MediaPlayer.create(this,R.raw.a440hz05sec);
+
         ActionBar ac = this.getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
         ac.setTitle("Registratore");
@@ -49,7 +51,6 @@ public class AccordatoreActivity extends AppCompatActivity {
     public void playNota(){
         Log.println(Log.ASSERT,"evento","playNota");
         //MediaPlayer.create(FakeCallScreen.this, R.raw.mysoundfile);
-        mPlayer = MediaPlayer.create(this,R.raw.a440hz05sec);
         mPlayer.start();
     }
 }

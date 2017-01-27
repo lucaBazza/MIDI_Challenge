@@ -28,10 +28,18 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     MidiFile mf;
     TextView tvLog;
 
+
+    private static FunzioniDatabase funzioniDatabase = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettagli__brano);
+
+        long l = getIntent().getLongExtra("id_brano",0);
+
+        funzioniDatabase = new FunzioniDatabase(getBaseContext());
+        brano = funzioniDatabase.trovaBrano(l);
 
         Button btnBrano = (Button) findViewById(R.id.buttonProvaCaricaBrano);
         btnBrano.setOnClickListener(new View.OnClickListener(){
@@ -44,6 +52,14 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         if(brano!=null) setTitle("Dettagli brano: "+brano.getTitolo());
         else setTitle("Dettagli brano: non disponibile!");
         tvLog = (TextView)findViewById(R.id.tvLog);
+
+        TextView txtTitolo = (TextView) findViewById(R.id.txt_TitoloBrano);
+        TextView txtAutore = (TextView) findViewById(R.id.txt_Autore);
+
+        txtTitolo.setText(brano.getTitolo());
+        txtAutore.setText("Inserire campo autore in brano. ");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void caricaBranoUtente(Brano brano, Utente utente){
