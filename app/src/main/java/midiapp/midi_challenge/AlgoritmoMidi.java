@@ -28,7 +28,7 @@ import java.util.Iterator;
 public class AlgoritmoMidi {
     MidiTrack midiTrack;
     private static ArrayList <NoteOn> ln = new ArrayList<NoteOn>();  // la lista sarebbe meglio se dinamica in base al delta time
-    private static int sizeOfLN=20;
+    private static int sizeOfLN=30;
     //static int [] tonalita = {1,3,5,6,8,10,11};                      // scala maggiore %12
     static int [] contNoteMod12 = new int[11];
     static long punteggio = 0;
@@ -59,6 +59,8 @@ public class AlgoritmoMidi {
                 ln.add(EveNota);                        //aggiungo la nota nel vettore temporaneo
                 contatorenNoteTotale++;
                 contNoteMod12[EveNota.getNoteValue()%11]++;
+
+                Log.println(Log.ASSERT,"Analisi","Nota: "+convIntStrNota(EveNota.getNoteValue())+ " \t tick: "+EveNota.getTick()+" \t delta: "+EveNota.getDelta());
 
                 puntTemp +=  punteggioVelocita() * punteggioMelArm();
                 if(puntTemp>bestPuntTemp)  {
@@ -115,9 +117,11 @@ public class AlgoritmoMidi {
      * @return punteggio di velocità di esecuzione della nota proecessata, ne restituisce un valore compreso fra { 0.01 e 1.00 }
      */
     private double punteggioVelocita(){
-        double punteggio = 0.00;
+        double punteggio;
         NoteOn nota = ln.get(ln.size()-1);
-        punteggio = 1 / nota.getDelta();
+        if(nota.getDelta()>0)
+            punteggio = 1 / nota.getDelta();
+        else punteggio =0.01;
         return punteggio;
     }
     /**
@@ -139,15 +143,17 @@ public class AlgoritmoMidi {
                 salto += (notaCorrente.getNoteValue() - notaPrec.getNoteValue())%11;    //il salto, sia ascendente che discendente
             else                                                                        // può dare max 11 punti (poi si va nell'ottava successiva)
                 salto += (notaPrec.getNoteValue() - notaCorrente.getNoteValue())%11;
-            Iterator<NoteOn> it = ln.iterator();
-            while (it.hasNext()){
-                if ((notaCorrente.getTick() - it.next().getTick()) < 1) {  //se c'è meno di 5ms fra la nota corrente e la precendente c'è un possibile accordo/appoggio
+
+            for( int i =0; i < ln.size();i++) {
+                if ((notaCorrente.getTick() - ln.get(i).getTick()) < 10) {  //se c'è meno di 5ms fra la nota corrente e la precendente c'è un possibile accordo/appoggio
                     moltAcco += 0.1;
                     contatoreAppoggiature++;
                     vociAccordo++;
-                    if(vociAccordo>=3) { moltAcco += 0.1; break;}
-                }
-                else vociAccordo=0;
+                    if (vociAccordo >= 3) {
+                        moltAcco += 0.1;
+                        break;
+                    }
+                } else vociAccordo = 0;
             }
         }
         if(vociAccordo>=3) {   //aggiorno contatore accordi e lo notifico nel log e/o output

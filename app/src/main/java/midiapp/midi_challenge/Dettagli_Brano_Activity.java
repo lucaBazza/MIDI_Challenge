@@ -86,7 +86,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             case 1: { // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0  && grantResults[0] == PackageManager.PERMISSION_GRANTED) { // permission was granted, yay! Do the contacts-related task you need to do.
                     File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file
-                    File input = new File(sdcard, "campanella.mid");
+                    File input = new File(sdcard, "happyBD.mid"); //campanella.mid
                     try {  mf = new MidiFile(input); }
                     catch (IOException e) {
                         System.err.println("Error parsing MIDI file:");
