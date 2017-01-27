@@ -95,14 +95,21 @@ public class AlgoritmoMidi {
     }
     */
 
-    private int punteggioVelocita(){
+    /**
+     *  Per calcolare la velocità viene dedotto da noteOn.tick rispetto alla precendente:
+     *  -> in primis viene confrontanta la velocità con dei valori static
+     *
+     * @return punteggio di velocità di esecuzione della nota proecessata, ne restituisce un valore compreso fra { 0.01 e 1.00 }
+     */
+
+    private float punteggioVelocita(){
         return 1;
     }
     /**
      *  Questo metodo analizza l'ultima nota processata, la confronta con il vettore ln -> note recenti:
      *      -> assegna un punto per ogni semitono che c'è di differenza fra la nota precendente e quella successiva
      *      ->se la nota viene suonata contemporaneamente -o quasi- a quella precendente (o precedenti) viene dato un bonus di 0.2x per ogni voce aggiunta
-     * @return punteggio della nota processata
+     * @return punteggio melodico + armonico della nota processata
      */
     private int punteggioMelArm(){
         int points =0;
@@ -113,7 +120,10 @@ public class AlgoritmoMidi {
         NoteOn notaCorrente =ln.get(ln.size()-1);
         if(ln.size()>1) { //se il vettore non contiene  più di una nota
             NoteOn notaPrec = ln.get(ln.size() - 2);
-            salto += notaCorrente.getNoteValue() - notaPrec.getNoteValue();
+            if(notaCorrente.getNoteValue() > notaPrec.getNoteValue())
+                salto += (notaCorrente.getNoteValue() - notaPrec.getNoteValue())%11;    //il salto, sia ascendente che discendente
+            else                                                                        // può dare max 11 punti (poi si va nell'ottava successiva)
+                salto += (notaPrec.getNoteValue() - notaCorrente.getNoteValue())%11;
             Iterator<NoteOn> it = ln.iterator();
             while (it.hasNext()){
                 if ((notaCorrente.getTick() - it.next().getTick()) < 1) {  //se c'è meno di 5ms fra la nota corrente e la precendente c'è un possibile accordo/appoggio
