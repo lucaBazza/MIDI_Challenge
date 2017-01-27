@@ -51,12 +51,19 @@ public class MainActivity extends AppCompatActivity {
 
         //====================================================================================================================
         //public Utente(String nickName, String foto, String strumento, int punteggioMassimo, int punteggioMedio)
-        utente = new Utente("Paolo","URLfoto","SEX",1205,324);                                                      //UTENTE DI DEBUG
+        //utente = new Utente("Paolo","URLfoto","SEX",1205,324);                                                      //UTENTE DI DEBUG
         //public Brano(long idBrano, String titolo, String nomeFile, int difficoltà,int autovalutazione) {
         brano = new Brano(0,"campanella","campanella.mid",-1,-1);                                                   //BRANO DI DEBUG
 
         //funzioniDatabase.inserisciBranoPerUtente(utente,brano,-1);                                                  //LINK UTENTE-BRANO DI DEBUG
         //====================================================================================================================
+
+        if(getIntent().hasExtra("id_utente")){
+            utente = funzioniDatabase.trovaUtente(getIntent().getLongExtra("id_utente",-1));
+        }
+
+        funzioniDatabase.inserisciBranoPerUtente(utente,funzioniDatabase.trovaBrano("Titolo"),21);
+        funzioniDatabase.inserisciBranoPerUtente(utente,funzioniDatabase.trovaBrano("Titolo"),21);
 
         ListView lista_brani = (ListView) findViewById(R.id.lista_brani_utente);
         final List<Brano> braniUtente = funzioniDatabase.braniUtente(utente.getIdUtente());
@@ -131,5 +138,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-
 }
