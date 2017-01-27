@@ -18,7 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Dettagli_Brano_Activity" />
+        <activity
+            android:name=".Dettagli_Brano_Activity"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".Aggiunta_Brano_Activity" />
         <activity
             android:name=".Registratore_Activity"

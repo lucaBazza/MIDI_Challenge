@@ -55,17 +55,20 @@ public class MainActivity extends AppCompatActivity {
         //public Brano(long idBrano, String titolo, String nomeFile, int difficoltà,int autovalutazione) {
         brano = new Brano(0,"campanella","campanella.mid",-1,-1);                                                   //BRANO DI DEBUG
 
-        funzioniDatabase.inserisciBranoPerUtente(utente,brano,-1);                                                  //LINK UTENTE-BRANO DI DEBUG
+        //funzioniDatabase.inserisciBranoPerUtente(utente,brano,-1);                                                  //LINK UTENTE-BRANO DI DEBUG
         //====================================================================================================================
 
         ListView lista_brani = (ListView) findViewById(R.id.lista_brani_utente);
-        List braniUtente = funzioniDatabase.braniUtente(utente.getIdUtente());
+        final List<Brano> braniUtente = funzioniDatabase.braniUtente(utente.getIdUtente());
         ArrayAdapter<Brano> bn = new ArrayAdapter<Brano>(this,R.layout.brani_list_element,braniUtente);
 
         lista_brani.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getBaseContext(),"uh",Toast.LENGTH_LONG);
+                Brano selezione = braniUtente.get(position);
+                Intent aperturaDettagliBrano = new Intent(getApplicationContext(),Dettagli_Brano_Activity.class);
+                aperturaDettagliBrano.putExtra("id_brano",selezione.getIdBrano());
+                startActivity(aperturaDettagliBrano);
             }
         });
 
@@ -120,7 +123,10 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.show_navigation_drawer :
                     DrawerLayout drw = (DrawerLayout)findViewById(R.id.drawer_layout);
-                    drw.openDrawer(Gravity.LEFT);
+                    if(!drw.isDrawerOpen(Gravity.LEFT))
+                        drw.openDrawer(Gravity.LEFT);
+                    else
+                        drw.closeDrawer(Gravity.LEFT);
                 break;
         }
         return true;
