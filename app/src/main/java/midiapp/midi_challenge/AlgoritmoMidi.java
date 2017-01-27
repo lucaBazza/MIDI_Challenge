@@ -30,7 +30,7 @@ public class AlgoritmoMidi {
     private static ArrayList <NoteOn> ln = new ArrayList<NoteOn>();  // la lista sarebbe meglio se dinamica in base al delta time
     private static int sizeOfLN=20;
     //static int [] tonalita = {1,3,5,6,8,10,11};                      // scala maggiore %12
-    //static int [] contNoteMod12 = new int[11];
+    static int [] contNoteMod12 = new int[11];
     static long punteggio = 0;
     int contatorenNoteTotale=0;
     int contatoreAppoggiature =0;
@@ -58,6 +58,7 @@ public class AlgoritmoMidi {
                 if(ln.size()>sizeOfLN) ln.clear();      //ogni X note viene resettato il contatore, deve (in più) cancellare dimanicaente in base a nota.tick
                 ln.add(EveNota);                        //aggiungo la nota nel vettore temporaneo
                 contatorenNoteTotale++;
+                contNoteMod12[EveNota.getNoteValue()%11]++;
 
                 puntTemp +=  punteggioVelocita() * punteggioMelArm();
                 if(puntTemp>bestPuntTemp)  {
@@ -68,7 +69,10 @@ public class AlgoritmoMidi {
                 puntTemp = 0;
             }
         }
+
+
         punteggio /= 1000*1000;            //miniaturizzazione
+
         outPut.add("Punteggio totale realizzato: \t"+ Long.toString(punteggio));
         Log.println(Log.ASSERT,"Algoritmo midi","numero di note in totale: "+contatorenNoteTotale);
         Log.println(Log.ASSERT,"Algoritmo midi","numero di appoggiature in totale: "+contatoreAppoggiature);
@@ -99,13 +103,17 @@ public class AlgoritmoMidi {
     }
     */
 
+    private double calcolaBiasTonalità(){
+        double punteggio = 0.0;
+        return punteggio;
+    }
+
     /**
      *  Per calcolare la velocità viene dedotto da noteOn.tick rispetto alla precendente:
      *  -> in primis viene confrontanta la velocità con dei valori static
      *
      * @return punteggio di velocità di esecuzione della nota proecessata, ne restituisce un valore compreso fra { 0.01 e 1.00 }
      */
-
     private double punteggioVelocita(){
         double punteggio = 0.00;
         NoteOn nota = ln.get(ln.size()-1);

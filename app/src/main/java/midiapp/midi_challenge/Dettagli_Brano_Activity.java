@@ -1,7 +1,6 @@
 package midiapp.midi_challenge;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -29,7 +28,6 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     MidiFile mf;
     TextView tvLog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,15 +41,16 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
                 eseguiAlgo();
             }
         });
-
         if(brano!=null) setTitle("Dettagli brano: "+brano.getTitolo());
         else setTitle("Dettagli brano: non disponibile!");
         tvLog = (TextView)findViewById(R.id.tvLog);
     }
+
     public void caricaBranoUtente(Brano brano, Utente utente){
         this.brano= brano;
         this.utente=utente;
     }
+
     private void eseguiAlgo(){
         ActivityCompat.requestPermissions( this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1); //CHIEDO PERMESSI LETTURA FILE
         if(mf!=null) {
@@ -60,7 +59,6 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             Iterator i = out.iterator();
             Log.println(Log.ASSERT,"Out Algo", "Algo Concluso!");
             tvLog.setText("Algoritmo concluso! righe output: "+out.size());
-
             //while(i.hasNext()) Log.println(Log.ASSERT,"Out Algo", i.toString());
         }
         else{ tvLog.setText("file midi null!"); }
@@ -86,5 +84,6 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             }  // other 'case' lines to check for other permissions this app might request
         }
     }
+
 
 }
