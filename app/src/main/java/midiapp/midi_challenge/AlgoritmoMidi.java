@@ -39,7 +39,7 @@ public class AlgoritmoMidi {
 
     AlgoritmoMidi(MidiFile x){
         midiTrack = x.getTracks().get(0);
-    }
+    } //seleziona la traccia 0 del file midi, è quella contentente la traccia da analizzare
 
     public ArrayList<String> calc(){
         Iterator<MidiEvent> it = midiTrack.getEvents().iterator();
