@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
         setTitle(utente.getNickName());
     }
 

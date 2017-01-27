@@ -35,7 +35,7 @@ public class AlgoritmoMidi {
     int contatorenNoteTotale=0;
     int contatoreAppoggiature =0;
     int contatoreAccordi =0;
-    long bestCombo =0;
+    long bestPuntTemp = 0;
 
     AlgoritmoMidi(MidiFile x){
         midiTrack = x.getTracks().get(0);
@@ -45,7 +45,7 @@ public class AlgoritmoMidi {
         Iterator<MidiEvent> it = midiTrack.getEvents().iterator();
         ArrayList<String> outPut = new ArrayList<>();
 
-        long combo = 0;
+        long puntTemp = 0;
 
         while(it.hasNext()) {   //per ogni nota nella traccia
             MidiEvent E = it.next();
@@ -59,12 +59,16 @@ public class AlgoritmoMidi {
                 ln.add(EveNota);                        //aggiungo la nota nel vettore temporaneo
                 contatorenNoteTotale++;
 
-                //combo += punteggioNota() * punteggioVelocita();
-                //if(combo>bestCombo) outPut.add("Fraseggio difficile a: " + when/1000+" sec.");
+                puntTemp +=  punteggioVelocita() * punteggioMelArm();
+                if(puntTemp>bestPuntTemp)  {
+                    bestPuntTemp = puntTemp;
+                    outPut.add("Fraseggio difficile a: " + when/1000+" sec.");
+                }
                 punteggio +=  punteggioVelocita() * punteggioMelArm();
+                puntTemp = 0;
             }
         }
-        punteggio /= 1000*1000*10;            //miniaturizzazione
+        punteggio /= 1000*1000;            //miniaturizzazione
         outPut.add("Punteggio totale realizzato: \t"+ Long.toString(punteggio));
         Log.println(Log.ASSERT,"Algoritmo midi","numero di note in totale: "+contatorenNoteTotale);
         Log.println(Log.ASSERT,"Algoritmo midi","numero di appoggiature in totale: "+contatoreAppoggiature);
@@ -102,8 +106,11 @@ public class AlgoritmoMidi {
      * @return punteggio di velocità di esecuzione della nota proecessata, ne restituisce un valore compreso fra { 0.01 e 1.00 }
      */
 
-    private float punteggioVelocita(){
-        return 1;
+    private double punteggioVelocita(){
+        double punteggio = 0.00;
+        NoteOn nota = ln.get(ln.size()-1);
+        punteggio = 1 / nota.getDelta();
+        return punteggio;
     }
     /**
      *  Questo metodo analizza l'ultima nota processata, la confronta con il vettore ln -> note recenti:
