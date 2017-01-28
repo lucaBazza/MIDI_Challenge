@@ -1,6 +1,5 @@
 package midiapp.midi_challenge;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,14 +25,6 @@ public class Login_Activity extends AppCompatActivity {
 
         db = new FunzioniDatabase(getBaseContext());
 
-        //controllare valore id utente. DAMMIT
-/*        Utente u = new Utente("Paolo","percorso_foto","Strumento",40,10);
-        Brano b = new Brano("Titolo","percorso",20);
-        db.inserisci(u);
-        db.inserisci(b);
-        db.inserisciBranoPerUtente(u,b,20);*/
-        //
-
         GridView grigliaUtenti = (GridView) findViewById(R.id.layout_griglia_utenti);
 
         final List<Utente> listaUtenti = db.prendiTuttiUtenti();
@@ -52,10 +43,8 @@ public class Login_Activity extends AppCompatActivity {
         grigliaUtenti.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Utente u = listaUtenti.get(i);
-                Intent loginIntent = new Intent(getBaseContext(),MainActivity.class);
-                loginIntent.putExtra("id_utente",u.getIdUtente());
-                startActivity(loginIntent);
+
+                Utente u = db.trovaUtente(listaUtenti.get(i).getIdUtente());
             }
         });
     }
