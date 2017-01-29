@@ -11,39 +11,31 @@
     tools:context="midiapp.midi_challenge.Impostazioni_Activity">
 
     <Button
+        android:text="ESPORTA DATI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        android:id="@+id/btn_export"
+        android:layout_below="@+id/btn_import"
+        android:layout_alignStart="@+id/btn_import" />
+
+    <Button
         android:text="IMPORTA DATI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
         android:id="@+id/btn_import"
-        android:background="@color/colorLightBlue"
-        android:minWidth="115dip"
-        android:layout_above="@+id/btn_export"
-        android:layout_alignStart="@+id/btn_info"
-        android:layout_marginBottom="71dp" />
+        android:layout_below="@+id/btn_info"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:text="INFO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:id="@+id/btn_info"
-        android:onClick="openNewActivity (Impostazioni_Activity)"
-        android:background="@color/colorLightBlue"
-        android:textSize="14sp"
-        android:elevation="0dp"
-        android:minWidth="115dip"
-        android:layout_above="@+id/btn_import"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="67dp" />
-
-    <Button
-        android:text="ESPORTA DATI"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_export"
-        android:background="@color/colorLightBlue"
-        android:minWidth="115dip"
-        android:layout_marginBottom="139dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/btn_import" />
+        android:onClick="openNewActivity"/>
 
 </RelativeLayout>
