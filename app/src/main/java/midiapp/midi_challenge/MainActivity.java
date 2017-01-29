@@ -49,9 +49,13 @@ public class MainActivity extends AppCompatActivity {
         funzioniDatabase = new FunzioniDatabase(this.getBaseContext());
         setContentView(R.layout.activity_main);
 
+        if(getIntent().hasExtra("id_utente")){
+            utente = funzioniDatabase.trovaUtente(getIntent().getLongExtra("id_utente",-1));
+        }
+
         //====================================================================================================================
         //public Utente(String nickName, String foto, String strumento, int punteggioMassimo, int punteggioMedio)
-        utente = new Utente("Paolo","URLfoto","SEX",1205,324);                                                      //UTENTE DI DEBUG
+        // utente = new Utente("Paolo","URLfoto","SEX",1205,324);                                                      //UTENTE DI DEBUG
         //public Brano(long idBrano, String titolo, String nomeFile, int difficoltà,int autovalutazione) {
         brano = new Brano(0,"campanella","campanella.mid",-1,-1);                                                   //BRANO DI DEBUG
 
