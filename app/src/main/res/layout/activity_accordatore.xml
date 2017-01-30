@@ -12,10 +12,11 @@
     tools:context="midiapp.midi_challenge.AccordatoreActivity">
 
     <ImageButton
-        android:layout_width="match_parent"
-        app:srcCompat="@mipmap/diapason_img"
         android:id="@+id/imgBtnDiapason"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_height="100dp" />
+        android:layout_width="200dp"
+        android:background="@drawable/imgDiapason1"
+        android:layout_height="200dp" />
 
 </RelativeLayout>

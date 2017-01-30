@@ -24,9 +24,11 @@ import java.util.List;
 public class Dettagli_Brano_Activity extends AppCompatActivity {
     public Brano brano = null;
     public Utente utente =null;
+    private String dir = "MidiChallenge/";
     AlgoritmoMidi alMidi;
     MidiFile mf;
     TextView tvLog;
+
 
 
     private static FunzioniDatabase funzioniDatabase = null;
@@ -86,7 +88,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             case 1: { // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0  && grantResults[0] == PackageManager.PERMISSION_GRANTED) { // permission was granted, yay! Do the contacts-related task you need to do.
                     File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file
-                    File input = new File(sdcard, "happyBD.mid"); //campanella.mid
+                    File input = new File(sdcard, dir+"Chopin_EtudesOp10n1.mid"); //campanella.mid  Chopin_EtudesOp10n1.mid  happyBD.mid
                     try {  mf = new MidiFile(input); }
                     catch (IOException e) {
                         System.err.println("Error parsing MIDI file:");
@@ -100,6 +102,4 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             }  // other 'case' lines to check for other permissions this app might request
         }
     }
-
-
 }
