@@ -20,15 +20,15 @@
         </activity>
         <activity
             android:name=".Dettagli_Brano_Activity"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".Aggiunta_Brano_Activity" />
         <activity
             android:name=".Registratore_Activity"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AccordatoreActivity"
-            android:parentActivityName=".MainActivity"></activity>
-        <activity android:name=".Login_Activity" >
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".Login_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,9 +38,8 @@
         <activity
             android:name=".Impostazioni_Activity"
             android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".Info_Activity">
-        </activity>
+        <activity android:name=".Info_Activity"></activity>
+        <activity android:name=".ActivityPaginaUtente"></activity>
     </application>
 
 </manifest>

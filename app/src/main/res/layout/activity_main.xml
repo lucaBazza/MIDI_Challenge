@@ -13,37 +13,6 @@
     tools:context="midiapp.midi_challenge.MainActivity">
 
 
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        android:id="@+id/LinearLayoutListaBrani"
-        <!-- android:background="@android:color/holo_orange_light"-->
-
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:clickable="true"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/ic_add_something"
-            android:id="@+id/floatingActionButton" />
-
-        <TextView
-            android:text="..."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView"
-            android:maxLines = "9000000"
-            android:scrollbars = "vertical"
-            android:layout_alignParentTop="true" />
-        
-        <ListView
-            android:layout_marginLeft="6dp"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:id="@+id/lista_brani_utente"
-            android:choiceMode="singleChoice"/>
-    </LinearLayout>
-
     <!-- The main content view -->
 
     <FrameLayout
@@ -51,8 +20,51 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/LinearLayoutContanier1" >
+
+            <LinearLayout android:layout_width="264dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/LinearLayoutListaBrani"
+                android:weightSum="1">
+                <!-- android:background="@android:color/holo_orange_light"-->
+
+                <TextView
+                    android:text="..."
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView"
+                    android:maxLines = "9000000"
+                    android:scrollbars = "vertical"
+                    android:layout_alignParentTop="true" />
+
+                <ListView
+                    android:layout_marginLeft="6dp"
+                    android:layout_width="244dp"
+                    android:layout_height="300dp"
+                    android:id="@+id/lista_brani_utente"
+                    android:choiceMode="singleChoice"
+                    android:layout_weight="0.93" />
+            </LinearLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:clickable="true"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/ic_add_something"
+                android:layout_margin="20dp"
+                android:id="@+id/floatingActionButton"
+                app:layout_anchor="@id/content_frame"
+                app:layout_anchorGravity="bottom|right|end" />
+        </LinearLayout>
     </FrameLayout>
     <!-- The navigation drawer -->
+
     <ListView
         android:id="@+id/left_drawer"
         android:layout_width="match_parent"

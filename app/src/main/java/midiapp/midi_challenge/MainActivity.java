@@ -95,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent testIntent;
                 switch (position){ // "Home","Profilo","Registratore","Metronomo","Accordatore, Impostazioni","Logout"
                     case 0: testIntent = new Intent(getApplicationContext(),MainActivity.class); break;
-                    //case 1: testIntent = new Intent(getApplicationContext(),Login_Activity.class); break;
+                    case 1: testIntent = new Intent(getApplicationContext(),ActivityPaginaUtente.class);
+                            testIntent.putExtra("id_utente",utente.getIdUtente());break;
                     case 2: testIntent = new Intent(getApplicationContext(),Registratore_Activity.class); break;
                     //case 3: testIntent = new Intent(getApplicationContext(),MetronomoActivity.class); break;
                     case 4: testIntent = new Intent(getApplicationContext(),AccordatoreActivity.class); break;
@@ -128,7 +129,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     *  crea il pulsante menù nella action bar del programma
+     * @param menu il menù xml in res/menu/ da usare
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inf = getMenuInflater();
@@ -136,6 +141,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * permette di visualizzare e/o nascondere il drawer/menùLaterale
+     * @param item menù sul quale viene triggerato l'evento
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
