@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -114,6 +115,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.println(Log.ASSERT,"MainActivity","Onclick floating button add brano!");
+                Toast.makeText(getBaseContext(),"Aggiungi nuovo brano",Toast.LENGTH_SHORT).show();
+            }
+        });
+
         setTitle(utente.getNickName());
     }
 
