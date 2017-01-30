@@ -1,12 +1,14 @@
 package midiapp.midi_challenge;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -80,6 +82,17 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             //while(i.hasNext()) Log.println(Log.ASSERT,"Out Algo", i.toString());
         }
         else{ tvLog.setText("file midi null!"); }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                Intent i = new Intent(getBaseContext(),MainActivity.class);
+                i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));   //find a better way to do dis
+                startActivity(i);
+                break;
+        }
+        return true;
     }
 
     @Override

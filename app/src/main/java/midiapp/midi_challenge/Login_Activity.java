@@ -88,15 +88,20 @@ public class Login_Activity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        LinearLayout layoutInserimento = (LinearLayout)findViewById(R.id.layout_inserimento_dati);
+        switch (item.getItemId()) {
+            case R.id.add_user_button:
+            LinearLayout layoutInserimento = (LinearLayout) findViewById(R.id.layout_inserimento_dati);
 
-        if(layoutInserimento != null){
-            if(layoutInserimento.getVisibility() == View.INVISIBLE)
-                layoutInserimento.setVisibility(View.VISIBLE);
-            else
-                layoutInserimento.setVisibility(View.INVISIBLE);
-            return true;
+            if (layoutInserimento != null) {
+                if (layoutInserimento.getVisibility() == View.INVISIBLE)
+                    layoutInserimento.setVisibility(View.VISIBLE);
+                else
+                    layoutInserimento.setVisibility(View.INVISIBLE);
+                return true;
+            }
+            break;
         }
         return false;
     }
+
 }

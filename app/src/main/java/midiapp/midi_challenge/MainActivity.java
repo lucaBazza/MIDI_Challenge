@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 Brano selezione = braniUtente.get(position);
                 Intent aperturaDettagliBrano = new Intent(getApplicationContext(),Dettagli_Brano_Activity.class);
                 aperturaDettagliBrano.putExtra("id_brano",selezione.getIdBrano());
+                aperturaDettagliBrano.putExtra("id_utente",utente.getIdUtente());
                 startActivity(aperturaDettagliBrano);
             }
         });
