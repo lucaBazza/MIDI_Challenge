@@ -72,7 +72,7 @@ public class AlgoritmoMidi {
             }
         }
 
-
+        punteggio *= calcolaBiasTonalità();
         punteggio /= 1000*1000;            //miniaturizzazione
 
         outPut.add("Punteggio totale realizzato: \t"+ Long.toString(punteggio));
@@ -90,24 +90,26 @@ public class AlgoritmoMidi {
         return result+octave;
     }
 
-    /*private void aggiornaTonalita(){    //confronta l'ultima nota inserita con il vettore ton e dopo il vettore last, e decide se una nota è diatonica, non, o se è avvenuto un cambio ton
-        NoteOn lastNota = ln.get(ln.size());
-        boolean diatonica = true;
-        for(int i=0;i<7;i++)   {} //controllo se diatonica
-            //if(lastNota.getNoteValue()%12 == tonalita[i]) diatonica = false;
-
-        if(!diatonica)          //Se NON è diatonica procedo con un controllo per vedere se è necessario un cambio tonalità
-            for(int i=ln.size()-1; i>0; i--){ //for dall'ultimo al primo
-                if(lastNota.getNoteValue()%12 == ln.get(i).getNoteValue()%12) { //se è la stessa nota vuol dire che la nota diatonica è stata ripetuta, quindi la ton va aggiornata
-                    Log.println(Log.ASSERT,"Evento refreshTonalita","Cambio tonalità a: "+lastNota.getDelta()/1000);
-                }
-            }
-    }
-    */
-
+    /**
+     * calcola la dispersione di note rispetto alla tonalità -> applicato in post su tutta la traccia -> più c'è dispersione più è difficile
+     * aggiunge 0.08 points per ogni nota del vettore contNoteMod12 che è conteggiata più di un undicesimo del totale, cioè che raggiunge un quantitativo minimo per
+     * essere parte della tonalità di impianto (circa 7 note, ma possibile anche 6 o 8) ->diatonica
+     * @return punteggio dispersione    output aspettato:
+         *                              0.09*6 ->pentatonica allargata
+         *                              0.09*7 ->tonalità/modi "classiche" basate su may/min/arm/mel
+         *                              0.09*8 ->scale dim half/whole o whole/half
+         *                              >0.09*9 -> cambi di tonalità e/o atonale
+     */
     private double calcolaBiasTonalità(){
-        double punteggio = 0.0;
-        return punteggio;
+        double p = 0.0;
+        for(int i = 0;i<11;i++){
+            if(contNoteMod12[i]>= contatorenNoteTotale/11){
+                Log.println(Log.ASSERT,"Calc tonalita","Nota diatonica: "+convIntStrNota(contNoteMod12[i]));
+                p +=0.09;
+            }
+        }
+        Log.println(Log.ASSERT,"Calc tonalita","Dispersione Tonalità: "+p);
+        return p;
     }
 
     /**
@@ -121,9 +123,10 @@ public class AlgoritmoMidi {
         NoteOn nota = ln.get(ln.size()-1);
         if(nota.getDelta()>0)
             punteggio = 1 / nota.getDelta();
-        else punteggio =0.01;
+        else punteggio = 0.01;
         return punteggio;
     }
+
     /**
      *  Questo metodo analizza l'ultima nota processata, la confronta con il vettore ln -> note recenti:
      *      -> assegna un punto per ogni semitono che c'è di differenza fra la nota precendente e quella successiva
@@ -165,3 +168,19 @@ public class AlgoritmoMidi {
     }
 
 }
+
+
+    /*private void aggiornaTonalita(){    //confronta l'ultima nota inserita con il vettore ton e dopo il vettore last, e decide se una nota è diatonica, non, o se è avvenuto un cambio ton
+        NoteOn lastNota = ln.get(ln.size());
+        boolean diatonica = true;
+        for(int i=0;i<7;i++)   {} //controllo se diatonica
+            //if(lastNota.getNoteValue()%12 == tonalita[i]) diatonica = false;
+
+        if(!diatonica)          //Se NON è diatonica procedo con un controllo per vedere se è necessario un cambio tonalità
+            for(int i=ln.size()-1; i>0; i--){ //for dall'ultimo al primo
+                if(lastNota.getNoteValue()%12 == ln.get(i).getNoteValue()%12) { //se è la stessa nota vuol dire che la nota diatonica è stata ripetuta, quindi la ton va aggiornata
+                    Log.println(Log.ASSERT,"Evento refreshTonalita","Cambio tonalità a: "+lastNota.getDelta()/1000);
+                }
+            }
+    }
+    */
