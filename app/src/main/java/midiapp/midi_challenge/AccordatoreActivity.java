@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.io.IOException;
 
@@ -21,8 +22,9 @@ public class AccordatoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_accordatore);
         setTitle("Tool Accordatore");
 
-        Button btnA440 = (Button) findViewById(R.id.button) ;
-        btnA440.setOnClickListener(new View.OnClickListener() {
+
+        ImageButton imgBtnDiapason = (ImageButton) findViewById(R.id.imgBtnDiapason);
+        imgBtnDiapason.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 playNota();
@@ -33,7 +35,7 @@ public class AccordatoreActivity extends AppCompatActivity {
 
         ActionBar ac = this.getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
-        ac.setTitle("Registratore");
+        ac.setTitle("Accordatore"); //prima era registratore?!
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,12 +47,10 @@ public class AccordatoreActivity extends AppCompatActivity {
     public void onDestroy() {
         mPlayer.stop();
         super.onDestroy();
-
     }
 
     public void playNota(){
-        Log.println(Log.ASSERT,"evento","playNota");
-        //MediaPlayer.create(FakeCallScreen.this, R.raw.mysoundfile);
+        Log.println(Log.ASSERT,"evento","playNota");        //MediaPlayer.create(FakeCallScreen.this, R.raw.mysoundfile);
         mPlayer.start();
     }
 }
