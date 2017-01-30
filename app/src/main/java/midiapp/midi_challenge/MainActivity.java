@@ -64,7 +64,13 @@ public class MainActivity extends AppCompatActivity {
 
         ListView lista_brani = (ListView) findViewById(R.id.lista_brani_utente);
         final List<Brano> braniUtente = funzioniDatabase.braniUtente(utente.getIdUtente());
-        ArrayAdapter<Brano> bn = new ArrayAdapter<Brano>(this,R.layout.brani_list_element,braniUtente);
+        if(!braniUtente.isEmpty()) {
+            ArrayAdapter<Brano> bn = new ArrayAdapter<Brano>(this, R.layout.brani_list_element, braniUtente);
+            lista_brani.setAdapter(bn);
+        }
+        else{
+            Toast.makeText(getBaseContext(),"Nessun Brano Trovato!",Toast.LENGTH_LONG);
+        }
 
         lista_brani.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -75,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(aperturaDettagliBrano);
             }
         });
-
-        lista_brani.setAdapter(bn);
 
         tv = (TextView)findViewById(R.id.textView);  //Find the view by its id
         tv.setMovementMethod(new ScrollingMovementMethod());
