@@ -7,6 +7,8 @@ import com.pdrogfer.mididroid.MidiTrack;
 import com.pdrogfer.mididroid.event.MidiEvent;
 import com.pdrogfer.mididroid.event.NoteOn;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -101,13 +103,13 @@ public class AlgoritmoMidi {
          *                              >0.09*9 -> cambi di tonalità e/o atonale
      */
     private double calcolaBiasTonalità(){
-        double p = 0.0;
+        Double p = 0.0;
         for(int i = 0;i<11;i++){
             if(contNoteMod12[i]>= contatorenNoteTotale/11){
                 Log.println(Log.ASSERT,"Calc tonalita","Nota diatonica: "+convIntStrNota(contNoteMod12[i]));
                 p +=0.09;
             }
-        }
+        } p = BigDecimal.valueOf(p).setScale(2, RoundingMode.HALF_UP).doubleValue();
         Log.println(Log.ASSERT,"Calc tonalita","Dispersione Tonalità: "+p);
         return p;
     }

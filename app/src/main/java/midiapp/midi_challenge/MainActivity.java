@@ -1,22 +1,14 @@
 package midiapp.midi_challenge;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import java.io.*;
+
 import java.util.List;
 
-import android.os.*;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,12 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.pdrogfer.mididroid.MidiFile;
 
 public class MainActivity extends AppCompatActivity {
     //Static Declarations
@@ -38,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] mActivityTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+    private ArrayAdapter<Brano> ArrayAdapterListaBrani;
 
     private Utente utente; //utente corrente
     private Brano brano; //BRANO DI PROVA  -- DEBUG
@@ -57,23 +47,26 @@ public class MainActivity extends AppCompatActivity {
         //====================================================================================================================
         //public Utente(String nickName, String foto, String strumento, int punteggioMassimo, int punteggioMedio)
         // utente = new Utente("Paolo","URLfoto","SEX",1205,324);                                                      //UTENTE DI DEBUG
-        //public Brano(long idBrano, String titolo, String nomeFile, int difficoltà,int autovalutazione) {
-        brano = new Brano(0,"campanella","campanella.mid",-1,-1);                                                   //BRANO DI DEBUG
+        //public Brano(long idBrano, String titolo, String nomeFile, int difficoltà,int autovalutazione)
+        /*for(int i =0;i<5;i++){
+            brano = new Brano(-1,"campanella"+i,"campanella.mid",-1,-1);                                                   //BRANO DI DEBUG
+            funzioniDatabase.inserisci(brano);
+            funzioniDatabase.inserisciBranoPerUtente(utente,brano,-1);                                                  //LINK UTENTE-BRANO DI DEBU
+        }*/
 
-        //funzioniDatabase.inserisciBranoPerUtente(utente,brano,-1);                                                  //LINK UTENTE-BRANO DI DEBUG
         //====================================================================================================================
 
-        ListView lista_brani = (ListView) findViewById(R.id.lista_brani_utente);
+        final ListView ListViewXmlListaBrani = (ListView) findViewById(R.id.lista_brani_utente);
         final List<Brano> braniUtente = funzioniDatabase.braniUtente(utente.getIdUtente());
         if(!braniUtente.isEmpty()) {
-            ArrayAdapter<Brano> bn = new ArrayAdapter<Brano>(this, R.layout.brani_list_element, braniUtente);
-            lista_brani.setAdapter(bn);
+            ArrayAdapterListaBrani = new ArrayAdapter<Brano>(this, R.layout.brani_list_element, braniUtente);
+            ListViewXmlListaBrani.setAdapter(ArrayAdapterListaBrani);
         }
         else{
             Toast.makeText(getBaseContext(),"Nessun Brano Trovato!",Toast.LENGTH_LONG);
         }
 
-        lista_brani.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ListViewXmlListaBrani.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Brano selezione = braniUtente.get(position);
@@ -120,8 +113,14 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.println(Log.ASSERT,"MainActivity","Onclick floating button add brano!");
+                //Log.println(Log.ASSERT,"MainActivity","Onclick floating button add brano!");
                 Toast.makeText(getBaseContext(),"Aggiungi nuovo brano",Toast.LENGTH_SHORT).show();
+                brano = new Brano(0,"campanella","campanella.mid",-1,-1);                                                   //BRANO DI DEBUG
+                funzioniDatabase.inserisciBranoPerUtente(utente,brano,-1);                                                  //LINK UTENTE-BRANO DI DEBUG
+                TextView tv = new TextView(getBaseContext()); tv.setText(brano.getTitolo());
+                braniUtente.add(brano);
+                ArrayAdapterListaBrani.notifyDataSetChanged();
+                ListViewXmlListaBrani.refreshDrawableState();
             }
         });
 
