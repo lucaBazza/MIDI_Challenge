@@ -58,12 +58,13 @@ public class MainActivity extends AppCompatActivity {
 
         final ListView ListViewXmlListaBrani = (ListView) findViewById(R.id.lista_brani_utente);
         final List<Brano> braniUtente = funzioniDatabase.braniUtente(utente.getIdUtente());
-        if(!braniUtente.isEmpty()) {
+
+        if(braniUtente != null) {
             ArrayAdapterListaBrani = new ArrayAdapter<Brano>(this, R.layout.brani_list_element, braniUtente);
             ListViewXmlListaBrani.setAdapter(ArrayAdapterListaBrani);
-        }
-        else{
-            Toast.makeText(getBaseContext(),"Nessun Brano Trovato!",Toast.LENGTH_LONG);
+            if(braniUtente.isEmpty()){
+                Toast.makeText(getBaseContext(),"Nessun Brano Trovato!",Toast.LENGTH_LONG);
+            }
         }
 
         ListViewXmlListaBrani.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 //Log.println(Log.ASSERT,"MainActivity","Onclick floating button add brano!");
                 Toast.makeText(getBaseContext(),"Aggiungi nuovo brano",Toast.LENGTH_SHORT).show();
                 brano = new Brano(0,"campanella","campanella.mid",-1,-1);                                                   //BRANO DI DEBUG
+                //funzioniDatabase.inserisci(brano);        inserimento necessario per il aggiungere un brano alla lista; eseguire solo una volta.
                 funzioniDatabase.inserisciBranoPerUtente(utente,brano,-1);                                                  //LINK UTENTE-BRANO DI DEBUG
                 TextView tv = new TextView(getBaseContext()); tv.setText(brano.getTitolo());
                 braniUtente.add(brano);
