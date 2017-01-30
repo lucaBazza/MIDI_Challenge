@@ -10,8 +10,11 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -53,6 +56,26 @@ public class Login_Activity extends AppCompatActivity {
                 startActivity(activityUtente);
             }
         });
+
+        Button btnInserimentoUtente = (Button) findViewById(R.id.btn_nuovo_utente);
+        btnInserimentoUtente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText txt = (EditText) findViewById(R.id.edtTxt_nomeUtente);
+                LinearLayout layoutInserimento = (LinearLayout)findViewById(R.id.layout_inserimento_dati);
+
+                Utente u = new Utente(txt.getText().toString(),"","",0,0);
+                long idNuovoUtente =  db.inserisci(u);
+                if(idNuovoUtente != -1){
+                    Toast.makeText(getBaseContext(),"Inserimento Avvenuto con Successo",Toast.LENGTH_SHORT).show();
+                    listaUtenti.add(u);
+                }
+                else{
+                    Toast.makeText(getBaseContext(),"Errore durante l'inserimento",Toast.LENGTH_SHORT).show();
+                }
+                layoutInserimento.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     @Override
@@ -64,7 +87,15 @@ public class Login_Activity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        
-        return true;
+        LinearLayout layoutInserimento = (LinearLayout)findViewById(R.id.layout_inserimento_dati);
+
+        if(layoutInserimento != null){
+            if(layoutInserimento.getVisibility() == View.INVISIBLE)
+                layoutInserimento.setVisibility(View.VISIBLE);
+            else
+                layoutInserimento.setVisibility(View.INVISIBLE);
+            return true;
+        }
+        return false;
     }
 }

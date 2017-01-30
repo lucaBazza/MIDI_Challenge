@@ -15,7 +15,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/layout_griglia_utenti"
-        android:layout_gravity="center_vertical">
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.7">
     </GridView>
+
+    <LinearLayout
+        android:visibility="invisible"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_inserimento_dati"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.3">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtTxt_nomeUtente"
+            android:hint="Nome Utente..."
+            android:maxLength="30"
+            android:maxLines="1"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inserisci \n Utente"
+            android:layout_marginLeft="50dp"
+            android:id="@+id/btn_nuovo_utente"/>
+    </LinearLayout>
 
 </LinearLayout>
