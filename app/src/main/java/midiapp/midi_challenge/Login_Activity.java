@@ -31,15 +31,14 @@ public class Login_Activity extends AppCompatActivity {
 
         db = new FunzioniDatabase(getBaseContext());
 
-        GridView grigliaUtenti = (GridView) findViewById(R.id.layout_griglia_utenti);
+        final GridView grigliaUtenti = (GridView) findViewById(R.id.layout_griglia_utenti);
 
         final List<Utente> listaUtenti = db.prendiTuttiUtenti();
 
+        final ArrayAdapter ad = new ArrayAdapter(this,R.layout.users_grid_element,R.id.txt_NomeUtenteLogin, listaUtenti);
+        grigliaUtenti.setAdapter(ad);
+
         if (!listaUtenti.isEmpty()) {
-            ArrayAdapter ad = new ArrayAdapter(this,R.layout.users_grid_element,R.id.txt_NomeUtenteLogin, listaUtenti);
-
-            grigliaUtenti.setAdapter(ad);
-
             setTitle("Selezione Utente");
         }
         else {
@@ -69,6 +68,8 @@ public class Login_Activity extends AppCompatActivity {
                 if(idNuovoUtente != -1){
                     Toast.makeText(getBaseContext(),"Inserimento Avvenuto con Successo",Toast.LENGTH_SHORT).show();
                     listaUtenti.add(u);
+                    ad.notifyDataSetChanged();
+                    grigliaUtenti.refreshDrawableState();
                 }
                 else{
                     Toast.makeText(getBaseContext(),"Errore durante l'inserimento",Toast.LENGTH_SHORT).show();
