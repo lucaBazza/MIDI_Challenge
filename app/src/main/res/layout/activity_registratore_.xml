@@ -20,4 +20,15 @@ tools:context="midiapp.midi_challenge.Registratore_Activity">
         android:layout_centerHorizontal="true"
         android:layout_marginTop="129dp"
         android:id="@+id/imageView" />
+
+    <Button
+        android:text="CI STA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:id="@+id/button"
+        style="@style/button" />
+
 </RelativeLayout>

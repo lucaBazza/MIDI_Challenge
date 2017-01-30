@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_width="200dp"
-        android:background="@drawable/imgDiapason1"
+        android:background="@drawable/img_diapason1"
         android:layout_height="200dp" />
 
 </RelativeLayout>
