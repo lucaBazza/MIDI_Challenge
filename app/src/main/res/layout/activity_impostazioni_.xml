@@ -11,31 +11,39 @@
     tools:context="midiapp.midi_challenge.Impostazioni_Activity">
 
     <Button
-        android:text="ESPORTA DATI"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="54dp"
-        android:id="@+id/btn_export"
-        android:layout_below="@+id/btn_import"
-        android:layout_alignStart="@+id/btn_import" />
-
-    <Button
-        android:text="IMPORTA DATI"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:id="@+id/btn_import"
-        android:layout_below="@+id/btn_info"
-        android:layout_centerHorizontal="true" />
-
-    <Button
         android:text="INFO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:id="@+id/btn_info"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="openNewActivity"/>
+        android:onClick="openNewActivity"
+        style="@android:style/Widget.Material.Button.Colored"
+        android:background="@drawable/roundcorner"
+        android:textSize="18sp"
+        android:layout_marginBottom="82dp"
+        android:layout_above="@+id/btn_import"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="IMPORTA DATI"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_import"
+        style="@android:style/Widget.Material.Button.Colored"
+        android:background="@drawable/roundcorner"
+        android:textSize="18sp"
+        android:layout_width="160dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="ESPORTA DATI"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_export"
+        style="@android:style/Widget.Material.Button.Colored"
+        android:background="@drawable/roundcorner"
+        android:textSize="18sp"
+        android:layout_width="160dp"
+        android:layout_alignTop="@+id/btn_import"
+        android:layout_alignStart="@+id/btn_import"
+        android:layout_marginTop="124dp" />
 
 </RelativeLayout>

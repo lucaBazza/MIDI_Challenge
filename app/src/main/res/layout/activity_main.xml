@@ -60,7 +60,8 @@
                 android:layout_margin="20dp"
                 android:id="@+id/floatingActionButton"
                 app:layout_anchor="@id/content_frame"
-                app:layout_anchorGravity="bottom|right|end" />
+                app:layout_anchorGravity="bottom|right|end"
+                app:elevation="24dp" />
         </LinearLayout>
     </FrameLayout>
     <!-- The navigation drawer -->
