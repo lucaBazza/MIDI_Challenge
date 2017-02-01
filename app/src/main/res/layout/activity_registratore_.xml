@@ -11,38 +11,39 @@ android:paddingRight="@dimen/activity_horizontal_margin"
 android:paddingTop="@dimen/activity_vertical_margin"
 tools:context="midiapp.midi_challenge.Registratore_Activity">
 
+    <Button
+        android:text="Registra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:id="@+id/btn_registraAudio"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="52dp"
+
+        android:background="@drawable/roundcorner"
+        android:textSize="18sp" />
+
+    <Button
+        android:text="Riproduci"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_riproduci"
+
+        android:background="@drawable/roundcorner"
+        android:textSize="18sp"
+        android:layout_alignBaseline="@+id/btn_registraAudio"
+        android:layout_alignBottom="@+id/btn_registraAudio"
+        android:layout_alignEnd="@+id/imageView" />
+
     <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:srcCompat="@drawable/rec_icon"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="129dp"
-        android:id="@+id/imageView" />
-
-    <Button
-        android:text="START"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:id="@+id/start_reg"
-        android:layout_below="@+id/imageView"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="52dp"
-        style="@android:style/Widget.Material.Button.Colored"
-        android:background="@drawable/roundcorner"
-        android:textSize="18sp" />
-
-    <Button
-        android:text="STOP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/start_reg"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="58dp"
-        android:id="@+id/stop_reg"
-        style="@android:style/Widget.Material.Button.Colored"
-        android:background="@drawable/roundcorner"
-        android:textSize="18sp" />
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
+    <!--style="@android:style/Widget.Material.Button.Colored" -->
