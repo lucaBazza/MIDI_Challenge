@@ -1,5 +1,6 @@
 package midiapp.midi_challenge;
 
+import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,13 +48,10 @@ public class ActivityPaginaUtente extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case R.id.show_navigation_drawer :
-                DrawerLayout drw = (DrawerLayout)findViewById(R.id.drawer_layout);
-                if(!drw.isDrawerOpen(Gravity.LEFT))
-                    drw.openDrawer(Gravity.LEFT);
-                else
-                    drw.closeDrawer(Gravity.LEFT);
-                break;
+            case R.id.home :
+                Intent i = new Intent(this,MainActivity.class);
+                i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));
+                startActivity(i);
         }
         return true;
     }

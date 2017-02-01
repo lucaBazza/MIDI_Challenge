@@ -2,6 +2,7 @@ package midiapp.midi_challenge;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -188,6 +189,18 @@ import java.io.IOException;
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inf = getMenuInflater();
         inf.inflate(R.menu.button_action_bar,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case android.R.id.home:
+                Intent i = new Intent(this,MainActivity.class);
+                i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));
+                startActivity(i);
+                break;
+        }
         return true;
     }
 

@@ -2,6 +2,7 @@ package midiapp.midi_challenge;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
 
@@ -22,6 +23,18 @@ public class Impostazioni_Activity extends AppCompatActivity {
     public void openNewActivity(View view) {
         Intent startActivity = new Intent(this, Info_Activity.class);
         startActivity(startActivity);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case android.R.id.home:
+                Intent i = new Intent(this,MainActivity.class);
+                i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));
+                startActivity(i);
+                break;
+        }
+        return true;
     }
 
 }

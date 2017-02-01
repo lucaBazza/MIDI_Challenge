@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         //mf = new MidiFile();
         //ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
-        mActivityTitles = new String[]{"Home","Profilo","Registratore","Metronomo","Accordatore", "Impostazioni","Logout"};
+        mActivityTitles = new String[]{"Home","Profilo","Registratore","Metronomo","Accordatore", "Impostazioni","Cambia Utente"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -98,8 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent testIntent;
                 switch (position){ // "Home","Profilo","Registratore","Metronomo","Accordatore, Impostazioni","Logout"
                     case 0: testIntent = new Intent(getApplicationContext(),MainActivity.class); break;
-                    case 1: testIntent = new Intent(getApplicationContext(),ActivityPaginaUtente.class);
-                            testIntent.putExtra("id_utente",utente.getIdUtente());break;
+                    case 1: testIntent = new Intent(getApplicationContext(),ActivityPaginaUtente.class); break;
                     case 2: testIntent = new Intent(getApplicationContext(),Registratore_Activity.class); break;
                     //case 3: testIntent = new Intent(getApplicationContext(),MetronomoActivity.class); break;
                     case 4: testIntent = new Intent(getApplicationContext(),AccordatoreActivity.class); break;
@@ -108,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                     default: testIntent = null;
                 }
                 if(testIntent!= null) {  //Log.println(Log.ASSERT,"activity","Pos: "+ position+"  activity: "+testIntent.toString());
+                    testIntent.putExtra("id_utente",utente.getIdUtente());
                     startActivity(testIntent);
                 }
             }
