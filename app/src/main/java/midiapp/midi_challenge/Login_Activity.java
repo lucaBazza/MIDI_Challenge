@@ -1,6 +1,7 @@
 package midiapp.midi_challenge;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,6 +19,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class Login_Activity extends AppCompatActivity {
@@ -74,6 +78,22 @@ public class Login_Activity extends AppCompatActivity {
                 layoutInserimento.setVisibility(View.INVISIBLE);
             }
         });
+
+        caricaFileMidi();
+    }
+
+    //carica i file midi presenti in una cartella specifica. Aggiunge le informazioni di tali file nel database.
+    private void caricaFileMidi(){
+        File f = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File[] contenuti =  f.listFiles();
+        if(contenuti!=null){
+            for(File el : contenuti){
+                if(el.getName().contains(".mid")){
+                    Brano b = new Brano(el.getName().split(".")[0],el.getName(),0);
+                    db.inserisci(b);
+                }
+            }
+        }
     }
 
     @Override
