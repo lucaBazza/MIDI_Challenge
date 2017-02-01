@@ -38,12 +38,8 @@ public class Login_Activity extends AppCompatActivity {
         final ArrayAdapter ad = new ArrayAdapter(this,R.layout.users_grid_element,R.id.txt_NomeUtenteLogin, listaUtenti);
         grigliaUtenti.setAdapter(ad);
 
-        if (!listaUtenti.isEmpty()) {
-            setTitle("Selezione Utente");
-        }
-        else {
-            setTitle("Nessun Utente Trovato!");
-        }
+        if (!listaUtenti.isEmpty()) { setTitle("Pagina login"); }
+        else { setTitle("Crea il primo utente!"); }
 
         grigliaUtenti.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

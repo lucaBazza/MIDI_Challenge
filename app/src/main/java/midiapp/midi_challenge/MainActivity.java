@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import java.util.List;
+import java.util.Random;
 
 import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Log.println(Log.ASSERT,"MainActivity","Onclick floating button add brano!");
                 Toast.makeText(getBaseContext(),"Aggiungi nuovo brano",Toast.LENGTH_SHORT).show();
-                brano = new Brano(0,"campanella","campanella.mid",-1,-1);                                                   //BRANO DI DEBUG
+                brano = new Brano(0,"campanella"+new Random().nextInt(100),"campanella.mid",-1,-1);                                                   //BRANO DI DEBUG
                 //funzioniDatabase.inserisci(brano);        inserimento necessario per il aggiungere un brano alla lista; eseguire solo una volta.
                 funzioniDatabase.inserisciBranoPerUtente(utente,brano,-1);                                                  //LINK UTENTE-BRANO DI DEBUG
                 TextView tv = new TextView(getBaseContext()); tv.setText(brano.getTitolo());
