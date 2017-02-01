@@ -36,8 +36,8 @@ public class Login_Activity extends AppCompatActivity {
         final List<Utente> listaUtenti = db.prendiTuttiUtenti();
 
         final ArrayAdapter ad = new ArrayAdapter(this,R.layout.users_grid_element,R.id.txt_NomeUtenteLogin, listaUtenti);
-        grigliaUtenti.setAdapter(ad);
-        //grigliaUtenti.setAdapter(new ImageAdapter(this,listaUtenti.size()));
+        //grigliaUtenti.setAdapter(ad);
+        grigliaUtenti.setAdapter(new ImageAdapter(this,listaUtenti));
 
         if (!listaUtenti.isEmpty()) { setTitle("Pagina login"); }
         else { setTitle("Crea il primo utente!"); }
