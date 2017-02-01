@@ -49,6 +49,12 @@ public class Brano {
         return this.titolo;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Brano b = (Brano) obj;
+        return this.nomeFile == b.nomeFile;
+    }
+
     public int getAutovalutazione() {
         return autovalutazione;
     }

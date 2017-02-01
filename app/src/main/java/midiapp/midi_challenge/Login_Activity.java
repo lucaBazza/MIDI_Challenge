@@ -84,13 +84,16 @@ public class Login_Activity extends AppCompatActivity {
 
     //carica i file midi presenti in una cartella specifica. Aggiunge le informazioni di tali file nel database.
     private void caricaFileMidi(){
+        List<Brano> listaBraniPresenti = db.prendiTuttiBrani();
+
         File f = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         File[] contenuti =  f.listFiles();
         if(contenuti!=null){
             for(File el : contenuti){
                 if(el.getName().contains(".mid")){
-                    Brano b = new Brano(el.getName().split(".")[0],el.getName(),0);
-                    db.inserisci(b);
+                    Brano b = new Brano(el.getName(),el.getName(),0);
+                    if(!listaBraniPresenti.contains(b)) //inserisce solo oggetti nuovi.
+                        db.inserisci(b);
                 }
             }
         }
