@@ -20,6 +20,9 @@
         android:id="@+id/layout_griglia_utenti"
         android:layout_gravity="center_vertical"
         android:layout_weight="0.7"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
         android:background="@color/colorAccent">
     </GridView>
 
