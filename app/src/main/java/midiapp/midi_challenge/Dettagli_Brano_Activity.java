@@ -58,10 +58,8 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         tvLog = (TextView)findViewById(R.id.tvLog);
 
         TextView txtTitolo = (TextView) findViewById(R.id.txt_TitoloBrano);
-        TextView txtAutore = (TextView) findViewById(R.id.txt_Autore);
 
         txtTitolo.setText(brano.getTitolo());
-        txtAutore.setText("Inserire campo autore in brano. ");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

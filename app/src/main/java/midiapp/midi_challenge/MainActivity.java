@@ -1,11 +1,15 @@
 package midiapp.midi_challenge;
 
+import android.Manifest;
 import android.content.Intent;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.io.File;
 import java.util.List;
 import java.util.Random;
 
@@ -117,15 +121,14 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Log.println(Log.ASSERT,"MainActivity","Onclick floating button add brano!");
-                Toast.makeText(getBaseContext(),"Aggiungi nuovo brano",Toast.LENGTH_SHORT).show();
-                brano = new Brano(0,"campanella"+new Random().nextInt(100),"campanella.mid",-1,-1);                                                   //BRANO DI DEBUG
-                //funzioniDatabase.inserisci(brano);        inserimento necessario per il aggiungere un brano alla lista; eseguire solo una volta.
-                funzioniDatabase.inserisciBranoPerUtente(utente,brano,-1);                                                  //LINK UTENTE-BRANO DI DEBUG
-                TextView tv = new TextView(getBaseContext()); tv.setText(brano.getTitolo());
-                braniUtente.add(brano);
-                ArrayAdapterListaBrani.notifyDataSetChanged();
-                ListViewXmlListaBrani.refreshDrawableState();
+                ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                File downloadFolderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                File[] tmp = downloadFolderPath.listFiles();
+                if(tmp != null){
+                    Intent i = new Intent(getBaseContext(),Aggiunta_Brano_Activity.class);
+                    i.putExtra("downloadFolder",tmp);
+                    startActivity(i);
+                }
             }
         });
         setTitle(utente.getNickName());

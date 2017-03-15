@@ -53,22 +53,6 @@
             android:orientation="horizontal"
             android:paddingTop="30px">
             <TextView
-                android:id="@+id/lbl_Autore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Autore : "/>
-            <TextView
-                android:id="@+id/txt_Autore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="30px">
-            <TextView
                 android:id="@+id/lbl_Info1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
