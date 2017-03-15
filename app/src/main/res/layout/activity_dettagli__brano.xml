@@ -19,7 +19,7 @@
             android:id="@+id/buttonProvaCaricaBrano"
             android:elevation="0dp"
             android:layout_marginTop="150dp"
-            style="@android:style/Widget.Material.Button.Colored"
+        android:textColor="@android:color/white"
         android:background="@drawable/roundcorner"
         android:textSize="20sp" />
 
