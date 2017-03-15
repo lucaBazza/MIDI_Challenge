@@ -128,10 +128,8 @@ public class MainActivity extends AppCompatActivity {
                 ListViewXmlListaBrani.refreshDrawableState();
             }
         });
-
         setTitle(utente.getNickName());
     }
-
 
     /**
      *  crea il pulsante menù nella action bar del programma

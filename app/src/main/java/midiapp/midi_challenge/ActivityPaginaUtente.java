@@ -1,6 +1,8 @@
 package midiapp.midi_challenge;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,8 +11,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+
 import static midiapp.midi_challenge.MainActivity.funzioniDatabase;
 
 public class ActivityPaginaUtente extends AppCompatActivity {
@@ -28,13 +36,42 @@ public class ActivityPaginaUtente extends AppCompatActivity {
         if(utente!=null) setTitle("Pagina Utente: "+ utente.getNickName());
         else setTitle("Pagina Utente");
 
-        ImageButton imgBtn = (ImageButton)findViewById(R.id.ImgBtnCancellaListaBrani);
-        imgBtn.setOnClickListener(new View.OnClickListener() {
+        ImageView imgProfilo = (ImageView) findViewById(R.id.imageViewFotoUtente);
+        File imgFile = new File("/sdcard/MidiChallenge/paolo.jpg");
+        if(imgFile.exists()){
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            imgProfilo.setImageBitmap(myBitmap);
+        }
+        else {
+            Toast.makeText(getBaseContext(),"Foto utente non trovata!",Toast.LENGTH_SHORT).show();
+        }
+
+        Button btnCancellaBrani = (Button)findViewById(R.id.buttonCancellaBrani);
+        btnCancellaBrani.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Toast.makeText(getBaseContext(),"Cancella lista brani!",Toast.LENGTH_SHORT).show();
             }
         });
+
+        TextView tbPuntMax = (TextView) findViewById(R.id.textViewPU1);
+        int max = 0; int media = 0; int tot = 0;
+        for(int i =0; i<utente.braniUtente.size();i++){
+            tot++;
+            media+=utente.braniUtente.get(i).difficoltà;
+            if(utente.braniUtente.get(i).difficoltà>max){
+                max = utente.braniUtente.get(i).difficoltà;
+                tbPuntMax.append(Integer.toString(max)+" - "+utente.braniUtente.get(i).titolo);
+            }
+        }
+
+        TextView tbPuntMedio = (TextView) findViewById(R.id.textViewPU2);
+        if(tot!= 0)
+            { media/=tot; }
+            tbPuntMedio.append(Integer.toString(media));
+        TextView tvBRaniTot = (TextView) findViewById(R.id.textViewPU3);
+            tvBRaniTot.append(Integer.toString(tot));
+
 
     }
 
