@@ -139,7 +139,7 @@ public class Registratore_Activity extends AppCompatActivity {
         }
 
         Button btnRip = null;
-        btnRip = (Button) findViewById(R.id.btn_riproduci);
+        btnRip = (Button) findViewById(R.id.btnRip);
         if(btnReg!=null) {
             if (mStartPlaying) {
                 btnRip.setText("Stop playing");
