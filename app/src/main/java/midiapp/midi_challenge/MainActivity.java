@@ -129,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
                     i.putExtra("downloadFolder",tmp);
                     startActivity(i);
                 }
+
+
             }
         });
         setTitle(utente.getNickName());

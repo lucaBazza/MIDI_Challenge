@@ -54,6 +54,7 @@ public class ActivityPaginaUtente extends AppCompatActivity {
             }
         });
 
+        utente.braniUtente = funzioniDatabase.braniUtente(utente.idUtente);
         TextView tbPuntMax = (TextView) findViewById(R.id.textViewPU1);
         int max = 0; int media = 0; int tot = 0;
         for(int i =0; i<utente.braniUtente.size();i++){

@@ -162,8 +162,15 @@ public class FunzioniDatabase {
         while(res.moveToNext()){
             tmpList.add(new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3)));
         }
-
         return tmpList;
+    }
 
+    public long cancLinkBranoUtente(int idUtente, int idBrano){ //http://stackoverflow.com/questions/15027474/android-sqlite-deleting-a-specific-row-from-database
+        String whereClause = idUtente + "= " + idBrano + "'";
+        return database.delete("relUtenteBrano",whereClause, null);
+    }
+
+    public long cancLinksTuttiBraniUtente(int idUtente){
+        return -1;
     }
 }
