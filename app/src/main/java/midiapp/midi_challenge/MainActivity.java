@@ -2,6 +2,7 @@ package midiapp.midi_challenge;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.util.List;
 import java.util.Random;
 
@@ -121,16 +123,11 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                File downloadFolderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                File[] tmp = downloadFolderPath.listFiles();
-                if(tmp != null){
-                    Intent i = new Intent(getBaseContext(),Aggiunta_Brano_Activity.class);
-                    i.putExtra("downloadFolder",tmp);
-                    startActivity(i);
+                if(PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(getBaseContext(),Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        Intent i = new Intent(getBaseContext(), Aggiunta_Brano_Activity.class);
+                        i.putExtra("id_utente", utente.getIdUtente());
+                        startActivity(i);
                 }
-
-
             }
         });
         setTitle(utente.getNickName());
