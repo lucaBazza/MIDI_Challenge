@@ -165,13 +165,13 @@ public class FunzioniDatabase {
         return tmpList;
     }
 
-    public long cancLinkBranoUtente(int idUtente, int idBrano){ //http://stackoverflow.com/questions/15027474/android-sqlite-deleting-a-specific-row-from-database
-        String whereClause = idUtente + "= " + idBrano + "'";
+    public long cancLinkBranoUtente(long idUtente, long idBrano){ //http://stackoverflow.com/questions/15027474/android-sqlite-deleting-a-specific-row-from-database
+        String whereClause = "idUtente='"+idUtente +"' AND idBrano='" + idBrano+"'";
         return database.delete("relUtenteBrano",whereClause, null);
     }
 
     public long cancLinksTuttiBraniUtente(long idUtente){
-        String whereClause = "idUtente=" + idUtente;
+        String whereClause = "idUtente='" + idUtente+"'";
         return database.delete("relUtenteBrano",whereClause, null);
     }
 }

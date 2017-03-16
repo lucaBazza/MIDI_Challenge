@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             utente = funzioniDatabase.trovaUtente(getIntent().getLongExtra("id_utente",-1));
         }
 
+
         //====================================================================================================================
         //public Utente(String nickName, String foto, String strumento, int punteggioMassimo, int punteggioMedio)
         // utente = new Utente("Paolo","URLfoto","SEX",1205,324);                                                      //UTENTE DI DEBUG
@@ -73,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(),"Nessun Brano Trovato!",Toast.LENGTH_LONG);
             }
         }
+        else
+            ArrayAdapterListaBrani.notifyDataSetChanged();
 
         ListViewXmlListaBrani.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -131,6 +135,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         setTitle(utente.getNickName());
+
+        Button btnDemo = (Button)findViewById(R.id.btnDemo);
+        btnDemo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(funzioniDatabase.cancLinkBranoUtente(utente.idUtente,braniUtente.get(0).idBrano)!=-1)
+                    Toast.makeText(getBaseContext(),"Cancellato brano!"+braniUtente.get(0).getTitolo(),Toast.LENGTH_LONG);
+                else Toast.makeText(getBaseContext(),"Non cancellato",Toast.LENGTH_LONG);
+            }
+         });
+
     }
 
     /**
