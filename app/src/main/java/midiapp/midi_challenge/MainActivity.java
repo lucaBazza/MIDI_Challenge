@@ -179,4 +179,19 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+        Toast.makeText(getBaseContext(),"On resume MainActivity!",Toast.LENGTH_LONG).show();
+        if(ArrayAdapterListaBrani!=null)
+            ArrayAdapterListaBrani.notifyDataSetChanged();
+        else {}
+    }
+    /*@Override
+    public void onStart (){
+        super.onStart();  // Always call the superclass method first
+        Toast.makeText(getBaseContext(),"On start MainActivity!",Toast.LENGTH_LONG).show();
+        if(ArrayAdapterListaBrani!=null)
+            ArrayAdapterListaBrani.notifyDataSetChanged();
+    }*/
 }

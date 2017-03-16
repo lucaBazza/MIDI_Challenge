@@ -51,12 +51,6 @@
                     android:choiceMode="singleChoice" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btnDemo"
-                android:layout_width="59dp"
-                android:layout_height="50dp"
-                android:text="btnDemo" />
-
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -70,6 +64,12 @@
                 app:elevation="24dp" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btnDemo"
+            android:layout_width="59dp"
+            android:layout_height="70dp"
+            android:text="btnDemo" />
     </FrameLayout>
     <!-- The navigation drawer -->
 
