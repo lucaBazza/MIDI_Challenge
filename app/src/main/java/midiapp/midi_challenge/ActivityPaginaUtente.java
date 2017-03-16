@@ -1,9 +1,11 @@
 package midiapp.midi_challenge;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -46,11 +48,36 @@ public class ActivityPaginaUtente extends AppCompatActivity {
             Toast.makeText(getBaseContext(),"Foto utente non trovata!",Toast.LENGTH_SHORT).show();
         }
 
+
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(ActivityPaginaUtente.this,R.style.Theme_AppCompat);
+        builder1.setMessage("Sicuro di cancellare la tua lista pezzi?"); builder1.setTitle("Attenzione!");
+        builder1.setCancelable(true);
+        builder1.setIcon(R.drawable.ic_add_something);
+
+        builder1.setPositiveButton( "Si",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        ((TextView) findViewById(R.id.textViewPU2)).append("YESSA");
+                        funzioniDatabase.cancLinksTuttiBraniUtente(utente.idUtente); //CANCELLA TUTTI I PEZZI DI UN UTENTE!
+                    }
+                });
+        builder1.setNegativeButton( "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        ((TextView) findViewById(R.id.textViewPU2)).append("Noohh");
+                    }
+                });
+        final AlertDialog alert = builder1.create();
+
+
         Button btnCancellaBrani = (Button)findViewById(R.id.buttonCancellaBrani);
         btnCancellaBrani.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getBaseContext(),"Cancella lista brani!",Toast.LENGTH_SHORT).show();
+                alert.show();
             }
         });
 

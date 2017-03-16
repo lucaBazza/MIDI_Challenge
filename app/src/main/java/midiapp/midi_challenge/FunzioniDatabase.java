@@ -170,7 +170,8 @@ public class FunzioniDatabase {
         return database.delete("relUtenteBrano",whereClause, null);
     }
 
-    public long cancLinksTuttiBraniUtente(int idUtente){
-        return -1;
+    public long cancLinksTuttiBraniUtente(long idUtente){
+        String whereClause = "idUtente=" + idUtente;
+        return database.delete("relUtenteBrano",whereClause, null);
     }
 }
