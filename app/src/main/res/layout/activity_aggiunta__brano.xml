@@ -16,6 +16,13 @@
         android:layout_height="wrap_content"
         android:text="Brani trovati nella cartella specificata:" />
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/spinner_aggiunta_brani">
+
+    </Spinner>
+
     <ListView
         android:id="@+id/lista_brani_trovati"
         android:layout_width="match_parent"

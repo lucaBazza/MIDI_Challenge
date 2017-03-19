@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="folders_aggiunta_brano">
+        <item>Download</item>
+        <item>Musica</item>
+        <item>Scegli Percorso...</item>
+        <!--only two of them ATM-->
+    </string-array>
+
+</resources>

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.security.Permission;
 import java.util.List;
 import java.util.Random;
 
@@ -51,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         if(getIntent().hasExtra("id_utente")){
             utente = funzioniDatabase.trovaUtente(getIntent().getLongExtra("id_utente",-1));
         }
-
 
         //====================================================================================================================
         //public Utente(String nickName, String foto, String strumento, int punteggioMassimo, int punteggioMedio)
@@ -140,9 +141,14 @@ public class MainActivity extends AppCompatActivity {
         btnDemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(funzioniDatabase.cancLinkBranoUtente(utente.idUtente,braniUtente.get(0).idBrano)!=-1)
-                    Toast.makeText(getBaseContext(),"Cancellato brano!"+braniUtente.get(0).getTitolo(),Toast.LENGTH_LONG);
-                else Toast.makeText(getBaseContext(),"Non cancellato",Toast.LENGTH_LONG);
+            if(funzioniDatabase.braniUtente(utente.idUtente).size() > 0) {
+                if (funzioniDatabase.cancLinkBranoUtente(utente.idUtente, braniUtente.get(0).idBrano) > 0)
+                    Toast.makeText(getBaseContext(), "Cancellato brano!" + braniUtente.get(0).getTitolo(), Toast.LENGTH_LONG);
+                else Toast.makeText(getBaseContext(), "Non cancellato", Toast.LENGTH_LONG);
+            }
+            else{
+                Toast.makeText(MainActivity.this, "Non hai ancora nessun brano!", Toast.LENGTH_SHORT).show();
+            }
             }
          });
 
@@ -158,6 +164,17 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inf = getMenuInflater();
         inf.inflate(R.menu.button_action_bar,menu);
         return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode){
+            case 2 :
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+                }
+                break;
+        }
     }
 
     /**
