@@ -44,7 +44,7 @@ public class ActivityPaginaUtente extends AppCompatActivity {
         else setTitle("Pagina Utente");
 
         imgProfilo = (ImageView) findViewById(R.id.imageViewFotoUtente);
-        File imgFile = new File("/sdcard/MidiChallenge/paolo.jpg");
+        File imgFile = new File("/sdcard/"+ utente.getFoto());
         if(imgFile.exists()){
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             imgProfilo.setImageBitmap(myBitmap);

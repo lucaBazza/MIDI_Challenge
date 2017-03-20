@@ -85,6 +85,11 @@ public class FunzioniDatabase {
         }
     }
 
+    public int aggiornaUtente(int idUtente){
+
+        return -1;
+    }
+
     public Brano trovaBrano(long id){
         String[] colums = {"idBrano","titolo","nomeFile","difficoltà"};
         Cursor res = database.query(true,"brano",colums,"idBrano = ?",new String[] {Long.toString(id)},"","","","");
