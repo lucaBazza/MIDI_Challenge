@@ -125,7 +125,7 @@ public class Registratore_Activity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
         Button btnReg = null;
-        btnReg = (Button) findViewById(R.id.btn_registraAudio);
+        btnReg = (Button) findViewById(R.id.btnRip);
         if(btnReg!=null){
             if (mStartRecording) { btnReg.setText("Stop recording"); }
             else { btnReg.setText("Start recording"); }

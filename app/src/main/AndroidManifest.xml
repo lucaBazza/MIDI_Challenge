@@ -38,8 +38,9 @@
         <activity
             android:name=".Impostazioni_Activity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".Info_Activity"></activity>
-        <activity android:name=".ActivityPaginaUtente"></activity>
+        <activity android:name=".Info_Activity" />
+        <activity android:name=".ActivityPaginaUtente" />
+        <activity android:name=".MetronomoActivity"></activity>
     </application>
 
 </manifest>
