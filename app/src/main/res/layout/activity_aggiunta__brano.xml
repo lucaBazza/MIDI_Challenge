@@ -20,7 +20,6 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:id="@+id/spinner_aggiunta_brani">
-
     </Spinner>
 
     <ListView

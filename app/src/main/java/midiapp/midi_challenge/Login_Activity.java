@@ -2,7 +2,9 @@ package midiapp.midi_challenge;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -82,11 +84,23 @@ public class Login_Activity extends AppCompatActivity {
         });
 
         //richiede i permessi per leggere la partizione esterna
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 2);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
 
-        caricaFileMidi();
+        File externalRootDir = Environment.getExternalStorageDirectory();
+        File appExternalDir = new File(externalRootDir,"Midi Challenge");
+        if(!appExternalDir.exists())
+            appExternalDir.mkdir();
+
+        //caricaFileMidi();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        }
+    }
+
+/*
     //carica i file midi presenti in una cartella specifica. Aggiunge le informazioni di tali file nel database.
     private void caricaFileMidi(){
         List<Brano> listaBraniPresenti = db.prendiTuttiBrani();
@@ -103,6 +117,7 @@ public class Login_Activity extends AppCompatActivity {
             }
         }
     }
+*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

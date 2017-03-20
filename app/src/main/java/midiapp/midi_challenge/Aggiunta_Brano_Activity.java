@@ -77,12 +77,14 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
                     case 2: //TODO: implement file browsing activity
                         break;
                 }
+                file_list_adapter.clear();
                 File[] midiFiles = downloadFolderPath.listFiles(midiFilter);
                 if(midiFiles != null){
                     for(File f : midiFiles){
                         file_list_adapter.add(f.getName());
                     }
-                    file_list_adapter.notifyDataSetChanged();
+                    ListView lv = (ListView) findViewById(R.id.lista_brani_trovati);
+                    lv.setAdapter(file_list_adapter);
                 }
             }
 
