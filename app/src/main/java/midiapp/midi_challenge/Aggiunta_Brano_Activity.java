@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -50,11 +51,11 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
         sp.setAdapter(spinnerAdapter);
         File downloadFolderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
+        file_list_adapter = new ArrayAdapter<String>(this,R.layout.checkbox_item_multiple_selection,R.id.textview_multiple_selection_item);
         ListView lv = (ListView)findViewById(R.id.lista_brani_trovati);
+
         lv.setAdapter(file_list_adapter);
 
-
-        file_list_adapter = new ArrayAdapter<String>(this,R.layout.drawer_list_item);
         File[] midiFiles = downloadFolderPath.listFiles(midiFilter);
         if(midiFiles != null){
             for(File f : midiFiles){
@@ -91,6 +92,14 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                CheckBox cb = (CheckBox) view.findViewById(R.id.checkbox_multiple_selection_item);
+                cb.toggle();    //TODO: tenere traccia dei brani già selezionati
             }
         });
     }
