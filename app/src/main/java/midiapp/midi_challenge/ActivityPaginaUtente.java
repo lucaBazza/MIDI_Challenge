@@ -209,11 +209,18 @@ public class ActivityPaginaUtente extends AppCompatActivity {
         builder.setItems(foto, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                Toast.makeText(getBaseContext(),"Nuova foto selezionata! "+item,Toast.LENGTH_SHORT).show();
+
                 File imgFile = new File("/sdcard/"+cartella+"/"+foto[item]);
                 //Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 Bitmap myBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()) ,500,500,true);
                 imgProfilo.setImageBitmap(myBitmap);
+                utente.foto = "/sdcard/"+cartella+"/"+foto[item];
+                try{
+                    funzioniDatabase.aggiornaUtente(utente);
+                }
+                catch (Exception ex){
+                    Toast.makeText(getBaseContext(),"errore: "+ex.toString(),Toast.LENGTH_SHORT).show();
+                }
                 dialog.dismiss();
             }
         });

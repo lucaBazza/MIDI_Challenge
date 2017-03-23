@@ -85,9 +85,13 @@ public class FunzioniDatabase {
         }
     }
 
-    public int aggiornaUtente(int idUtente){
-
-        return -1;
+    public int aggiornaUtente(Utente u){
+        ContentValues cv = new ContentValues();
+        cv.put("nickname",u.nickName); //These Fields should be your String values of actual column names
+        cv.put("foto",u.strumento);
+        cv.put("punteggioMassimo",u.punteggioMassimo);
+        cv.put("punteggioMedio", u.punteggioMedio);
+        return database.update("utente", cv, "_id="+u.idUtente, null);
     }
 
     public Brano trovaBrano(long id){
