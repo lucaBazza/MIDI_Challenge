@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -19,8 +20,11 @@ import android.widget.Spinner;
 import java.io.File;
 import java.io.FileFilter;
 import java.security.Permission;
+import java.util.ArrayList;
 
 public class Aggiunta_Brano_Activity extends AppCompatActivity {
+
+    FunzioniDatabase db = null;
 
     FileFilter midiFilter = new FileFilter() {
         @Override
@@ -35,10 +39,14 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
 
     ArrayAdapter<String> file_list_adapter = null;
 
+    ArrayList<File> selectedFiles = new ArrayList<File>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiunta__brano);
+
+        db = new FunzioniDatabase(getBaseContext());
 
         ActionBar ac = this.getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
@@ -56,7 +64,7 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
 
         lv.setAdapter(file_list_adapter);
 
-        File[] midiFiles = downloadFolderPath.listFiles(midiFilter);
+        final File[] midiFiles = downloadFolderPath.listFiles(midiFilter);
         if(midiFiles != null){
             for(File f : midiFiles){
                 file_list_adapter.add(f.getName());
@@ -100,6 +108,23 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 CheckBox cb = (CheckBox) view.findViewById(R.id.checkbox_multiple_selection_item);
                 cb.toggle();    //TODO: tenere traccia dei brani già selezionati
+                selectedFiles.add(midiFiles[i]);    //assunzone: l'ordine dei file non cambia durante l'esecuzione della activity
+            }
+        });
+
+        Button btn = (Button)findViewById(R.id.btn_aggiungi_brano);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!selectedFiles.isEmpty()) {
+                    for (File f : selectedFiles) {
+                        Brano b = new Brano(f.getName(), f.getPath(), 0);    //va effettuata l'analisi del brano
+                        db.inserisci(b);
+                    }
+                    Intent i = new Intent(getBaseContext(), MainActivity.class);
+                    i.putExtra("id_utente", getIntent().getLongExtra("id_utente", 1));
+                    startActivity(i);
+                }
             }
         });
     }

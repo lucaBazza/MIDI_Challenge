@@ -29,10 +29,11 @@
         android:layout_height="100pt" />
 
     <Button
+        android:id="@+id/btn_aggiungi_brano"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="AGGIUNGI"
-        android:textAllCaps="true"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:textAllCaps="true" />
 
 </LinearLayout>
