@@ -13,23 +13,23 @@
         tools:context="midiapp.midi_challenge.Dettagli_Brano_Activity">
 
     <Button
-            android:text="Carica Brano"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/buttonProvaCaricaBrano"
-            android:elevation="0dp"
-            android:layout_marginTop="150dp"
-        android:textColor="@android:color/white"
+        android:id="@+id/buttonProvaCaricaBrano"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
         android:background="@drawable/roundcorner"
+        android:elevation="0dp"
+        android:text="Elabora Brano"
+        android:textColor="@android:color/white"
         android:textSize="20sp" />
 
     <TextView
-        android:text="...log..."
+        android:id="@+id/tvLog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvLog"
-        android:textColor="@color/colorAccent"
-        android:textAlignment="center" />
+        android:text="...log..."
+        android:textAlignment="center"
+        android:textColor="@android:color/black" />
 
     <LinearLayout
             android:layout_width="wrap_content"

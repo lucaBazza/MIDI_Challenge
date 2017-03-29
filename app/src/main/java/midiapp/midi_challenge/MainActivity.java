@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<Brano> ArrayAdapterListaBrani;
 
     private Utente utente; //utente corrente
-    private Brano brano; //BRANO DI PROVA  -- DEBUG
+    //private Brano brano; //BRANO DI PROVA  -- DEBUG
     static FunzioniDatabase funzioniDatabase = null;
 
     @Override

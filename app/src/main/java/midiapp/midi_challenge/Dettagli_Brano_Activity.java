@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.pdrogfer.mididroid.MidiFile;
+import com.pdrogfer.mididroid.event.meta.Text;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,10 +30,9 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     public Utente utente =null;
     private String dir = "MidiChallenge/";
     AlgoritmoMidi alMidi;
-    MidiFile mf;
+    MidiFile midiFile;
     TextView tvLog;
-
-
+    TextView tvInfo1;
 
     private static FunzioniDatabase funzioniDatabase = null;
 
@@ -42,26 +42,37 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_dettagli__brano);
 
         long l = getIntent().getLongExtra("id_brano",0);
-
         funzioniDatabase = new FunzioniDatabase(getBaseContext());
         brano = funzioniDatabase.trovaBrano(l);
 
-        Button btnBrano = (Button) findViewById(R.id.buttonProvaCaricaBrano);
+        Button btnBrano = (Button) findViewById(R.id.buttonProvaCaricaBrano);       //BUTTON ELABORA MIDI
         btnBrano.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Log.println(Log.ASSERT,"OnClick","BTNbrano_dettagliBranoActivity");
-                eseguiAlgo();
+
+                File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file  //campanella.mid  Chopin_EtudesOp10n1.mid  happyBD.mid
+                File input = new File(brano.nomeFile);
+                try {  midiFile = new MidiFile(input);
+                    if(midiFile!=null) {
+                        alMidi = new AlgoritmoMidi(midiFile);
+                        showResults();
+                    }   else{ tvLog.setText("file midi null!"); }
+                }
+                catch (IOException e) {
+                    System.err.println("Error parsing MIDI file:");
+                    e.printStackTrace();        //log.setText(e.toString());
+                    midiFile=null; return;
+                }
             }
         });
-        if(brano!=null) setTitle("Dettagli brano: "+brano.getTitolo());
+
+        if(brano!=null) setTitle("Dettagli brano: "+brano.getTitolo());     //TITOLO
         else setTitle("Dettagli brano: non disponibile!");
         tvLog = (TextView)findViewById(R.id.tvLog);
-
         TextView txtTitolo = (TextView) findViewById(R.id.txt_TitoloBrano);
-
         txtTitolo.setText(brano.getTitolo());
 
+        tvInfo1 = (TextView)findViewById(R.id.lbl_Info1);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -70,17 +81,13 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         this.utente=utente;
     }
 
-    private void eseguiAlgo(){
-        ActivityCompat.requestPermissions( this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1); //CHIEDO PERMESSI LETTURA FILE
-        if(mf!=null) {
-            alMidi = new AlgoritmoMidi(mf);
-            List<String> out = alMidi.calc();
-            Iterator i = out.iterator();
-            Log.println(Log.ASSERT,"Out Algo", "Algo Concluso!");
-            tvLog.setText("Algoritmo concluso! righe output: "+out.size());
-            //while(i.hasNext()) Log.println(Log.ASSERT,"Out Algo", i.toString());
-        }
-        else{ tvLog.setText("file midi null!"); }
+    private void showResults(){
+        List<String> out = alMidi.calc();
+        Iterator i = out.iterator();
+        //Log.println(Log.ASSERT,"Out Algo", "Algo Concluso!");
+        tvInfo1.setText("Livello di difficoltà brano: "+alMidi.punteggio);
+        tvLog.setText("Algoritmo concluso! righe output: "+out.size());
+        //while(i.hasNext()) Log.println(Log.ASSERT,"Out Algo", i.toString());
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -100,18 +107,26 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             case 1: { // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0  && grantResults[0] == PackageManager.PERMISSION_GRANTED) { // permission was granted, yay! Do the contacts-related task you need to do.
                     File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file
-                    File input = new File(sdcard, dir+"Chopin_EtudesOp10n1.mid"); //campanella.mid  Chopin_EtudesOp10n1.mid  happyBD.mid
-                    try {  mf = new MidiFile(input); }
+                    //File input = new File(sdcard, dir+"Chopin_EtudesOp10n1.mid"); //campanella.mid  Chopin_EtudesOp10n1.mid  happyBD.mid
+                    File input = new File(brano.nomeFile);
+                    try {  midiFile = new MidiFile(input);
+                        if(midiFile!=null) {
+                            alMidi = new AlgoritmoMidi(midiFile);
+                            showResults();
+                        }
+                        else{ tvLog.setText("file midi null!"); }
+                    }
                     catch (IOException e) {
                         System.err.println("Error parsing MIDI file:");
                         e.printStackTrace();        //log.setText(e.toString());
-                        mf=null; return;
+                        midiFile=null; return;
                     }
                 }
                 else {   // permission denied, boo! Disable the functionality that depends on this permission.
                     Log.println(Log.ASSERT,"Errore lettura","Permessi lettura SD negati!"); }
-                return;
+                break;
             }  // other 'case' lines to check for other permissions this app might request
+            default: break;
         }
     }
 }

@@ -33,7 +33,7 @@ public class AlgoritmoMidi {
     private static int sizeOfLN=30;
     //static int [] tonalita = {1,3,5,6,8,10,11};                      // scala maggiore %12
     static int [] contNoteMod12 = new int[11];
-    static long punteggio = 0;
+    public static long punteggio = 0;
     int contatorenNoteTotale=0;
     int contatoreAppoggiature =0;
     int contatoreAccordi =0;
@@ -62,18 +62,24 @@ public class AlgoritmoMidi {
                 contatorenNoteTotale++;
                 contNoteMod12[EveNota.getNoteValue()%11]++;
 
-                Log.println(Log.ASSERT,"Analisi","Nota: "+convIntStrNota(EveNota.getNoteValue())+ " \t tick: "+EveNota.getTick()+" \t delta: "+EveNota.getDelta());
+                Log.println(Log.ASSERT," Analisi","Nota: "+convIntStrNota(EveNota.getNoteValue())+ " \t tick: "+EveNota.getTick()+" \t delta: "+EveNota.getDelta()); //DEBUG
 
                 puntTemp +=  punteggioVelocita() * punteggioMelArm();
                 if(puntTemp>bestPuntTemp)  {
                     bestPuntTemp = puntTemp;
                     outPut.add("Fraseggio difficile a: " + when/1000+" sec.");
                 }
-                punteggio +=  punteggioVelocita() * punteggioMelArm();
+                int pma = punteggioMelArm();
+                double pv = punteggioVelocita();
+
+                punteggio +=  pv * pma;
+                Log.println(Log.ASSERT," Analisi","Punt Vel: "+pv+ " \t Punt MelArm: "+pma+" \t totale: "+ punteggio); //DEBUG
                 puntTemp = 0;
             }
         }
 
+        Log.println(Log.ASSERT,"Algoritmo midi","punteggio pre raffinazione: "+punteggio);
+        Log.println(Log.ASSERT,"Algoritmo midi","Bias tonalita: "+calcolaBiasTonalità());
         punteggio *= calcolaBiasTonalità();
         punteggio /= 1000*1000;            //miniaturizzazione
 
@@ -106,11 +112,11 @@ public class AlgoritmoMidi {
         Double p = 0.0;
         for(int i = 0;i<11;i++){
             if(contNoteMod12[i]>= contatorenNoteTotale/11){
-                Log.println(Log.ASSERT,"Calc tonalita","Nota diatonica: "+convIntStrNota(contNoteMod12[i]));
+                //Log.println(Log.ASSERT,"Calc tonalita","Nota diatonica: "+convIntStrNota(contNoteMod12[i]));  //DEBUG
                 p +=0.09;
             }
         } p = BigDecimal.valueOf(p).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        Log.println(Log.ASSERT,"Calc tonalita","Dispersione Tonalità: "+p);
+        //Log.println(Log.ASSERT,"Calc tonalita","Dispersione Tonalità: "+p);   //DEBUG
         return p;
     }
 
@@ -124,7 +130,7 @@ public class AlgoritmoMidi {
         double punteggio;
         NoteOn nota = ln.get(ln.size()-1);
         if(nota.getDelta()>0)
-            punteggio = 1 / nota.getDelta();
+            punteggio = 1 / nota.getDelta();  //DIVISIONE DOUBLE INTERO! CAST LONG A DOUBLE
         else punteggio = 0.01;
         return punteggio;
     }
