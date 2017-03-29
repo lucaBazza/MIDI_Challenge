@@ -12,25 +12,52 @@
     tools:context="midiapp.midi_challenge.AccordatoreActivity">
 
     <Button
-        android:id="@+id/btnTap"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnSu"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="62dp"
         android:background="@drawable/roundcorner"
-        android:text="TAP"
+        android:text="+"
         android:textColor="@android:color/white"
-        android:textSize="22sp" />
+        android:textSize="28sp"
+        android:onClick="addone"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/textBPM"
+        android:layout_marginStart="29dp" />
+
+    <Button
+        android:id="@+id/btnGiu"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/roundcorner"
+        android:text="-"
+        android:textColor="@android:color/white"
+        android:textSize="28sp"
+        android:onClick="subone"
+        android:layout_marginStart="35dp"
+        android:layout_alignBottom="@+id/counter"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/textBPM"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:text="120 BPM"
+        android:text="BPM"
         android:textSize="30sp"
-        android:layout_above="@+id/btnTap"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/btnSu"
+        android:layout_toEndOf="@+id/counter" />
+
+    <EditText
+        android:id="@+id/counter"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textBPM"
+        android:layout_alignBottom="@+id/textBPM"
+        android:layout_marginStart="33dp"
+        android:layout_toEndOf="@+id/btnGiu"
+        android:ems="10"
+        android:inputType="number"
+        android:text="120"
+        android:textSize="28sp" />
 
 </RelativeLayout>

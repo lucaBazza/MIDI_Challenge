@@ -14,8 +14,16 @@ public class MetronomoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_metronomo);
     }
 
-    public void changeBPM(View view) {
-        ((TextView)findViewById(R.id.textBPM)).setText("ciaooooneBPM");
+    public void addone(View v){
+        int numtest = 0;
+        TextView t = (TextView) findViewById(R.id.counter);
+        t.setText("bo");
+    }
+
+    public void subone(View v){
+
+        TextView p = (TextView) findViewById(R.id.counter);
+        p.setText("");
     }
 
 }

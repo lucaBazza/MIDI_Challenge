@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                     case 0: testIntent = new Intent(getApplicationContext(),MainActivity.class); break;
                     case 1: testIntent = new Intent(getApplicationContext(),ActivityPaginaUtente.class); break;
                     case 2: testIntent = new Intent(getApplicationContext(),Registratore_Activity.class); break;
-                    //case 3: testIntent = new Intent(getApplicationContext(),MetronomoActivity.class); break;
+                    case 3: testIntent = new Intent(getApplicationContext(),MetronomoActivity.class); break;
                     case 4: testIntent = new Intent(getApplicationContext(),AccordatoreActivity.class); break;
                     case 5: testIntent = new Intent(getApplicationContext(),Impostazioni_Activity.class); break; //IMPOSTAZIONI ACTIVITY
                     case 6: testIntent = new Intent(getApplicationContext(),Login_Activity.class); break; //Domanda prima di uscire!
