@@ -143,22 +143,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         setTitle(utente.getNickName());
-
-        Button btnDemo = (Button)findViewById(R.id.btnDemo);
-        btnDemo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            if(funzioniDatabase.braniUtente(utente.idUtente).size() > 0) {
-                if (funzioniDatabase.cancLinkBranoUtente(utente.idUtente, braniUtente.get(0).idBrano) > 0)
-                    Toast.makeText(getBaseContext(), "Cancellato brano!" + braniUtente.get(0).getTitolo(), Toast.LENGTH_LONG);
-                else Toast.makeText(getBaseContext(), "Non cancellato", Toast.LENGTH_LONG);
-            }
-            else{
-                Toast.makeText(MainActivity.this, "Non hai ancora nessun brano!", Toast.LENGTH_SHORT).show();
-            }
-            }
-         });
-
     }
 
     /**
@@ -210,11 +194,4 @@ public class MainActivity extends AppCompatActivity {
             ArrayAdapterListaBrani.notifyDataSetChanged();
         else {}
     }
-    /*@Override
-    public void onStart (){
-        super.onStart();  // Always call the superclass method first
-        Toast.makeText(getBaseContext(),"On start MainActivity!",Toast.LENGTH_LONG).show();
-        if(ArrayAdapterListaBrani!=null)
-            ArrayAdapterListaBrani.notifyDataSetChanged();
-    }*/
 }
