@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private Utente utente; //utente corrente
     private Brano brano; //BRANO DI PROVA  -- DEBUG
     static FunzioniDatabase funzioniDatabase = null;
-    //MidiFile mf;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
