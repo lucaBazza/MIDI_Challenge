@@ -7,23 +7,35 @@ import android.widget.TextView;
 
 
 public class MetronomoActivity extends AppCompatActivity {
-
+    int minteger = 120;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_metronomo);
     }
 
-    public void addone(View v){
-        int numtest = 0;
-        TextView t = (TextView) findViewById(R.id.counter);
-        t.setText("bo");
+    public void increaseInteger(View view) {
+        minteger = minteger + 4;
+        display(minteger);
+
+    }public void decreaseInteger(View view) {
+        minteger = minteger - 4;
+        display(minteger);
     }
 
-    public void subone(View v){
-
-        TextView p = (TextView) findViewById(R.id.counter);
-        p.setText("");
+    private void display(int number) {
+        TextView displayInteger = (TextView) findViewById(
+                R.id.counter);
+        displayInteger.setText("" + number);
     }
-
 }
+
+
+/*
+    public void suonoBPM(View v){
+        TextView t = (TextView) findViewById(R.id.counter);
+        int bpm = Integer.getInteger(t.getText().toString());
+        //prendi audio
+        //riproduci ogni min/bpm
+    }
+*/
