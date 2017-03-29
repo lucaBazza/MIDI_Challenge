@@ -132,11 +132,14 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
                 if(!selectedFiles.isEmpty()) {
                     Utente u = db.trovaUtente(getIntent().getLongExtra("id_utente",-1));
                     List<Brano> braniUtente = db.braniUtente(u.getIdUtente());  //dammit
+                    List<Brano> braniPresenti = db.prendiTuttiBrani();
 
                     for (File f : selectedFiles) {
                         Brano b = new Brano(f.getName(), f.getPath(), 0);
-                        if(! braniUtente.contains(b)) {
+                        if(! braniPresenti.contains(b)){
                             db.inserisci(b);
+                        }
+                        if(! braniUtente.contains(b)) {
                             db.inserisciBranoPerUtente(u,b,0);
                         }
                     }

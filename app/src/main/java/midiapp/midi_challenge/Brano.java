@@ -52,7 +52,7 @@ public class Brano {
     @Override
     public boolean equals(Object obj) {
         Brano b = (Brano) obj;
-        return this.nomeFile == b.nomeFile;
+        return this.nomeFile == b.nomeFile || this.titolo == b.titolo;
     }
 
     public int getAutovalutazione() {
