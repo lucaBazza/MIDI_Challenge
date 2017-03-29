@@ -5,9 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-
 public class MetronomoActivity extends AppCompatActivity {
-    int minteger = 120;
+    int cont = 120;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,12 +14,16 @@ public class MetronomoActivity extends AppCompatActivity {
     }
 
     public void increaseInteger(View view) {
-        minteger = minteger + 4;
-        display(minteger);
+        if (cont < 300) {
+            cont = cont + 4;
+            display(cont);
+        } else {}
 
     }public void decreaseInteger(View view) {
-        minteger = minteger - 4;
-        display(minteger);
+        if(cont > 0) {
+            cont = cont - 4;
+            display(cont);
+        } else {}
     }
 
     private void display(int number) {
@@ -29,6 +32,15 @@ public class MetronomoActivity extends AppCompatActivity {
         displayInteger.setText("" + number);
     }
 }
+
+
+
+
+
+
+
+
+
 
 
 /*
