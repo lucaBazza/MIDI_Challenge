@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Path;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NavUtils;
 import android.support.v4.util.ArraySet;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -150,9 +151,9 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                Intent i = new Intent(getBaseContext(),MainActivity.class);
-                i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));   //find a better way to do dis
-                startActivity(i);
+                Intent i = new Intent(getBaseContext(), MainActivity.class);
+                i.putExtra("id_utente", getIntent().getLongExtra("id_utente", 1));
+                NavUtils.navigateUpTo(this,i);
                 break;
         }
         return true;

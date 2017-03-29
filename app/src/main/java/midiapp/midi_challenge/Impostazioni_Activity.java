@@ -1,5 +1,6 @@
 package midiapp.midi_challenge;
 
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -31,7 +32,7 @@ public class Impostazioni_Activity extends AppCompatActivity {
             case android.R.id.home:
                 Intent i = new Intent(this,MainActivity.class);
                 i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));
-                startActivity(i);
+                NavUtils.navigateUpTo(this,i);
                 break;
         }
         return true;

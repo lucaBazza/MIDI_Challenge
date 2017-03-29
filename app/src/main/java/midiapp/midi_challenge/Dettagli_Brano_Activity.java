@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -87,7 +88,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             case android.R.id.home:
                 Intent i = new Intent(getBaseContext(),MainActivity.class);
                 i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));   //find a better way to do dis
-                startActivity(i);
+                NavUtils.navigateUpTo(this,i);
                 break;
         }
         return true;

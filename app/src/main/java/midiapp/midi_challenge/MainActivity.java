@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     case 6: testIntent = new Intent(getApplicationContext(),Login_Activity.class); break; //Domanda prima di uscire!
                     default: testIntent = null;
                 }
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
                 if(testIntent!= null) {  //Log.println(Log.ASSERT,"activity","Pos: "+ position+"  activity: "+testIntent.toString());
                     testIntent.putExtra("id_utente",utente.getIdUtente());
                     startActivity(testIntent);

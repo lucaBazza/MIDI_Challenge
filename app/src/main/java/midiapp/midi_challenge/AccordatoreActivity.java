@@ -2,6 +2,7 @@ package midiapp.midi_challenge;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,7 +53,7 @@ public class AccordatoreActivity extends AppCompatActivity {
             case android.R.id.home:
                 Intent i = new Intent(this,MainActivity.class);
                 i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));
-                startActivity(i);
+                NavUtils.navigateUpTo(this,i);
                 break;
         }
         return true;
