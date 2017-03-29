@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -33,6 +34,7 @@ public class ActivityPaginaUtente extends AppCompatActivity {
     Utente utente = null;
     ImageView imgProfilo;
     TextView tw_log_pagUser;
+    EditText textBoxStrumento;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,15 +49,13 @@ public class ActivityPaginaUtente extends AppCompatActivity {
 
         tw_log_pagUser = (TextView)findViewById(R.id.tw_log_pagUser);
         imgProfilo = (ImageView) findViewById(R.id.imageViewFotoUtente);
-        File imgFile = new File("/sdcard/"+ utente.getFoto());
-        if(imgFile.exists() && !utente.getFoto().isEmpty()){           // non trovando il file comunque entra nel if
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+        File imgFile = new File(utente.getFoto());
+        if(!utente.getFoto().isEmpty() && imgFile.exists()){           // non trovando il file comunque entra nel if
+            Bitmap myBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()) ,500,500,true);
             imgProfilo.setImageBitmap(myBitmap);
-            Toast.makeText(getBaseContext(),"y"+ utente.getFoto(),Toast.LENGTH_SHORT).show();
         }
         else {
             imgProfilo.setImageResource(R.mipmap.generic_user_mc);
-            //Toast.makeText(getBaseContext(),"Foto utente non trovata!",Toast.LENGTH_SHORT).show();
         }
 
         Button btnCancellaBrani = (Button)findViewById(R.id.buttonCancellaBrani);           //CANCELLA TUTTI I BRANI
@@ -74,7 +74,7 @@ public class ActivityPaginaUtente extends AppCompatActivity {
             media+=utente.braniUtente.get(i).difficoltà;
             if(utente.braniUtente.get(i).difficoltà>max){
                 max = utente.braniUtente.get(i).difficoltà;
-                tbPuntMax.append(Integer.toString(max)+" - "+utente.braniUtente.get(i).titolo);
+                tbPuntMax.setText("Punteggio massimo: "+ Integer.toString(max)+" - "+utente.braniUtente.get(i).titolo);
             }
         }
         TextView tbPuntMedio = (TextView) findViewById(R.id.textViewPU2);
@@ -84,7 +84,9 @@ public class ActivityPaginaUtente extends AppCompatActivity {
         TextView tvBRaniTot = (TextView) findViewById(R.id.textViewPU3);
             tvBRaniTot.append(Integer.toString(tot));
 
-
+        textBoxStrumento = (EditText) findViewById(R.id.textBoxStrumento);
+        if(!utente.getStrumento().isEmpty())
+            textBoxStrumento.setText(utente.getStrumento());
 
         Button btnCambiaFoto = (Button) findViewById(R.id.btnCambiaFoto);       //CAMBIA FOTO PROFILO
         btnCambiaFoto.setOnClickListener(new View.OnClickListener() {
@@ -165,7 +167,6 @@ public class ActivityPaginaUtente extends AppCompatActivity {
     }
 
     void AltDlgCambiaFotoPt2(final String cartella){
-
         final ArrayList<String> ArrFoto = new ArrayList<>(); // = {"Paolo","Cartella predefinita","Cartella foto","Cancella"};
         switch(cartella){
             case "Download": {
@@ -213,15 +214,13 @@ public class ActivityPaginaUtente extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int item) {
 
                 File imgFile = new File("/sdcard/"+cartella+"/"+foto[item]);
-                //Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 Bitmap myBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()) ,500,500,true);
                 imgProfilo.setImageBitmap(myBitmap);
                 utente.foto = "/sdcard/"+cartella+"/"+foto[item];
+                utente.strumento = textBoxStrumento.getText().toString();
                 try{
                     if(funzioniDatabase.aggiornaUtente(utente)!=-1)
                         tw_log_pagUser.setText("Aggiornato database!");
-
-
                 }
                 catch (Exception ex){
                     Toast.makeText(getBaseContext(),"errore: "+ex.toString(),Toast.LENGTH_SHORT).show();
@@ -231,7 +230,6 @@ public class ActivityPaginaUtente extends AppCompatActivity {
             }
         });
         builder.show();
-
     }
 
     FileFilter photoFilter = new FileFilter() {

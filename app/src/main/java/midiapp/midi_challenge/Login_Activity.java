@@ -44,7 +44,6 @@ public class Login_Activity extends AppCompatActivity {
         final List<Utente> listaUtenti = db.prendiTuttiUtenti();
 
         final ArrayAdapter ad = new ArrayAdapter(this,R.layout.users_grid_element,R.id.txt_NomeUtenteLogin, listaUtenti);
-        //grigliaUtenti.setAdapter(ad);
         grigliaUtenti.setAdapter(new ImageAdapter(this,listaUtenti));
 
         if (!listaUtenti.isEmpty()) { setTitle("Pagina login"); }
@@ -90,8 +89,6 @@ public class Login_Activity extends AppCompatActivity {
         File appExternalDir = new File(externalRootDir,"Midi Challenge");
         if(!appExternalDir.exists())
             appExternalDir.mkdir();
-
-        //caricaFileMidi();
     }
 
     @Override
@@ -99,25 +96,6 @@ public class Login_Activity extends AppCompatActivity {
         if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
         }
     }
-
-/*
-    //carica i file midi presenti in una cartella specifica. Aggiunge le informazioni di tali file nel database.
-    private void caricaFileMidi(){
-        List<Brano> listaBraniPresenti = db.prendiTuttiBrani();
-
-        File f = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        File[] contenuti =  f.listFiles();
-        if(contenuti!=null){
-            for(File el : contenuti){
-                if(el.getName().contains(".mid")){
-                    Brano b = new Brano(el.getName(),el.getName(),0);
-                    if(!listaBraniPresenti.contains(b)) //inserisce solo oggetti nuovi.
-                        db.inserisci(b);
-                }
-            }
-        }
-    }
-*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -143,5 +121,4 @@ public class Login_Activity extends AppCompatActivity {
         }
         return false;
     }
-
 }
