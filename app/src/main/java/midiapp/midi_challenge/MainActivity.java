@@ -50,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
         funzioniDatabase = new FunzioniDatabase(this.getBaseContext());
         setContentView(R.layout.activity_main);
 
+        //cartella predefinita in cui sono contenuti i file .midi
+        File cartellaPredefinita = new File(Environment.getExternalStorageDirectory(),"MIDI_FILES");
+
+        if(! cartellaPredefinita.exists()){
+            cartellaPredefinita.mkdir();
+        }
+
         if(getIntent().hasExtra("id_utente")){
             utente = funzioniDatabase.trovaUtente(getIntent().getLongExtra("id_utente",-1));
         }
@@ -199,7 +206,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
-        Toast.makeText(getBaseContext(),"On resume MainActivity!",Toast.LENGTH_LONG).show();
         if(ArrayAdapterListaBrani!=null)
             ArrayAdapterListaBrani.notifyDataSetChanged();
         else {}

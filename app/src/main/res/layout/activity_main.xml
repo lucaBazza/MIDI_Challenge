@@ -65,11 +65,6 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnDemo"
-            android:layout_width="59dp"
-            android:layout_height="70dp"
-            android:text="btnDemo" />
     </FrameLayout>
     <!-- The navigation drawer -->
 
