@@ -81,5 +81,13 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
+        <TextView
+            android:id="@+id/tw_log_pagUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:text="..." />
+
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

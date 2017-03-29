@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,6 +32,7 @@ public class ActivityPaginaUtente extends AppCompatActivity {
 
     Utente utente = null;
     ImageView imgProfilo;
+    TextView tw_log_pagUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,17 +45,17 @@ public class ActivityPaginaUtente extends AppCompatActivity {
         if(utente!=null) setTitle("Pagina Utente: "+ utente.getNickName());
         else setTitle("Pagina Utente");
 
+        tw_log_pagUser = (TextView)findViewById(R.id.tw_log_pagUser);
         imgProfilo = (ImageView) findViewById(R.id.imageViewFotoUtente);
         File imgFile = new File("/sdcard/"+ utente.getFoto());
-        if(imgFile.exists()){
+        if(imgFile.exists() && !utente.getFoto().isEmpty()){           // non trovando il file comunque entra nel if
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             imgProfilo.setImageBitmap(myBitmap);
+            Toast.makeText(getBaseContext(),"y"+ utente.getFoto(),Toast.LENGTH_SHORT).show();
         }
         else {
-            imgFile = new File("/sdcard/MidiChallenge/user.png");
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            imgProfilo.setImageBitmap(myBitmap);
-            Toast.makeText(getBaseContext(),"Foto utente non trovata!",Toast.LENGTH_SHORT).show();
+            imgProfilo.setImageResource(R.mipmap.generic_user_mc);
+            //Toast.makeText(getBaseContext(),"Foto utente non trovata!",Toast.LENGTH_SHORT).show();
         }
 
         Button btnCancellaBrani = (Button)findViewById(R.id.buttonCancellaBrani);           //CANCELLA TUTTI I BRANI
@@ -216,10 +218,14 @@ public class ActivityPaginaUtente extends AppCompatActivity {
                 imgProfilo.setImageBitmap(myBitmap);
                 utente.foto = "/sdcard/"+cartella+"/"+foto[item];
                 try{
-                    funzioniDatabase.aggiornaUtente(utente);
+                    if(funzioniDatabase.aggiornaUtente(utente)!=-1)
+                        tw_log_pagUser.setText("Aggiornato database!");
+
+
                 }
                 catch (Exception ex){
                     Toast.makeText(getBaseContext(),"errore: "+ex.toString(),Toast.LENGTH_SHORT).show();
+                    Log.d("error",ex.toString());
                 }
                 dialog.dismiss();
             }
