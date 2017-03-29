@@ -2,8 +2,10 @@ package midiapp.midi_challenge;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Path;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.util.ArraySet;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.security.Permission;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Aggiunta_Brano_Activity extends AppCompatActivity {
 
@@ -39,7 +42,7 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
 
     ArrayAdapter<String> file_list_adapter = null;
 
-    ArrayList<File> selectedFiles = new ArrayList<File>();
+    ArraySet<File> selectedFiles = new ArraySet<File>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,12 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
                 file_list_adapter.add(f.getName());
             }
             file_list_adapter.notifyDataSetChanged();
+        }
+
+        List<Brano> braniPresenti = db.trovaUtente(getIntent().getLongExtra("id_utente",-1)).getBraniUtente();
+        for(Brano b : braniPresenti){
+            File f = new File(b.getNomeFile());
+
         }
 
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -107,8 +116,8 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 CheckBox cb = (CheckBox) view.findViewById(R.id.checkbox_multiple_selection_item);
-                cb.toggle();    //TODO: tenere traccia dei brani già selezionati
-                selectedFiles.add(midiFiles[i]);    //assunzone: l'ordine dei file non cambia durante l'esecuzione della activity
+                cb.toggle();
+                selectedFiles.add(midiFiles[i]);    //assunzione: l'ordine dei file non cambia durante l'esecuzione della activity
             }
         });
 
@@ -117,9 +126,15 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!selectedFiles.isEmpty()) {
+                    Utente u = db.trovaUtente(getIntent().getLongExtra("id_utente",-1));
+                    List<Brano> braniUtente = db.braniUtente(u.getIdUtente());  //dammit
+
                     for (File f : selectedFiles) {
-                        Brano b = new Brano(f.getName(), f.getPath(), 0);    //va effettuata l'analisi del brano
-                        db.inserisci(b);
+                        Brano b = new Brano(f.getName(), f.getPath(), 0);
+                        if(! braniUtente.contains(b)) {
+                            db.inserisci(b);
+                            db.inserisciBranoPerUtente(u,b,0);
+                        }
                     }
                     Intent i = new Intent(getBaseContext(), MainActivity.class);
                     i.putExtra("id_utente", getIntent().getLongExtra("id_utente", 1));
