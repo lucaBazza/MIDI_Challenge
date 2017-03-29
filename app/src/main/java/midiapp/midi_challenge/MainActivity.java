@@ -97,11 +97,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tv = (TextView)findViewById(R.id.textView);  //Find the view by its id
+        tv = (TextView)findViewById(R.id.textView);
         tv.setMovementMethod(new ScrollingMovementMethod());
-
-        //mf = new MidiFile();
-        //ActivityCompat.requestPermissions( MainActivity.this  ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
         mActivityTitles = new String[]{"Home","Profilo","Registratore","Metronomo","Accordatore", "Impostazioni","Cambia Utente"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -165,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
 
                 }
+                else Toast.makeText(MainActivity.this, "Permessi non concessi!", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

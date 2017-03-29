@@ -47,8 +47,8 @@
             android:textColor="@android:color/white" />
 
         <TextView
-            android:id="@+id/tw_strum"
-            android:layout_width="100dp"
+            android:id="@+id/tbStrum"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/imageViewFotoUtente"
@@ -59,27 +59,25 @@
             android:text="Punteggio medio: "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="27dp"
             android:id="@+id/textViewPU2"
-            android:layout_below="@+id/textViewPU1"
-            android:layout_alignParentStart="true" />
+            android:layout_alignBottom="@+id/textViewPU3"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="28dp" />
 
         <TextView
             android:text="Punteggio massimo: "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textViewPU1"
-            android:layout_marginTop="33dp"
-            android:layout_below="@+id/tw_strum"
+            android:layout_below="@+id/btnChangeStr"
             android:layout_alignParentStart="true" />
 
         <TextView
             android:text="Totale Brani: "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="21dp"
             android:id="@+id/textViewPU3"
-            android:layout_below="@+id/textViewPU2"
+            android:layout_centerVertical="true"
             android:layout_alignParentStart="true" />
 
         <Button
@@ -98,15 +96,13 @@
             android:layout_alignParentStart="true"
             android:text="..." />
 
-        <EditText
-            android:id="@+id/textBoxStrumento"
+        <Button
+            android:id="@+id/btnChangeStr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/btnCambiaFoto"
-            android:ems="10"
-            android:inputType="textShortMessage"
-            android:text="inserisci qui" />
+            android:text="Aggiorna Strumento"
+            android:layout_below="@+id/tbStrum"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

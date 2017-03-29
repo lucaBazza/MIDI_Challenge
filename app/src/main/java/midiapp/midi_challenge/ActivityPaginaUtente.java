@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,7 +35,8 @@ public class ActivityPaginaUtente extends AppCompatActivity {
     Utente utente = null;
     ImageView imgProfilo;
     TextView tw_log_pagUser;
-    EditText textBoxStrumento;
+    Button btnChangeStr;
+    TextView tbStrum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +47,11 @@ public class ActivityPaginaUtente extends AppCompatActivity {
         }
 
         if(utente!=null) setTitle("Pagina Utente: "+ utente.getNickName());
-        else setTitle("Pagina Utente");
+        else setTitle("Pagina Utente - NONAME");
 
         tw_log_pagUser = (TextView)findViewById(R.id.tw_log_pagUser);
-        imgProfilo = (ImageView) findViewById(R.id.imageViewFotoUtente);
+
+        imgProfilo = (ImageView) findViewById(R.id.imageViewFotoUtente);    // CARICA FOTO UTENTE
         File imgFile = new File(utente.getFoto());
         if(!utente.getFoto().isEmpty() && imgFile.exists()){           // non trovando il file comunque entra nel if
             Bitmap myBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()) ,500,500,true);
@@ -74,8 +77,7 @@ public class ActivityPaginaUtente extends AppCompatActivity {
             media+=utente.braniUtente.get(i).difficoltà;
             if(utente.braniUtente.get(i).difficoltà>max){
                 max = utente.braniUtente.get(i).difficoltà;
-                tbPuntMax.setText("Punteggio massimo: "+ Integer.toString(max)+" - "+utente.braniUtente.get(i).titolo);
-            }
+                tbPuntMax.setText("Punteggio massimo: "+ Integer.toString(max)+" - "+utente.braniUtente.get(i).titolo);  }
         }
         TextView tbPuntMedio = (TextView) findViewById(R.id.textViewPU2);
         if(tot!= 0)
@@ -84,14 +86,21 @@ public class ActivityPaginaUtente extends AppCompatActivity {
         TextView tvBRaniTot = (TextView) findViewById(R.id.textViewPU3);
             tvBRaniTot.append(Integer.toString(tot));
 
-        textBoxStrumento = (EditText) findViewById(R.id.textBoxStrumento);
+        btnChangeStr = (Button) findViewById(R.id.btnChangeStr);        // STRUMENTO
+        tbStrum = (TextView)findViewById(R.id.tbStrum);
         if(!utente.getStrumento().isEmpty())
-            textBoxStrumento.setText(utente.getStrumento());
+            tbStrum.append(utente.getStrumento());
+        btnChangeStr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    AltDlgCambiaStrum();
+            }
+        });
 
         Button btnCambiaFoto = (Button) findViewById(R.id.btnCambiaFoto);       //CAMBIA FOTO PROFILO
         btnCambiaFoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { //Toast.makeText(getBaseContext(),"Cancella lista brani!",Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
                 AltDlgCambiaFoto();
             }
         });
@@ -139,7 +148,6 @@ public class ActivityPaginaUtente extends AppCompatActivity {
     }
 
     void AltDlgCambiaFoto(){
-
         final CharSequence[] cartelle = {"Download","Cartella predefinita","Galleria foto","WhatsApp","Cancella"};
         AlertDialog.Builder builder = new AlertDialog.Builder(ActivityPaginaUtente.this);
 
@@ -212,12 +220,10 @@ public class ActivityPaginaUtente extends AppCompatActivity {
         builder.setItems(foto, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-
                 File imgFile = new File("/sdcard/"+cartella+"/"+foto[item]);
                 Bitmap myBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()) ,500,500,true);
                 imgProfilo.setImageBitmap(myBitmap);
                 utente.foto = "/sdcard/"+cartella+"/"+foto[item];
-                utente.strumento = textBoxStrumento.getText().toString();
                 try{
                     if(funzioniDatabase.aggiornaUtente(utente)!=-1)
                         tw_log_pagUser.setText("Aggiornato database!");
@@ -227,6 +233,31 @@ public class ActivityPaginaUtente extends AppCompatActivity {
                     Log.d("error",ex.toString());
                 }
                 dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+    void AltDlgCambiaStrum(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityPaginaUtente.this,R.style.Theme_AppCompat_Dialog);
+        builder.setTitle("Cambia strumento: ");
+        final EditText input = new EditText(this);   // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL | InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                tbStrum.setText("Strumento: "+input.getText().toString());
+                utente.setStrumento(input.getText().toString());
+                if(funzioniDatabase.aggiornaUtente(utente)!=-1)
+                    tw_log_pagUser.setText("Aggiornato database!");
+                else tw_log_pagUser.setText("Errore aggiornamento database!");
+            }
+        });
+        builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
             }
         });
         builder.show();
