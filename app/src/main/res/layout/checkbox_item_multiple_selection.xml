@@ -18,6 +18,7 @@
         android:checked="false"
         android:shadowColor="@color/colorPrimaryDark"
         app:buttonTint="@color/colorPrimaryDark"
-        android:focusable="false"/>
+        android:focusable="false"
+        android:clickable="false"/>
 
 </LinearLayout>
