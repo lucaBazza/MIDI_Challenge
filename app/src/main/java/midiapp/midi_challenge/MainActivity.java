@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //cartella predefinita in cui sono contenuti i file .midi
-        File cartellaPredefinita = new File(Environment.getExternalStorageDirectory(),"MIDI_FILES");
+        File cartellaPredefinita = new File(Environment.getExternalStorageDirectory(),"MidiChallenge");
 
         if(! cartellaPredefinita.exists()){
             cartellaPredefinita.mkdir();

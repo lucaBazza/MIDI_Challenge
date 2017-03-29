@@ -88,7 +88,7 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
                 File downloadFolderPath = null;
                 switch (i){
                     case 0:
-                        downloadFolderPath = new File(Environment.getExternalStorageDirectory(),"MIDI_FILES");
+                        downloadFolderPath = new File(Environment.getExternalStorageDirectory(),"MidiChallenge");
                         break;
                     case 1:
                         downloadFolderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
