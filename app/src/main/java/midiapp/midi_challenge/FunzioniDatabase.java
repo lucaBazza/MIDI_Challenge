@@ -54,8 +54,8 @@ public class FunzioniDatabase {
 
     public long inserisci(Brano b){
         ContentValues cv = new ContentValues();
-        cv.put("titolo",b.titolo);
-        cv.put("nomeFile",b.nomeFile);
+        cv.put("titolo",b.getTitolo());
+        cv.put("nomeFile",b.getNomeFile());
         cv.put("difficoltà",b.difficoltà);
 
         long result = database.insert("brano","",cv);
@@ -102,9 +102,9 @@ public class FunzioniDatabase {
         Cursor res = database.query(true,"brano",colums,"idBrano = ?",new String[] {Long.toString(id)},"","","","");
 
         if (res.moveToFirst()){
-            return new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3));
+            return new Brano(res.getInt(0),res.getString(2),res.getInt(3));
         }else{
-            return  new Brano(-1,"","",0);
+            return  new Brano(-1,"",0);
         }
     }
 
@@ -113,9 +113,9 @@ public class FunzioniDatabase {
         Cursor res = database.query(true,"brano",colums,"titolo = ?",new String[] {titolo},"","","","");
 
         if (res.moveToFirst()){
-            return new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3));
+            return new Brano(res.getInt(0),res.getString(2),res.getInt(3));
         }else{
-            return  new Brano(-1,"","",0);
+            return  new Brano(-1,"",0);
         }
     }
 
@@ -125,7 +125,7 @@ public class FunzioniDatabase {
 
         Cursor res = database.rawQuery(selectionQuery,new String[]{Long.toString(idUtente)});
         while(res.moveToNext()){
-            tmpList.add(new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3),res.getInt(4)));
+            tmpList.add(new Brano(res.getInt(0),res.getString(2),res.getInt(3),res.getInt(4)));
         }
 
         return tmpList;
@@ -137,7 +137,7 @@ public class FunzioniDatabase {
 
         Cursor res = database.rawQuery(selectionQuery,new String[]{nickName});
         while(res.moveToNext()){
-            tmpList.add(new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3),res.getInt(4)));
+            tmpList.add(new Brano(res.getInt(0),res.getString(2),res.getInt(3),res.getInt(4)));
         }
 
         return tmpList;
@@ -172,7 +172,7 @@ public class FunzioniDatabase {
         Cursor res = database.query(true,"brano",columns,"",new String[] {},"","","","");
 
         while(res.moveToNext()){
-            tmpList.add(new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getInt(3)));
+            tmpList.add(new Brano(res.getInt(0),res.getString(2),res.getInt(3)));
         }
         return tmpList;
     }

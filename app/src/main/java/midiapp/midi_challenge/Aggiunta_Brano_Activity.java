@@ -73,7 +73,7 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
         }
 
         for(File f : midiFiles){
-            Brano b = new Brano(f.getName(),f.getAbsolutePath(),0,0);
+            Brano b = new Brano(f.getAbsolutePath(),0);
             if(db.trovaBrano(b.getTitolo()).getIdBrano() == -1) {
                 db.inserisci(b);
             }
@@ -128,7 +128,7 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
                 for(String path : selectedFiles){
                     File f = new File(path);
                     Utente utenteCorrente = db.trovaUtente(getIntent().getLongExtra("id_utente",-1));
-                    Brano b = new Brano(f.getName(),f.getAbsolutePath(),0,0);
+                    Brano b = new Brano(f.getAbsolutePath(),0);
                     db.inserisciBranoPerUtente(utenteCorrente,b,0);
                 }
                 Intent i = new Intent(getBaseContext(),MainActivity.class);

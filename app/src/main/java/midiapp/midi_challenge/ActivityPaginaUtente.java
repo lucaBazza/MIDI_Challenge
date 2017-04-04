@@ -77,7 +77,7 @@ public class ActivityPaginaUtente extends AppCompatActivity {
             media+=utente.braniUtente.get(i).difficoltà;
             if(utente.braniUtente.get(i).difficoltà>max){
                 max = utente.braniUtente.get(i).difficoltà;
-                tbPuntMax.setText("Punteggio massimo: "+ Integer.toString(max)+" - "+utente.braniUtente.get(i).titolo);  }
+                tbPuntMax.setText("Punteggio massimo: "+ Integer.toString(max)+" - "+utente.braniUtente.get(i).getTitolo());  }
         }
         TextView tbPuntMedio = (TextView) findViewById(R.id.textViewPU2);
         if(tot!= 0)

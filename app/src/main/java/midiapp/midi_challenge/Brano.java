@@ -1,58 +1,55 @@
 package midiapp.midi_challenge;
 
+import java.io.File;
+
 /**
  * Created by luca on 04/01/17.
  */
 
 public class Brano {
     long idBrano;
-    String titolo;
-    String nomeFile;
+    File fileBrano;
     int difficoltà;
     int autovalutazione;
 
-    public Brano(long idBrano, String titolo, String nomeFile, int difficoltà,int autovalutazione) {
+    public Brano(long idBrano, String nomeFile, int difficoltà,int autovalutazione) {
         this.idBrano = idBrano;
-        this.titolo = titolo;
-        this.nomeFile = nomeFile;
+        this.fileBrano = new File(nomeFile);
         this.difficoltà = difficoltà;
         this.autovalutazione = autovalutazione;
     }
 
-    public Brano(long idBrano, String titolo, String nomeFile, int difficoltà) {
+    public Brano(long idBrano, String nomeFile, int difficoltà) {
         this.idBrano = idBrano;
-        this.titolo = titolo;
-        this.nomeFile = nomeFile;
+        this.fileBrano = new File(nomeFile);
         this.difficoltà = difficoltà;
         this.autovalutazione = -1;
     }
 
-    public Brano(String titolo, String nomeFile, int difficoltà,int autovalutazione) {
+    public Brano(String nomeFile, int difficoltà,int autovalutazione) {
         this.idBrano = -1;
-        this.titolo = titolo;
-        this.nomeFile = nomeFile;
+        this.fileBrano = new File(nomeFile);
         this.difficoltà = difficoltà;
         this.autovalutazione = autovalutazione;
     }
 
 
-    public Brano(String titolo, String nomeFile, int difficoltà) {
+    public Brano(String nomeFile, int difficoltà) {
         this.idBrano = -1;
-        this.titolo = titolo;
-        this.nomeFile = nomeFile;
+        this.fileBrano = new File(nomeFile);
         this.difficoltà = difficoltà;
         this.autovalutazione = -1;
     }
 
     @Override
     public String toString() {
-        return this.titolo;
+        return this.fileBrano.getName();
     }
 
     @Override
     public boolean equals(Object obj) {
         Brano b = (Brano) obj;
-        return this.nomeFile == b.nomeFile || this.titolo == b.titolo;
+        return this.fileBrano.equals(b) || this.fileBrano.getName() == b.fileBrano.getName();
     }
 
     public int getAutovalutazione() {
@@ -80,18 +77,14 @@ public class Brano {
     }
 
     public String getNomeFile() {
-        return nomeFile;
+        return this.fileBrano.getAbsolutePath();
     }
 
     public void setNomeFile(String nomeFile) {
-        this.nomeFile = nomeFile;
+        this.fileBrano = new File(nomeFile);
     }
 
     public String getTitolo() {
-        return titolo;
-    }
-
-    public void setTitolo(String titolo) {
-        this.titolo = titolo;
+        return this.fileBrano.getName();
     }
 }
