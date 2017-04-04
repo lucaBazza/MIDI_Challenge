@@ -1,8 +1,11 @@
 package midiapp.midi_challenge;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,19 +28,23 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import android.content.Context;
-import android.hardware.Camera;
+import android.hardware.camera2.*;
 import android.hardware.Camera.PictureCallback;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.GET_ACCOUNTS;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 /**
  * @author lucabazzanella
@@ -53,6 +60,8 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
 
     Camera camera;
     Button brnFotocamera;
+    private static final int REQUEST_GET_ACCOUNT = 112;
+    private static final int PERMISSION_REQUEST_CODE = 200;
 
     private static FunzioniDatabase funzioniDatabase = null;
 
@@ -131,28 +140,58 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {  //chiede permessi lettura SD
         switch (requestCode) {
             case 1: { // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0  && grantResults[0] == PackageManager.PERMISSION_GRANTED) { // permission was granted, yay! Do the contacts-related task you need to do.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) { // permission was granted, yay! Do the contacts-related task you need to do.
                     File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file
                     //File input = new File(sdcard, dir+"Chopin_EtudesOp10n1.mid"); //campanella.mid  Chopin_EtudesOp10n1.mid  happyBD.mid
                     File input = new File(brano.nomeFile);
-                    try {  midiFile = new MidiFile(input);
-                        if(midiFile!=null) {
+                    try {
+                        midiFile = new MidiFile(input);
+                        if (midiFile != null) {
                             alMidi = new AlgoritmoMidi(midiFile);
                             showResults();
+                        } else {
+                            tvLog.setText("file midi null!");
                         }
-                        else{ tvLog.setText("file midi null!"); }
-                    }
-                    catch (IOException e) {
+                    } catch (IOException e) {
                         System.err.println("Error parsing MIDI file:");
                         e.printStackTrace();        //log.setText(e.toString());
-                        midiFile=null; return;
+                        midiFile = null;
+                        return;
                     }
+                } else {   // permission denied, boo! Disable the functionality that depends on this permission.
+                    Log.println(Log.ASSERT, "Errore lettura", "Permessi lettura SD negati!");
                 }
-                else {   // permission denied, boo! Disable the functionality that depends on this permission.
-                    Log.println(Log.ASSERT,"Errore lettura","Permessi lettura SD negati!"); }
                 break;
             }  // other 'case' lines to check for other permissions this app might request
-            default: break;
+            case PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+
+                    boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean cameraAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+
+                    if (locationAccepted && cameraAccepted)
+                        Toast.makeText(getApplicationContext(), "Permission Granted, Now you can access location data and camera", Toast.LENGTH_LONG).show();
+                    else {
+                        Toast.makeText(getApplicationContext(), "Permission Denied, You cannot access location data and camera", Toast.LENGTH_LONG).show();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (shouldShowRequestPermissionRationale(WRITE_EXTERNAL_STORAGE)) {
+                                showMessageOKCancel("You need to allow access to both the permissions",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                    requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE},
+                                                            PERMISSION_REQUEST_CODE);
+                                                }
+                                            }
+                                        });
+                                return;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
         }
     }
 
@@ -169,9 +208,11 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
          int cameraId = 0;
         // do we have a camera?
         if (checkCameraHardware(this)){
+            ActivityCompat.requestPermissions(this, new String[]{GET_ACCOUNTS, CAMERA}, REQUEST_GET_ACCOUNT);
             try {
-                camera = android.hardware.Camera.open(cameraId);
-                camera.takePicture(null, null, new PhotoHandler(getApplicationContext()));
+                    CameraManager manager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
+                    String[] cameraIds = manager.getCameraIdList();
+                    CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraIds[cameraId]);
             }
             catch (Exception e){
                 Log.d("Debug", e.toString());
@@ -202,6 +243,14 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             // no camera on this device
             return false;
         }
+    }
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new android.support.v7.app.AlertDialog.Builder(this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
     }
 
 }
