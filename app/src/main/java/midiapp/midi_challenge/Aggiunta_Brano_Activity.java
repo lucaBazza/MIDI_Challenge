@@ -1,32 +1,27 @@
 package midiapp.midi_challenge;
 
-import android.Manifest;
 import android.content.Intent;
-import android.graphics.Path;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v4.util.ArraySet;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.security.Permission;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Aggiunta_Brano_Activity extends AppCompatActivity {
+public class Aggiunta_Brano_Activity extends AppCompatActivity{
 
     FunzioniDatabase db = null;
 
@@ -43,28 +38,29 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
 
     ArrayAdapter<String> file_list_adapter = null;
 
-    ArraySet<File> selectedFiles = new ArraySet<File>();
+    ArraySet<String> selectedFiles = new ArraySet<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiunta__brano);
-
         db = new FunzioniDatabase(getBaseContext());
+
+        List<Brano> braniPresenti = db.trovaUtente(getIntent().getLongExtra("id_utente",-1)).getBraniUtente();
 
         ActionBar ac = this.getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
         ac.setTitle("Aggiugi Brano");
 
         Spinner sp = (Spinner) findViewById(R.id.spinner_aggiunta_brani);
-        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,R.array.folders_aggiunta_brano,R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,R.array.cartelle_aggiunta_brano,R.layout.support_simple_spinner_dropdown_item);
         spinnerAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
 
         sp.setAdapter(spinnerAdapter);
         File downloadFolderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
         file_list_adapter = new ArrayAdapter<String>(this,R.layout.checkbox_item_multiple_selection,R.id.textview_multiple_selection_item);
-        ListView lv = (ListView)findViewById(R.id.lista_brani_trovati);
+        final ListView lv = (ListView)findViewById(R.id.lista_brani_trovati);
 
         lv.setAdapter(file_list_adapter);
 
@@ -76,11 +72,14 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
             file_list_adapter.notifyDataSetChanged();
         }
 
-        List<Brano> braniPresenti = db.trovaUtente(getIntent().getLongExtra("id_utente",-1)).getBraniUtente();
-        for(Brano b : braniPresenti){
-            File f = new File(b.getNomeFile());
-
+        for(File f : midiFiles){
+            Brano b = new Brano(f.getAbsolutePath(),0);
+            if(db.trovaBrano(b.getTitolo()).getIdBrano() == -1) {
+                db.inserisci(b);
+            }
         }
+
+        lv.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -93,10 +92,10 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
                     case 1:
                         downloadFolderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
                         break;
-                    case 2: //TODO: implement file browsing activity
+                    case 2:
                         downloadFolderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
                         break;
-                    case 3:
+                    case 3: //TODO: implement file browsing activity
                         break;
                 }
                 file_list_adapter.clear();
@@ -116,37 +115,25 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
             }
         });
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                CheckBox cb = (CheckBox) view.findViewById(R.id.checkbox_multiple_selection_item);
-                cb.toggle();
-                selectedFiles.add(midiFiles[i]);    //assunzione: l'ordine dei file non cambia durante l'esecuzione della activity
-            }
-        });
-
         Button btn = (Button)findViewById(R.id.btn_aggiungi_brano);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!selectedFiles.isEmpty()) {
-                    Utente u = db.trovaUtente(getIntent().getLongExtra("id_utente",-1));
-                    List<Brano> braniUtente = db.braniUtente(u.getIdUtente());  //dammit
-                    List<Brano> braniPresenti = db.prendiTuttiBrani();
-
-                    for (File f : selectedFiles) {
-                        Brano b = new Brano(f.getName(), f.getPath(), 0);
-                        if(! braniPresenti.contains(b)){
-                            db.inserisci(b);
-                        }
-                        if(! braniUtente.contains(b)) {
-                            db.inserisciBranoPerUtente(u,b,0);
-                        }
+                SparseBooleanArray selected = lv.getCheckedItemPositions();
+                for(int i = 0; i < selected.size(); i++){
+                    if(selected.valueAt(i)){
+                        selectedFiles.add(file_list_adapter.getItem(i));
                     }
-                    Intent i = new Intent(getBaseContext(), MainActivity.class);
-                    i.putExtra("id_utente", getIntent().getLongExtra("id_utente", 1));
-                    startActivity(i);
                 }
+                for(String path : selectedFiles){
+                    File f = new File(path);
+                    Utente utenteCorrente = db.trovaUtente(getIntent().getLongExtra("id_utente",-1));
+                    Brano b = new Brano(f.getAbsolutePath(),0);
+                    db.inserisciBranoPerUtente(utenteCorrente,b,0);
+                }
+                Intent i = new Intent(getBaseContext(),MainActivity.class);
+                i.putExtra("id_utente", getIntent().getLongExtra("id_utente", 1));
+                startActivity(i);
             }
         });
     }
@@ -161,4 +148,6 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity {
         }
         return true;
     }
+
+
 }

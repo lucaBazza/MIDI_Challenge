@@ -15,16 +15,15 @@
     tools:context="midiapp.midi_challenge.Login_Activity">
 
     <GridView
+        android:id="@+id/layout_griglia_utenti"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/layout_griglia_utenti"
         android:layout_gravity="center_vertical"
         android:layout_weight="0.8"
-        android:numColumns="auto_fit"
-        android:verticalSpacing="20dp"
+        android:background="@color/background_material_light_1"
         android:horizontalSpacing="20dp"
-        android:background="@color/colorAccent">
-    </GridView>
+        android:numColumns="auto_fit"
+        android:verticalSpacing="20dp"></GridView>
 
 
     <LinearLayout

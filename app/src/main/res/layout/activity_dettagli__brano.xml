@@ -79,4 +79,15 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+    <Button
+        android:id="@+id/btnFotocamera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/roundcorner"
+        android:elevation="0dp"
+        android:text="Aggiungi Spartito"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
 </LinearLayout>

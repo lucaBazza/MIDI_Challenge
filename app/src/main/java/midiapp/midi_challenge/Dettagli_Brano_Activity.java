@@ -1,10 +1,8 @@
 package midiapp.midi_challenge;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,12 +13,31 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.pdrogfer.mididroid.MidiFile;
-import com.pdrogfer.mididroid.event.meta.Text;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import android.content.Context;
+import android.hardware.Camera;
+import android.hardware.Camera.PictureCallback;
+import android.os.Environment;
+import android.util.Log;
+import android.widget.Toast;
+import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.hardware.Camera;
+import android.hardware.Camera.CameraInfo;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 /**
  * @author lucabazzanella
@@ -33,6 +50,9 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     MidiFile midiFile;
     TextView tvLog;
     TextView tvInfo1;
+
+    Camera camera;
+    Button brnFotocamera;
 
     private static FunzioniDatabase funzioniDatabase = null;
 
@@ -51,7 +71,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             public void onClick(View view) {
 
                 File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file  //campanella.mid  Chopin_EtudesOp10n1.mid  happyBD.mid
-                File input = new File(brano.nomeFile);
+                File input = new File(brano.getNomeFile());
                 try {  midiFile = new MidiFile(input);
                     if(midiFile!=null) {
                         alMidi = new AlgoritmoMidi(midiFile);
@@ -63,6 +83,14 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
                     e.printStackTrace();        //log.setText(e.toString());
                     midiFile=null; return;
                 }
+            }
+        });
+
+        brnFotocamera = (Button)findViewById(R.id.btnFotocamera);
+        brnFotocamera.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                shootFoto();
             }
         });
 
@@ -84,10 +112,8 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     private void showResults(){
         List<String> out = alMidi.calc();
         Iterator i = out.iterator();
-        //Log.println(Log.ASSERT,"Out Algo", "Algo Concluso!");
         tvInfo1.setText("Livello di difficoltà brano: "+alMidi.punteggio);
         tvLog.setText("Algoritmo concluso! righe output: "+out.size());
-        //while(i.hasNext()) Log.println(Log.ASSERT,"Out Algo", i.toString());
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -108,7 +134,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
                 if (grantResults.length > 0  && grantResults[0] == PackageManager.PERMISSION_GRANTED) { // permission was granted, yay! Do the contacts-related task you need to do.
                     File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file
                     //File input = new File(sdcard, dir+"Chopin_EtudesOp10n1.mid"); //campanella.mid  Chopin_EtudesOp10n1.mid  happyBD.mid
-                    File input = new File(brano.nomeFile);
+                    File input = new File(brano.getNomeFile());
                     try {  midiFile = new MidiFile(input);
                         if(midiFile!=null) {
                             alMidi = new AlgoritmoMidi(midiFile);
@@ -129,4 +155,53 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             default: break;
         }
     }
+
+    @Override
+    protected void onPause() {
+        if (camera != null) {
+            camera.release();
+            camera = null;
+        }
+        super.onPause();
+    }
+
+    void shootFoto(){
+         int cameraId = 0;
+        // do we have a camera?
+        if (checkCameraHardware(this)){
+            try {
+                camera = android.hardware.Camera.open(cameraId);
+                camera.takePicture(null, null, new PhotoHandler(getApplicationContext()));
+            }
+            catch (Exception e){
+                Log.d("Debug", e.toString());
+            }
+        }
+        else { Log.println(Log.ASSERT,"Foto","No camera found!");  }
+    }
+    private int findFrontFacingCamera() {
+        int cameraId = -1;
+        // Search for the front facing camera
+        int numberOfCameras = Camera.getNumberOfCameras();
+        for (int i = 0; i < numberOfCameras; i++) {
+            CameraInfo info = new CameraInfo();
+            Camera.getCameraInfo(i, info);
+            if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
+                Log.d("Debug", "Camera found");
+                cameraId = i;
+                break;
+            }
+        }
+        return cameraId;
+    }
+    private boolean checkCameraHardware(Context context) {
+        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
+            // this device has a camera
+            return true;
+        } else {
+            // no camera on this device
+            return false;
+        }
+    }
+
 }

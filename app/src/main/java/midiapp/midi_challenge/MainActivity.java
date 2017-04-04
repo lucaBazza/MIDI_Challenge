@@ -60,18 +60,6 @@ public class MainActivity extends AppCompatActivity {
             utente = funzioniDatabase.trovaUtente(getIntent().getLongExtra("id_utente",-1));
         }
 
-        //====================================================================================================================
-        //public Utente(String nickName, String foto, String strumento, int punteggioMassimo, int punteggioMedio)
-        // utente = new Utente("Paolo","URLfoto","SEX",1205,324);                                                      //UTENTE DI DEBUG
-        //public Brano(long idBrano, String titolo, String nomeFile, int difficoltà,int autovalutazione)
-        /*for(int i =0;i<5;i++){
-            brano = new Brano(-1,"campanella"+i,"campanella.mid",-1,-1);                                                   //BRANO DI DEBUG
-            funzioniDatabase.inserisci(brano);
-            funzioniDatabase.inserisciBranoPerUtente(utente,brano,-1);                                                  //LINK UTENTE-BRANO DI DEBU
-        }*/
-
-        //====================================================================================================================
-
         final ListView ListViewXmlListaBrani = (ListView) findViewById(R.id.lista_brani_utente);
         final List<Brano> braniUtente = funzioniDatabase.braniUtente(utente.getIdUtente());
 
