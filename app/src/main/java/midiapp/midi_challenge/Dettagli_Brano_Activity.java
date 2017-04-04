@@ -34,6 +34,8 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     TextView tvLog;
     TextView tvInfo1;
 
+    Button brnFotocamera = (Button)findViewById(R.id.brnFotocamera);
+
     private static FunzioniDatabase funzioniDatabase = null;
 
     @Override
@@ -63,6 +65,13 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
                     e.printStackTrace();        //log.setText(e.toString());
                     midiFile=null; return;
                 }
+            }
+        });
+
+        brnFotocamera.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                shootFoto();
             }
         });
 
@@ -128,5 +137,10 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             }  // other 'case' lines to check for other permissions this app might request
             default: break;
         }
+    }
+
+    void shootFoto(){
+        
+
     }
 }
