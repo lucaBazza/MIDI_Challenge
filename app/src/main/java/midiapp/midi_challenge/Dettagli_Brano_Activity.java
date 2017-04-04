@@ -80,7 +80,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             public void onClick(View view) {
 
                 File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file  //campanella.mid  Chopin_EtudesOp10n1.mid  happyBD.mid
-                File input = new File(brano.nomeFile);
+                File input = new File(brano.getNomeFile());
                 try {  midiFile = new MidiFile(input);
                     if(midiFile!=null) {
                         alMidi = new AlgoritmoMidi(midiFile);
@@ -143,6 +143,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) { // permission was granted, yay! Do the contacts-related task you need to do.
                     File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file
                     //File input = new File(sdcard, dir+"Chopin_EtudesOp10n1.mid"); //campanella.mid  Chopin_EtudesOp10n1.mid  happyBD.mid
+
                     File input = new File(brano.nomeFile);
                     try {
                         midiFile = new MidiFile(input);

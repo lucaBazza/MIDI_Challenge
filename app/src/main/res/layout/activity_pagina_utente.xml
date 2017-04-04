@@ -36,7 +36,6 @@
 
         <Button
             android:id="@+id/buttonCancellaBrani"
-            style="@android:style/Widget.Material.Button.Colored"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -70,7 +69,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/textViewPU1"
             android:layout_below="@+id/btnChangeStr"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="9dp" />
 
         <TextView
             android:text="Totale Brani: "
@@ -82,11 +82,14 @@
 
         <Button
             android:id="@+id/btnCambiaFoto"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="Cambia foto"
+            android:layout_alignEnd="@+id/btnChangeStr"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:background="@drawable/roundcorner"
+            android:text="Cambia foto"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tw_log_pagUser"
@@ -98,11 +101,14 @@
 
         <Button
             android:id="@+id/btnChangeStr"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/roundcorner"
             android:text="Aggiorna Strumento"
+            android:textColor="@android:color/white"
             android:layout_below="@+id/tbStrum"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="9dp" />
 
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>
