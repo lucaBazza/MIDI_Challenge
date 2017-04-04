@@ -46,7 +46,7 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
         setContentView(R.layout.activity_aggiunta__brano);
         db = new FunzioniDatabase(getBaseContext());
 
-        List<Brano> braniPresenti = db.trovaUtente(getIntent().getLongExtra("id_utente",-1)).getBraniUtente();
+        List<Brano> braniUtente = db.trovaUtente(getIntent().getLongExtra("id_utente",-1)).getBraniUtente();
 
         ActionBar ac = this.getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
@@ -67,7 +67,9 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
         final File[] midiFiles = downloadFolderPath.listFiles(midiFilter);
         if(midiFiles != null){
             for(File f : midiFiles){
-                file_list_adapter.add(f.getName());
+                if(! braniUtente.contains(f)) {
+                    file_list_adapter.add(f.getName());
+                }
             }
             file_list_adapter.notifyDataSetChanged();
         }
