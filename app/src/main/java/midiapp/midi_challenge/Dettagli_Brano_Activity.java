@@ -1,10 +1,8 @@
 package midiapp.midi_challenge;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,12 +13,31 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.pdrogfer.mididroid.MidiFile;
-import com.pdrogfer.mididroid.event.meta.Text;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import android.content.Context;
+import android.hardware.Camera;
+import android.hardware.Camera.PictureCallback;
+import android.os.Environment;
+import android.util.Log;
+import android.widget.Toast;
+import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.hardware.Camera;
+import android.hardware.Camera.CameraInfo;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 /**
  * @author lucabazzanella
@@ -34,7 +51,8 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     TextView tvLog;
     TextView tvInfo1;
 
-    Button brnFotocamera = (Button)findViewById(R.id.brnFotocamera);
+    Camera camera;
+    Button brnFotocamera;
 
     private static FunzioniDatabase funzioniDatabase = null;
 
@@ -68,6 +86,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             }
         });
 
+        brnFotocamera = (Button)findViewById(R.id.btnFotocamera);
         brnFotocamera.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -93,10 +112,8 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     private void showResults(){
         List<String> out = alMidi.calc();
         Iterator i = out.iterator();
-        //Log.println(Log.ASSERT,"Out Algo", "Algo Concluso!");
         tvInfo1.setText("Livello di difficoltà brano: "+alMidi.punteggio);
         tvLog.setText("Algoritmo concluso! righe output: "+out.size());
-        //while(i.hasNext()) Log.println(Log.ASSERT,"Out Algo", i.toString());
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -139,8 +156,52 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         }
     }
 
-    void shootFoto(){
-        
-
+    @Override
+    protected void onPause() {
+        if (camera != null) {
+            camera.release();
+            camera = null;
+        }
+        super.onPause();
     }
+
+    void shootFoto(){
+         int cameraId = 0;
+        // do we have a camera?
+        if (checkCameraHardware(this)){
+            try {
+                camera = android.hardware.Camera.open(cameraId);
+                camera.takePicture(null, null, new PhotoHandler(getApplicationContext()));
+            }
+            catch (Exception e){
+                Log.d("Debug", e.toString());
+            }
+        }
+        else { Log.println(Log.ASSERT,"Foto","No camera found!");  }
+    }
+    private int findFrontFacingCamera() {
+        int cameraId = -1;
+        // Search for the front facing camera
+        int numberOfCameras = Camera.getNumberOfCameras();
+        for (int i = 0; i < numberOfCameras; i++) {
+            CameraInfo info = new CameraInfo();
+            Camera.getCameraInfo(i, info);
+            if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
+                Log.d("Debug", "Camera found");
+                cameraId = i;
+                break;
+            }
+        }
+        return cameraId;
+    }
+    private boolean checkCameraHardware(Context context) {
+        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
+            // this device has a camera
+            return true;
+        } else {
+            // no camera on this device
+            return false;
+        }
+    }
+
 }
