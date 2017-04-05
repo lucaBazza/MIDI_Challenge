@@ -3,6 +3,7 @@ package midiapp.midi_challenge;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -144,7 +145,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
                     File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file
                     //File input = new File(sdcard, dir+"Chopin_EtudesOp10n1.mid"); //campanella.mid  Chopin_EtudesOp10n1.mid  happyBD.mid
 
-                    File input = new File(brano.nomeFile);
+                    File input = new File(brano.getNomeFile());
                     try {
                         midiFile = new MidiFile(input);
                         if (midiFile != null) {
@@ -211,7 +212,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         if (checkCameraHardware(this)){
             ActivityCompat.requestPermissions(this, new String[]{GET_ACCOUNTS, CAMERA}, REQUEST_GET_ACCOUNT);
             try {
-                    CameraManager manager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
+                    CameraManager manager = (CameraManager) getBaseContext().getSystemService(Context.CAMERA_SERVICE);
                     String[] cameraIds = manager.getCameraIdList();
                     CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraIds[cameraId]);
             }

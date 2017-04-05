@@ -50,84 +50,105 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //cartella predefinita in cui sono contenuti i file .midi
-        File cartellaPredefinita = new File(Environment.getExternalStorageDirectory(),"MidiChallenge");
+        File cartellaPredefinita = new File(Environment.getExternalStorageDirectory(), "MidiChallenge");
 
-        if(! cartellaPredefinita.exists()){
+        if (!cartellaPredefinita.exists()) {
             cartellaPredefinita.mkdir();
         }
 
-        if(getIntent().hasExtra("id_utente")){
-            utente = funzioniDatabase.trovaUtente(getIntent().getLongExtra("id_utente",-1));
+        if (getIntent().hasExtra("id_utente")) {
+            utente = funzioniDatabase.trovaUtente(getIntent().getLongExtra("id_utente", -1));
         }
 
-        final ListView ListViewXmlListaBrani = (ListView) findViewById(R.id.lista_brani_utente);
-        final List<Brano> braniUtente = funzioniDatabase.braniUtente(utente.getIdUtente());
+        if (utente != null) {
 
-        if(braniUtente != null) {
-            ArrayAdapterListaBrani = new ArrayAdapter<Brano>(this, R.layout.brani_list_element, braniUtente);
-            ListViewXmlListaBrani.setAdapter(ArrayAdapterListaBrani);
-            if(braniUtente.isEmpty()){
-                Toast.makeText(getBaseContext(),"Nessun Brano Trovato!",Toast.LENGTH_LONG);
-            }
-        }
-        else
-            ArrayAdapterListaBrani.notifyDataSetChanged();
+            final ListView ListViewXmlListaBrani = (ListView) findViewById(R.id.lista_brani_utente);
+            final List<Brano> braniUtente = funzioniDatabase.braniUtente(utente.getIdUtente());
 
-        ListViewXmlListaBrani.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Brano selezione = braniUtente.get(position);
-                Intent aperturaDettagliBrano = new Intent(getApplicationContext(),Dettagli_Brano_Activity.class);
-                aperturaDettagliBrano.putExtra("id_brano",selezione.getIdBrano());
-                aperturaDettagliBrano.putExtra("id_utente",utente.getIdUtente());
-                startActivity(aperturaDettagliBrano);
-            }
-        });
-
-        tv = (TextView)findViewById(R.id.textView);
-        tv.setMovementMethod(new ScrollingMovementMethod());
-
-        mActivityTitles = new String[]{"Home","Profilo","Registratore","Metronomo","Accordatore", "Impostazioni","Cambia Utente"};
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-        // Set the adapter for the list view
-        ArrayAdapter<String> xxxx  = new ArrayAdapter<String>(this, R.layout.drawer_list_item, mActivityTitles);        mDrawerList.setAdapter(xxxx);
-        // Set the list's click listener    //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent testIntent;
-                switch (position){ // "Home","Profilo","Registratore","Metronomo","Accordatore, Impostazioni","Logout"
-                    case 0: testIntent = new Intent(getApplicationContext(),MainActivity.class); break;
-                    case 1: testIntent = new Intent(getApplicationContext(),ActivityPaginaUtente.class); break;
-                    case 2: testIntent = new Intent(getApplicationContext(),Registratore_Activity.class); break;
-                    case 3: testIntent = new Intent(getApplicationContext(),MetronomoActivity.class); break;
-                    case 4: testIntent = new Intent(getApplicationContext(),AccordatoreActivity.class); break;
-                    case 5: testIntent = new Intent(getApplicationContext(),Impostazioni_Activity.class); break; //IMPOSTAZIONI ACTIVITY
-                    case 6: testIntent = new Intent(getApplicationContext(),Login_Activity.class); break; //Domanda prima di uscire!
-                    default: testIntent = null;
+            if (braniUtente != null) {
+                ArrayAdapterListaBrani = new ArrayAdapter<Brano>(this, R.layout.brani_list_element, braniUtente);
+                ListViewXmlListaBrani.setAdapter(ArrayAdapterListaBrani);
+                if (braniUtente.isEmpty()) {
+                    Toast.makeText(getBaseContext(), "Nessun Brano Trovato!", Toast.LENGTH_LONG);
                 }
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                if(testIntent!= null) {  //Log.println(Log.ASSERT,"activity","Pos: "+ position+"  activity: "+testIntent.toString());
-                    testIntent.putExtra("id_utente",utente.getIdUtente());
-                    startActivity(testIntent);
-                }
-            }
-        });
+            } else
+                ArrayAdapterListaBrani.notifyDataSetChanged();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(getBaseContext(),Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            ListViewXmlListaBrani.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Brano selezione = braniUtente.get(position);
+                    Intent aperturaDettagliBrano = new Intent(getApplicationContext(), Dettagli_Brano_Activity.class);
+                    aperturaDettagliBrano.putExtra("id_brano", selezione.getIdBrano());
+                    aperturaDettagliBrano.putExtra("id_utente", utente.getIdUtente());
+                    startActivity(aperturaDettagliBrano);
+                }
+            });
+
+            tv = (TextView) findViewById(R.id.textView);
+            tv.setMovementMethod(new ScrollingMovementMethod());
+
+            mActivityTitles = new String[]{"Home", "Profilo", "Registratore", "Metronomo", "Accordatore", "Impostazioni", "Cambia Utente"};
+            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+            // Set the adapter for the list view
+            ArrayAdapter<String> xxxx = new ArrayAdapter<String>(this, R.layout.drawer_list_item, mActivityTitles);
+            mDrawerList.setAdapter(xxxx);
+            // Set the list's click listener    //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+            mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent testIntent;
+                    switch (position) { // "Home","Profilo","Registratore","Metronomo","Accordatore, Impostazioni","Logout"
+                        case 0:
+                            testIntent = new Intent(getApplicationContext(), MainActivity.class);
+                            break;
+                        case 1:
+                            testIntent = new Intent(getApplicationContext(), ActivityPaginaUtente.class);
+                            break;
+                        case 2:
+                            testIntent = new Intent(getApplicationContext(), Registratore_Activity.class);
+                            break;
+                        case 3:
+                            testIntent = new Intent(getApplicationContext(), MetronomoActivity.class);
+                            break;
+                        case 4:
+                            testIntent = new Intent(getApplicationContext(), AccordatoreActivity.class);
+                            break;
+                        case 5:
+                            testIntent = new Intent(getApplicationContext(), Impostazioni_Activity.class);
+                            break; //IMPOSTAZIONI ACTIVITY
+                        case 6:
+                            testIntent = new Intent(getApplicationContext(), Login_Activity.class);
+                            break; //Domanda prima di uscire!
+                        default:
+                            testIntent = null;
+                    }
+                    mDrawerLayout.closeDrawer(Gravity.LEFT);
+                    if (testIntent != null) {  //Log.println(Log.ASSERT,"activity","Pos: "+ position+"  activity: "+testIntent.toString());
+                        testIntent.putExtra("id_utente", utente.getIdUtente());
+                        startActivity(testIntent);
+                    }
+                }
+            });
+
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
                         Intent i = new Intent(getBaseContext(), Aggiunta_Brano_Activity.class);
                         i.putExtra("id_utente", utente.getIdUtente());
                         startActivity(i);
+                    }
                 }
-            }
-        });
-        setTitle(utente.getNickName());
+            });
+            setTitle(utente.getNickName());
+        } else {
+            LoginDialog dg = new LoginDialog();
+            dg.show(getFragmentManager(), "Login");
+        }
     }
 
     /**
