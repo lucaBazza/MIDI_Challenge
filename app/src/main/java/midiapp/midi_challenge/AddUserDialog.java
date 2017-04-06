@@ -9,26 +9,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by Paolo on 05/04/2017.
+ * Created by Paolo on 06/04/2017.
  */
 
-public class LoginDialog extends DialogFragment {
+public class AddUserDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.setTitle("Seleziona Utente");
+        dialog.setTitle("Aggiungi Utente");
         return dialog;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_login_activity,container,false);
+        View v = inflater.inflate(R.layout.add_user_layout,container,false);
+
+        return v;
     }
 }

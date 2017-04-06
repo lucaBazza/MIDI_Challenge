@@ -7,15 +7,14 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import java.io.File;
-import java.io.FileFilter;
-import java.security.Permission;
 import java.util.List;
-import java.util.Random;
 
 import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
@@ -25,7 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -99,36 +97,36 @@ public class MainActivity extends AppCompatActivity {
             mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent testIntent;
+                    Intent prossimaActivity;
                     switch (position) { // "Home","Profilo","Registratore","Metronomo","Accordatore, Impostazioni","Logout"
                         case 0:
-                            testIntent = new Intent(getApplicationContext(), MainActivity.class);
+                            prossimaActivity = new Intent(getApplicationContext(), MainActivity.class);
                             break;
                         case 1:
-                            testIntent = new Intent(getApplicationContext(), ActivityPaginaUtente.class);
+                            prossimaActivity = new Intent(getApplicationContext(), ActivityPaginaUtente.class);
                             break;
                         case 2:
-                            testIntent = new Intent(getApplicationContext(), Registratore_Activity.class);
+                            prossimaActivity = new Intent(getApplicationContext(), Registratore_Activity.class);
                             break;
                         case 3:
-                            testIntent = new Intent(getApplicationContext(), MetronomoActivity.class);
+                            prossimaActivity = new Intent(getApplicationContext(), MetronomoActivity.class);
                             break;
                         case 4:
-                            testIntent = new Intent(getApplicationContext(), AccordatoreActivity.class);
+                            prossimaActivity = new Intent(getApplicationContext(), AccordatoreActivity.class);
                             break;
                         case 5:
-                            testIntent = new Intent(getApplicationContext(), Impostazioni_Activity.class);
+                            prossimaActivity = new Intent(getApplicationContext(), Impostazioni_Activity.class);
                             break; //IMPOSTAZIONI ACTIVITY
                         case 6:
-                            testIntent = new Intent(getApplicationContext(), Login_Activity.class);
+                            prossimaActivity = new Intent(getApplicationContext(), Login_Activity.class);
                             break; //Domanda prima di uscire!
                         default:
-                            testIntent = null;
+                            prossimaActivity = null;
                     }
                     mDrawerLayout.closeDrawer(Gravity.LEFT);
-                    if (testIntent != null) {  //Log.println(Log.ASSERT,"activity","Pos: "+ position+"  activity: "+testIntent.toString());
-                        testIntent.putExtra("id_utente", utente.getIdUtente());
-                        startActivity(testIntent);
+                    if (prossimaActivity != null) {  //Log.println(Log.ASSERT,"activity","Pos: "+ position+"  activity: "+testIntent.toString());
+                        prossimaActivity.putExtra("id_utente", utente.getIdUtente());
+                        startActivity(prossimaActivity);
                     }
                 }
             });
@@ -146,8 +144,9 @@ public class MainActivity extends AppCompatActivity {
             });
             setTitle(utente.getNickName());
         } else {
-            LoginDialog dg = new LoginDialog();
-            dg.show(getFragmentManager(), "Login");
+            /*ChooseUserDialog dg = new ChooseUserDialog();
+
+            dg.show(getFragmentManager(), "Login");*/
         }
     }
 

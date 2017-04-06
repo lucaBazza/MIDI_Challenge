@@ -37,7 +37,7 @@
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:id="@+id/edtTxt_nomeUtente"
             android:hint="Nome Utente..."
             android:maxLength="30"
