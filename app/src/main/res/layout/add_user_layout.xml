@@ -2,25 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/edtTxt_nomeUtente"
             android:hint="Nome Utente..."
             android:maxLength="30"
-            android:maxLines="1"/>
+            android:maxLines="1" />
 
         <Button
             android:layout_height="wrap_content"
-            android:text="Inserisci \n Utente"
-            android:layout_marginLeft="50dp"
+            android:text="AGGIUNGI"
             android:id="@+id/btn_nuovo_utente"
             android:textColor="@android:color/white"
             android:background="@drawable/roundcorner"
             android:layout_width="match_parent" />
-    </LinearLayout>
 </LinearLayout>

@@ -50,7 +50,8 @@ public class ChooseUserDialog extends DialogFragment {
                 Utente u = db.trovaUtente(listaUtenti.get(i).getIdUtente());
                 Intent activityUtente = new Intent(getActivity().getBaseContext(),MainActivity.class);
                 activityUtente.putExtra("id_utente",u.getIdUtente());
-                //activityUtente.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                activityUtente.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                activityUtente.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(activityUtente);
             }
         });

@@ -28,7 +28,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends GenericMIDIChallengeActivity {
     //Static Declarations
     static TextView log, tv;
 
@@ -125,8 +125,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                     mDrawerLayout.closeDrawer(Gravity.LEFT);
                     if (prossimaActivity != null) {  //Log.println(Log.ASSERT,"activity","Pos: "+ position+"  activity: "+testIntent.toString());
-                        prossimaActivity.putExtra("id_utente", utente.getIdUtente());
-                        startActivity(prossimaActivity);
+                        if (prossimaActivity.filterEquals(new Intent(getApplicationContext(),Login_Activity.class))) {//TODO: ugly, change it. ASAP.
+                            ChooseUserDialog dg = new ChooseUserDialog();
+                            dg.show(getFragmentManager(),"Cambia Utente");
+                        }else{
+                            prossimaActivity.putExtra("id_utente", utente.getIdUtente());
+                            startActivity(prossimaActivity);
+                        }
                     }
                 }
             });
@@ -144,23 +149,21 @@ public class MainActivity extends AppCompatActivity {
             });
             setTitle(utente.getNickName());
         } else {
-            /*ChooseUserDialog dg = new ChooseUserDialog();
+            ChooseUserDialog dg = new ChooseUserDialog();
 
-            dg.show(getFragmentManager(), "Login");*/
+            dg.show(getFragmentManager(), "Login");
         }
     }
 
-    /**
-     *  crea il pulsante menù nella action bar del programma
-     * @param menu il menù xml in res/menu/ da usare
-     * @return
-     */
+
+    /*
     @Override
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inf = getMenuInflater();
         inf.inflate(R.menu.button_action_bar,menu);
         return true;
-    }
+    } */
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -174,11 +177,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * permette di visualizzare e/o nascondere il drawer/menùLaterale
-     * @param item menù sul quale viene triggerato l'evento
-     * @return
-     */
+
+   /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return true;
-    }
+    } */
 
     @Override
     public void onResume() {
