@@ -1,5 +1,6 @@
 package midiapp.midi_challenge;
 
+import android.os.Environment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,14 +9,30 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.io.File;
+
 public class GenericMIDIChallengeActivity extends AppCompatActivity {
 
-    FunzioniDatabase funzioniDatabaseComuni = null;
+    FunzioniDatabase db = null;
+
+    File cartellaPredefinita = new File(Environment.getExternalStorageDirectory(), "MidiChallenge");
+
+    public FunzioniDatabase getDb() {
+        return db;
+    }
+
+    public void setDb(FunzioniDatabase db) {
+        this.db = db;
+    }
+
+    public File getCartellaPredefinita() {
+        return cartellaPredefinita;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        funzioniDatabaseComuni = new FunzioniDatabase(this.getBaseContext());
+        db = new FunzioniDatabase(this.getBaseContext());
     }
 
     @Override

@@ -44,11 +44,11 @@ public class MainActivity extends GenericMIDIChallengeActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        funzioniDatabase = new FunzioniDatabase(this.getBaseContext());
+        funzioniDatabase = getDb();
         setContentView(R.layout.activity_main);
 
         //cartella predefinita in cui sono contenuti i file .midi
-        File cartellaPredefinita = new File(Environment.getExternalStorageDirectory(), "MidiChallenge");
+        File cartellaPredefinita = getCartellaPredefinita();
 
         if (!cartellaPredefinita.exists()) {
             cartellaPredefinita.mkdir();
@@ -149,21 +149,11 @@ public class MainActivity extends GenericMIDIChallengeActivity {
             });
             setTitle(utente.getNickName());
         } else {
-            ChooseUserDialog dg = new ChooseUserDialog();
-
+            //ChooseUserDialog dg = new ChooseUserDialog();
+            AddUserDialog dg = new AddUserDialog();
             dg.show(getFragmentManager(), "Login");
         }
     }
-
-
-    /*
-    @Override
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inf = getMenuInflater();
-        inf.inflate(R.menu.button_action_bar,menu);
-        return true;
-    } */
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -176,22 +166,6 @@ public class MainActivity extends GenericMIDIChallengeActivity {
                 break;
         }
     }
-
-
-   /*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.show_navigation_drawer :
-                    DrawerLayout drw = (DrawerLayout)findViewById(R.id.drawer_layout);
-                    if(!drw.isDrawerOpen(Gravity.LEFT))
-                        drw.openDrawer(Gravity.LEFT);
-                    else
-                        drw.closeDrawer(Gravity.LEFT);
-                break;
-        }
-        return true;
-    } */
 
     @Override
     public void onResume() {

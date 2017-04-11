@@ -45,9 +45,8 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiunta__brano);
         db = new FunzioniDatabase(getBaseContext());
-
         List<Brano> braniUtente = db.trovaUtente(getIntent().getLongExtra("id_utente",-1)).getBraniUtente();
-
+        
         ActionBar ac = this.getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
         ac.setTitle("Aggiugi Brano");
