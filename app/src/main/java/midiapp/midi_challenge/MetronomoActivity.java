@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class MetronomoActivity extends AppCompatActivity {
+public class MetronomoActivity extends GenericMIDIChallengeActivity {
     int cont = 120;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

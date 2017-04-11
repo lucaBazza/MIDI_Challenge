@@ -17,6 +17,11 @@ public class Utente {
 
     List<Brano> braniUtente;
 
+    //'dummy' constructor used when creating a new user for the first time.
+    public Utente(String nickName) {
+        this.nickName = nickName;
+    }
+
     public Utente(long idUtente, String nickName, String foto, String strumento, int punteggioMassimo, int punteggioMedio) {
         this.foto = foto;
         this.idUtente = idUtente;

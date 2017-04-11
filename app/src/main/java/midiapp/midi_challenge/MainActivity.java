@@ -2,6 +2,7 @@ package midiapp.midi_challenge;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -53,6 +54,8 @@ public class MainActivity extends GenericMIDIChallengeActivity {
         if (!cartellaPredefinita.exists()) {
             cartellaPredefinita.mkdir();
         }
+
+        SharedPreferences sp = getPreferences(0);
 
         if (getIntent().hasExtra("id_utente")) {
             utente = funzioniDatabase.trovaUtente(getIntent().getLongExtra("id_utente", -1));
@@ -149,8 +152,7 @@ public class MainActivity extends GenericMIDIChallengeActivity {
             });
             setTitle(utente.getNickName());
         } else {
-            //ChooseUserDialog dg = new ChooseUserDialog();
-            AddUserDialog dg = new AddUserDialog();
+            ChooseUserDialog dg = new ChooseUserDialog();
             dg.show(getFragmentManager(), "Login");
         }
     }
