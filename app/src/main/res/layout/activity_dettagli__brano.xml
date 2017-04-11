@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:id="@+id/activity_dettagli__brano"
@@ -10,18 +11,26 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="midiapp.midi_challenge.Dettagli_Brano_Activity">
+        tools:context="midiapp.midi_challenge.Dettagli_Brano_Activity"
+    android:weightSum="1">
 
     <Button
         android:id="@+id/buttonProvaCaricaBrano"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
         android:background="@drawable/roundcorner"
         android:elevation="0dp"
         android:text="Elabora Brano"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="30px">
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvLog"
@@ -31,59 +40,51 @@
         android:textAlignment="center"
         android:textColor="@android:color/black" />
 
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="30px">
-            <TextView
-                android:id="@+id/lbl_Titolo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Titolo : "/>
-            <TextView
-                android:id="@+id/txt_TitoloBrano"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+    <TextView
+        android:id="@+id/lbl_Titolo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Titolo : " />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="30px">
-            <TextView
-                android:id="@+id/lbl_Info1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Etc : "/>
-            <TextView
-                android:id="@+id/txt_Info1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+    <TextView
+        android:id="@+id/txt_TitoloBrano"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="30px">
-            <TextView
-                android:id="@+id/lbl_Info2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Etc : "/>
-            <TextView
-                android:id="@+id/txt_Info2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+    <TextView
+        android:id="@+id/lbl_Info1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Etc : " />
+
+    <TextView
+        android:id="@+id/txt_Info1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/lbl_Info2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Etc : " />
+
+    <TextView
+        android:id="@+id/txt_Info2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/imgViewSpartitoDemo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.53"
+        app:srcCompat="@android:drawable/ic_menu_report_image" />
 
     <Button
         android:id="@+id/btnFotocamera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/roundcorner"
         android:elevation="0dp"
         android:text="Aggiungi Spartito"

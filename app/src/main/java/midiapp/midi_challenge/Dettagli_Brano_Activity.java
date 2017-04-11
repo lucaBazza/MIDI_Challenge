@@ -3,17 +3,22 @@ package midiapp.midi_challenge;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pdrogfer.mididroid.MidiFile;
@@ -63,6 +68,8 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     Button brnFotocamera;
     private static final int REQUEST_GET_ACCOUNT = 112;
     private static final int PERMISSION_REQUEST_CODE = 200;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_TAKE_PHOTO = 1;
 
     private static FunzioniDatabase funzioniDatabase = null;
 
@@ -212,9 +219,13 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         if (checkCameraHardware(this)){
             ActivityCompat.requestPermissions(this, new String[]{GET_ACCOUNTS, CAMERA}, REQUEST_GET_ACCOUNT);
             try {
-                    CameraManager manager = (CameraManager) getBaseContext().getSystemService(Context.CAMERA_SERVICE);
+                    /*CameraManager manager = (CameraManager) getBaseContext().getSystemService(Context.CAMERA_SERVICE);
                     String[] cameraIds = manager.getCameraIdList();
-                    CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraIds[cameraId]);
+                    CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraIds[cameraId]);*/
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                    }
             }
             catch (Exception e){
                 Log.d("Debug", e.toString());
@@ -222,7 +233,31 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         }
         else { Log.println(Log.ASSERT,"Foto","No camera found!");  }
     }
-    private int findFrontFacingCamera() {
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile(dir);
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Log.d("Error I/O",ex.toString());
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
+    }
+
+    /*private int findFrontFacingCamera() {
         int cameraId = -1;
         // Search for the front facing camera
         int numberOfCameras = Camera.getNumberOfCameras();
@@ -236,7 +271,8 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             }
         }
         return cameraId;
-    }
+    }*/
+
     private boolean checkCameraHardware(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
             // this device has a camera
@@ -253,6 +289,30 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
                 .setNegativeButton("Cancel", null)
                 .create()
                 .show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {     //restituisce l'immagine dopo che è stato chiamato l'intent alla fotocamera
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ((ImageView)findViewById(R.id.imgViewSpartitoDemo)).setImageBitmap(imageBitmap); //visualizza l'immagine scattata su un imageview demo
+        }
+    }
+
+    private File createImageFile(String percorso) throws IOException { //Crea un file con la foto
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        // Save a file: path for use with ACTION_VIEW intents
+        percorso = image.getAbsolutePath();
+        return image;
     }
 
 }
