@@ -2,15 +2,19 @@ package midiapp.midi_challenge;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 
 import java.util.List;
@@ -19,7 +23,7 @@ import java.util.List;
  * Created by Paolo on 05/04/2017.
  */
 
-public class ChooseUserDialog extends DialogFragment {
+public class ChooseUserDialog extends DialogFragment implements DialogInterface.OnDismissListener {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
@@ -65,8 +69,23 @@ public class ChooseUserDialog extends DialogFragment {
             }
         });
 
+        Button btnAddUser = (Button) v.findViewById(R.id.btn_nuovo_utente);
+        if(btnAddUser!=null){
+            btnAddUser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AddUserDialog dg = new AddUserDialog();
+                    dg.show(getFragmentManager(),"");
+                }
+            });
+        }
+
         return v;
     }
 
-
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        getActivity().recreate();
+    }
 }

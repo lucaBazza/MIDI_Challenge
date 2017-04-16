@@ -8,18 +8,22 @@ import java.util.List;
  */
 
 public class Utente {
-    long idUtente;
-    String nickName;
-    String foto;
-    int punteggioMassimo;
-    int punteggioMedio;
-    String strumento;
+    long idUtente = -1;
+    String nickName = "";
+    String foto = "";
+    int punteggioMassimo = 0;
+    int punteggioMedio = 0;
+    String strumento = "";
 
     List<Brano> braniUtente;
 
     //'dummy' constructor used when creating a new user for the first time.
     public Utente(String nickName) {
         this.nickName = nickName;
+        this.foto = "";
+        this.punteggioMassimo = 0;
+        this.punteggioMedio = 0;
+        this.strumento = "";
     }
 
     public Utente(long idUtente, String nickName, String foto, String strumento, int punteggioMassimo, int punteggioMedio) {
@@ -33,12 +37,12 @@ public class Utente {
     }
 
     public Utente(String nickName, String foto, String strumento, int punteggioMassimo, int punteggioMedio) {
-        this.foto = foto;
+        this.setFoto(foto);
         this.nickName = nickName;
         this.punteggioMassimo = punteggioMassimo;
         this.punteggioMedio = punteggioMedio;
         this.braniUtente = new ArrayList<>();
-        this.strumento = strumento;
+        this.setStrumento(strumento);
     }
 
     @Override
@@ -55,19 +59,32 @@ public class Utente {
     }
 
     public String getStrumento() {
-        return strumento;
+        if(this.strumento==null)
+            return "defaultInstrument"; //TODO: dammit, again. Find a better way to indicate that someone hasn't selected an instument at all
+        else
+            return strumento;
     }
 
     public void setStrumento(String strumento) {
-        this.strumento = strumento;
+
+        if(strumento!=null)
+            this.strumento=strumento;
+        else
+            this.strumento = "defaultInstrument";
     }
 
     public String getFoto() {
-        return foto;
+        if(this.foto == null)
+            return "/defaultImage.png"; //TODO:DAMMIT
+        else
+            return foto;
     }
 
     public void setFoto(String foto) {
-        this.foto = foto;
+        if(foto != null)
+            this.foto = foto;
+        else
+            this.foto = "/defaultImage.png";
     }
 
     public String getNickName() {

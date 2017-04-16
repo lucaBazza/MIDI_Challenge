@@ -111,7 +111,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             }
         });
 
-        if(brano!=null) setTitle("Dettagli brano: "+brano.getTitolo());     //TITOLO
+        if(brano!=null) setTitle(brano.getTitolo());
         else setTitle("Dettagli brano: non disponibile!");
         tvLog = (TextView)findViewById(R.id.tvLog);
         TextView txtTitolo = (TextView) findViewById(R.id.txt_TitoloBrano);
