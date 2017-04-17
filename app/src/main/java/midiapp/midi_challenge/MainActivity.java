@@ -55,10 +55,17 @@ public class MainActivity extends GenericMIDIChallengeActivity {
             cartellaPredefinita.mkdir();
         }
 
-        SharedPreferences sp = getPreferences(0);
-
         if (getIntent().hasExtra("id_utente")) {
             utente = funzioniDatabase.trovaUtente(getIntent().getLongExtra("id_utente", -1));
+            SharedPreferences sp = getPreferences(MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putLong("id_utente",utente.getIdUtente());
+            editor.commit();
+        }
+
+        SharedPreferences sp = getPreferences(MODE_PRIVATE);
+        if(sp.contains("id_utente")) {
+            utente = funzioniDatabase.trovaUtente(sp.getLong("id_utente", -1));
         }
 
         if (utente != null) {
@@ -175,5 +182,13 @@ public class MainActivity extends GenericMIDIChallengeActivity {
         if(ArrayAdapterListaBrani!=null)
             ArrayAdapterListaBrani.notifyDataSetChanged();
         else {}
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory(Intent.CATEGORY_HOME);
+        startActivity(homeIntent);
+        finish();
     }
 }

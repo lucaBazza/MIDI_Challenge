@@ -36,9 +36,9 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
         }
     };
 
-    ArrayAdapter<String> file_list_adapter = null;
+    ArrayAdapter<Brano> file_list_adapter = null;
 
-    ArraySet<String> selectedFiles = new ArraySet<String>();
+    ArraySet<Brano> selectedFiles = new ArraySet<Brano>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
         sp.setAdapter(spinnerAdapter);
         File downloadFolderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
-        file_list_adapter = new ArrayAdapter<String>(this,R.layout.checkbox_item_multiple_selection,R.id.textview_multiple_selection_item);
+        file_list_adapter = new ArrayAdapter<Brano>(this,R.layout.checkbox_item_multiple_selection,R.id.textview_multiple_selection_item);
         final ListView lv = (ListView)findViewById(R.id.lista_brani_trovati);
 
         lv.setAdapter(file_list_adapter);
@@ -67,20 +67,18 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
         if(midiFiles != null){
             for(File f : midiFiles){
                 if(! braniUtente.contains(f)) {
-                    file_list_adapter.add(f.getName());
+                    file_list_adapter.add(new Brano(f.getName(),0));
                 }
             }
             file_list_adapter.notifyDataSetChanged();
         }
 
         for(File f : midiFiles){
-            Brano b = new Brano(f.getAbsolutePath(),0);
-            if(db.trovaBrano(b.getTitolo()).getIdBrano() == -1) {
+            Brano b = new Brano(f.getName(),f,0);
+            if(db.trovaBrano(b.getTitolo()) == null) {
                 db.inserisci(b);
             }
         }
-
-        lv.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -103,7 +101,7 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
                 File[] midiFiles = downloadFolderPath.listFiles(midiFilter);
                 if(midiFiles != null){
                     for(File f : midiFiles){
-                        file_list_adapter.add(f.getName());
+                        file_list_adapter.add(new Brano(f.getName(),f,-1));
                     }
                     ListView lv = (ListView) findViewById(R.id.lista_brani_trovati);
                     lv.setAdapter(file_list_adapter);
@@ -126,10 +124,8 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
                         selectedFiles.add(file_list_adapter.getItem(i));
                     }
                 }
-                for(String path : selectedFiles){
-                    File f = new File(path);
+                for(Brano b : selectedFiles){
                     Utente utenteCorrente = db.trovaUtente(getIntent().getLongExtra("id_utente",-1));
-                    Brano b = new Brano(f.getAbsolutePath(),0);
                     db.inserisciBranoPerUtente(utenteCorrente,b,0);
                 }
                 Intent i = new Intent(getBaseContext(),MainActivity.class);

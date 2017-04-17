@@ -115,7 +115,7 @@ public class FunzioniDatabase {
         if (res.moveToFirst()){
             return new Brano(res.getInt(0),res.getString(2),res.getInt(3));
         }else{
-            return  new Brano(-1,"",0);
+            return  null;
         }
     }
 
@@ -144,6 +144,11 @@ public class FunzioniDatabase {
     }
 
     public long inserisciBranoPerUtente(Utente u, Brano b, int autovalutazione){
+
+        if(trovaBrano(b.getTitolo()) == null){
+            inserisci(b);
+        }
+
         ContentValues cv = new ContentValues();
         cv.put("idUtente",u.idUtente);
         cv.put("idBrano",b.idBrano);

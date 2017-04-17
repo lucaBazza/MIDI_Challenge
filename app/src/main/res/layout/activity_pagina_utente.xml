@@ -27,24 +27,24 @@
 
         <ImageView
             android:id="@+id/imageViewFotoUtente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:maxHeight="50dp"
-            android:maxWidth="50dp"
+            android:maxHeight="150dp"
+            android:maxWidth="150dp"
             app:srcCompat="@android:drawable/sym_def_app_icon" />
 
         <Button
             android:id="@+id/buttonCancellaBrani"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="115dp"
+            android:layout_marginBottom="72dp"
             android:background="@drawable/roundcorner"
             android:text="Cancella Brani"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:layout_above="@+id/tw_log_pagUser"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:id="@+id/tbStrum"
@@ -85,12 +85,12 @@
             android:id="@+id/btnCambiaFoto"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/btnChangeStr"
-            android:layout_alignParentTop="true"
             android:background="@drawable/roundcorner"
             android:text="Cambia foto"
             android:textColor="@android:color/white"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:id="@+id/tw_log_pagUser"
@@ -104,12 +104,12 @@
             android:id="@+id/btnChangeStr"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/tbStrum"
-            android:layout_marginTop="9dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/roundcorner"
             android:text="Aggiorna Strumento"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:layout_below="@+id/textViewPU2"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

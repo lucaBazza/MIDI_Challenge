@@ -41,6 +41,13 @@ public class Brano {
         this.autovalutazione = -1;
     }
 
+    public Brano(String nomeFile, File path, int difficoltà) {
+        this.idBrano = -1;
+        this.fileBrano = path;
+        this.difficoltà = difficoltà;
+        this.autovalutazione = -1;
+    }
+
     @Override
     public String toString() {
         return this.fileBrano.getName();
