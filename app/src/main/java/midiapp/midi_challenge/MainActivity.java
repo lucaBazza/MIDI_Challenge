@@ -44,9 +44,10 @@ public class MainActivity extends GenericMIDIChallengeActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+        setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);
         funzioniDatabase = getDb();
-        setContentView(R.layout.activity_main);
+
 
         //cartella predefinita in cui sono contenuti i file .midi
         File cartellaPredefinita = getCartellaPredefinita();
@@ -55,18 +56,7 @@ public class MainActivity extends GenericMIDIChallengeActivity {
             cartellaPredefinita.mkdir();
         }
 
-        if (getIntent().hasExtra("id_utente")) {
-            utente = funzioniDatabase.trovaUtente(getIntent().getLongExtra("id_utente", -1));
-            SharedPreferences sp = getPreferences(MODE_PRIVATE);
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putLong("id_utente",utente.getIdUtente());
-            editor.commit();
-        }
-
-        SharedPreferences sp = getPreferences(MODE_PRIVATE);
-        if(sp.contains("id_utente")) {
-            utente = funzioniDatabase.trovaUtente(sp.getLong("id_utente", -1));
-        }
+        utente = utenteCorrente;
 
         if (utente != null) {
 
@@ -100,6 +90,7 @@ public class MainActivity extends GenericMIDIChallengeActivity {
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
+/*
             // Set the adapter for the list view
             ArrayAdapter<String> xxxx = new ArrayAdapter<String>(this, R.layout.drawer_list_item, mActivityTitles);
             mDrawerList.setAdapter(xxxx);
@@ -145,6 +136,7 @@ public class MainActivity extends GenericMIDIChallengeActivity {
                     }
                 }
             });
+*/
 
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
             fab.setOnClickListener(new View.OnClickListener() {

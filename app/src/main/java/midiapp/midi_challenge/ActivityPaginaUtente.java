@@ -30,7 +30,7 @@ import java.util.List;
 
 import static midiapp.midi_challenge.MainActivity.funzioniDatabase;
 
-public class ActivityPaginaUtente extends AppCompatActivity {
+public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
 
     Utente utente = null;
     ImageView imgProfilo;
@@ -39,8 +39,8 @@ public class ActivityPaginaUtente extends AppCompatActivity {
     TextView tbStrum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pagina_utente);
+        super.onCreate(savedInstanceState);
 
         if(getIntent().hasExtra("id_utente")){
             utente = funzioniDatabase.trovaUtente(getIntent().getLongExtra("id_utente",-1));
@@ -110,17 +110,6 @@ public class ActivityPaginaUtente extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inf = getMenuInflater();
         inf.inflate(R.menu.button_action_bar,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.home :
-                Intent i = new Intent(this,MainActivity.class);
-                i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));
-                startActivity(i);
-        }
         return true;
     }
 

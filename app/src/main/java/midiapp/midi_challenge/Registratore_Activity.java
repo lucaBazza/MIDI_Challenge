@@ -27,7 +27,7 @@ import android.widget.LinearLayout;
 import java.io.IOException;
 import java.util.Random;
 
-public class Registratore_Activity extends AppCompatActivity {
+public class Registratore_Activity extends GenericMIDIChallengeActivity {
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
@@ -117,6 +117,7 @@ public class Registratore_Activity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle icicle) {
+        setContentView(R.layout.activity_registratore_);
         super.onCreate(icicle);
         String dir ="MidiChallenge/";
         // Record to the external cache directory for visibility
@@ -164,18 +165,6 @@ public class Registratore_Activity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inf = getMenuInflater();
         inf.inflate(R.menu.button_action_bar,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case android.R.id.home:
-                Intent i = new Intent(this,MainActivity.class);
-                i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));
-                NavUtils.navigateUpTo(this,i);
-                break;
-        }
         return true;
     }
 

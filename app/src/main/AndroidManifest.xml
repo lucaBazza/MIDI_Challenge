@@ -46,7 +46,7 @@
         <activity android:name=".Info_Activity" />
         <activity android:name=".ActivityPaginaUtente" />
         <activity android:name=".MetronomoActivity" />
-        <activity android:name=".GenericMIDIChallengeActivity"></activity>
+        <activity android:name=".GenericMIDIChallengeActivity" />
     </application>
 
 </manifest>
