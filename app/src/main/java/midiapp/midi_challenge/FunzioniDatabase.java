@@ -97,6 +97,16 @@ public class FunzioniDatabase {
         return database.update("utente", cv, "idUtente="+u.idUtente, null);
     }
 
+    public int aggiornaBrano(Brano b){ // idBrano INTEGER PRIMARY KEY, titolo VARCHAR NOT NULL, nomeFile VARCHAR, difficoltà INTEGER DEFAULT -1 NOT NULL
+        ContentValues cv = new ContentValues();
+        cv.put("titolo",b.getTitolo()); //These Fields should be your String values of actual column names
+        /*cv.put("foto",b.foto);
+        cv.put("strumento");*/
+
+        Log.d("UPDATE DB",cv.toString());
+        return database.update("brano", cv, "idBrano="+b.idBrano, null);
+    }
+
     public Brano trovaBrano(long id){
         String[] colums = {"idBrano","titolo","nomeFile","difficoltà"};
         Cursor res = database.query(true,"brano",colums,"idBrano = ?",new String[] {Long.toString(id)},"","","","");

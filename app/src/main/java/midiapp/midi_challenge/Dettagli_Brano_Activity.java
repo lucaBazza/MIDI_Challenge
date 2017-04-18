@@ -25,6 +25,7 @@ import com.pdrogfer.mididroid.MidiFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
 
@@ -234,7 +235,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         else { Log.println(Log.ASSERT,"Foto","No camera found!");  }
     }
 
-    private void dispatchTakePictureIntent() {
+    /*private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -255,7 +256,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
         }
-    }
+    }*/
 
     /*private int findFrontFacingCamera() {
         int cameraId = -1;
@@ -297,21 +298,51 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ((ImageView)findViewById(R.id.imgViewSpartitoDemo)).setImageBitmap(imageBitmap); //visualizza l'immagine scattata su un imageview demo
+
+            try {
+                //String path = Environment.getExternalStorageDirectory().toString();
+                String path = GenericMIDIChallengeActivity.cartellaPredefinita.toString();
+                String nomeFile = "_"+brano.getTitolo()+"_" +new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis())+ ".jpg";
+                OutputStream fOut = null;
+                File file = new File(path,nomeFile ); // the File to save , append increasing numeric counter to prevent files from getting overwritten.
+                fOut = new FileOutputStream(file);
+
+                Bitmap pictureBitmap = (Bitmap) extras.get("data"); // obtaining the Bitmap//Bitmap pictureBitmap = getImageBitmap(myurl); // obtaining the Bitmap
+                pictureBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut); // saving the Bitmap to a file compressed as a JPEG with 85% compression rate
+                fOut.flush(); // Not really required
+                fOut.close(); // do not forget to close the stream
+                MediaStore.Images.Media.insertImage(getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
+
+                funzioniDatabase.
+            }
+            catch (Exception ex){
+                Toast.makeText(this, "Errore salvataggio immagine!", Toast.LENGTH_LONG).show();
+                Log.d("Errore i/o",ex.toString());
+            }
+
+            /*try{
+                createImageFile("pippo");
+                Log.d("I/O FOTO","Foto salvata correttamente!");
+            }
+            catch(IOException ex){
+                Toast.makeText(this, "Errore salvataggio immagine!", Toast.LENGTH_LONG).show();
+                Log.d("Errore i/o",ex.toString());
+            }*/
         }
     }
 
     private File createImageFile(String percorso) throws IOException { //Crea un file con la foto
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis());
+        //File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/Camera/");
+        File storageDir = new File( GenericMIDIChallengeActivity.cartellaPredefinita.toString());
+        if (!storageDir.exists())
+            storageDir.mkdirs();
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
+                timeStamp,                   /* prefix */
+                ".jpeg",                     /* suffix */
+                storageDir                   /* directory */
         );
-        // Save a file: path for use with ACTION_VIEW intents
-        percorso = image.getAbsolutePath();
         return image;
     }
 

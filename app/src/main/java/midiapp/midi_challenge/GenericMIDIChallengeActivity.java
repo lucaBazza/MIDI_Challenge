@@ -15,7 +15,7 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
 
     FunzioniDatabase db = null;
 
-    File cartellaPredefinita = new File(Environment.getExternalStorageDirectory(), "MidiChallenge");
+    static File cartellaPredefinita = new File(Environment.getExternalStorageDirectory(), "MidiChallenge");
 
     public FunzioniDatabase getDb() {
         return db;
