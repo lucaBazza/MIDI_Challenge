@@ -21,9 +21,9 @@ public class FunzioniDatabase {
     private Context internalContextDatabase = null;
 
     /*
-        Database Schema:
+        Database Schema:            idBrano INTEGER PRIMARY KEY, titolo VARCHAR NOT NULL,autore VARCHAR NOT NULL, nomeFile VARCHAR, arraySpartiti VARCHAR, difficoltà INTEGER DEFAULT -1 NOT NULL);";
         Utente(rowid,nickname,foto,punteggioMassimo,punteggioMedio)
-        Brano(rowid,titolo,nomeFile,difficoltà)
+        Brano(idBrano,titolo,autore, nomeFile, arraySpartitidifficoltà)
         relUtenteBrano(idUtente,idBrano)
      */
 
@@ -55,7 +55,9 @@ public class FunzioniDatabase {
     public long inserisci(Brano b){
         ContentValues cv = new ContentValues();
         cv.put("titolo",b.getTitolo());
+        cv.put("autore",b.autore);
         cv.put("nomeFile",b.getNomeFile());
+        cv.put("arraySpartiti",b.arraySpartiti);
         cv.put("difficoltà",b.difficoltà);
 
         long result = database.insert("brano","",cv);
@@ -131,11 +133,11 @@ public class FunzioniDatabase {
 
     public List<Brano> braniUtente(long idUtente){
         List<Brano> tmpList = new ArrayList<>();
-        String selectionQuery = "SELECT DISTINCT Brano.idBrano,titolo,nomeFile,difficoltà,autovalutazione FROM Brano JOIN relUtenteBrano WHERE idUtente = ?";
+        String selectionQuery = "SELECT DISTINCT Brano.idBrano,titolo,nomeFile,difficoltà,autovalutazione,autore,arraySpartiti FROM Brano JOIN relUtenteBrano WHERE idUtente = ?";
 
         Cursor res = database.rawQuery(selectionQuery,new String[]{Long.toString(idUtente)});
         while(res.moveToNext()){
-            tmpList.add(new Brano(res.getInt(0),res.getString(2),res.getInt(3),res.getInt(4)));
+            tmpList.add(new Brano(res.getInt(0),res.getString(2),res.getInt(3),res.getInt(4),res.getString(5),res.getString(6)));
         }
 
         return tmpList;
@@ -143,11 +145,11 @@ public class FunzioniDatabase {
 
     public List<Brano> braniUtente(String nickName){
         List<Brano> tmpList = new ArrayList<>();
-        String selectionQuery = "SELECT Brano.idBrano,titolo,nomeFile,difficoltà,autovalutazione FROM Brano JOIN relUtenteBrano JOIN Utente WHERE nickname = ?";
+        String selectionQuery = "SELECT Brano.idBrano,titolo,nomeFile,difficoltà,autovalutazione,autore,arraySpartiti FROM Brano JOIN relUtenteBrano JOIN Utente WHERE nickname = ?";
 
         Cursor res = database.rawQuery(selectionQuery,new String[]{nickName});
         while(res.moveToNext()){
-            tmpList.add(new Brano(res.getInt(0),res.getString(2),res.getInt(3),res.getInt(4)));
+            tmpList.add(new Brano(res.getInt(0),res.getString(2),res.getInt(3),res.getInt(4),res.getString(5),res.getString(6)));
         }
 
         return tmpList;

@@ -19,7 +19,7 @@ public class DatabaseApp extends SQLiteOpenHelper {
 
     private static String CREATE_USERS = "CREATE TABLE utente (idUtente INTEGER PRIMARY KEY, nickname VARCHAR NOT NULL,foto VARCHAR, strumento VARCHAR ,punteggioMassimo INTEGER DEFAULT -1, punteggioMedio INTEGER DEFAULT -1);";
 
-    private static String CREATE_BRANI = "CREATE TABLE brano (idBrano INTEGER PRIMARY KEY, titolo VARCHAR NOT NULL, nomeFile VARCHAR, difficoltà INTEGER DEFAULT -1 NOT NULL);";
+    private static String CREATE_BRANI = "CREATE TABLE brano (idBrano INTEGER PRIMARY KEY, titolo VARCHAR NOT NULL,autore VARCHAR, nomeFile VARCHAR, arraySpartiti VARCHAR, difficoltà INTEGER DEFAULT -1 NOT NULL);";
 
     private static String CREATE_REL_UTENTE_BRANO = "CREATE TABLE relUtenteBrano (idUtente int(32), idBrano int(32), autovalutazione int(32),FOREIGN KEY (idBrano) REFERENCES brano(idBrano), FOREIGN KEY (idUtente) REFERENCES  utente(idUtente));";
 

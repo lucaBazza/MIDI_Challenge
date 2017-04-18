@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Build;
@@ -26,6 +27,7 @@ import com.pdrogfer.mididroid.MidiFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -117,6 +119,21 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         tvLog = (TextView)findViewById(R.id.tvLog);
         TextView txtTitolo = (TextView) findViewById(R.id.txt_TitoloBrano);
         txtTitolo.setText(brano.getTitolo());
+
+        ImageView imgViewSpartitoDemo = (ImageView) findViewById(R.id.imgViewSpartitoDemo);    // CARICA FOTO spartito
+
+        if(!brano.arraySpartiti.isEmpty()){
+            String[] arr = brano.arraySpartiti.split(";");
+            File imgFile = new File(arr[0]);
+            if(imgFile.exists()){  // non trovando il file comunque entra nel if
+                Bitmap myBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()) ,500,500,true);
+                imgViewSpartitoDemo.setImageBitmap(myBitmap);
+            }
+            else {
+                Log.d("Errore spartito","non trovo spartito: "+arr[0]);
+                Toast.makeText(this, "Errore non trovo spartito!", Toast.LENGTH_LONG).show();
+            }
+        }
 
         tvInfo1 = (TextView)findViewById(R.id.lbl_Info1);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -235,45 +252,6 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         else { Log.println(Log.ASSERT,"Foto","No camera found!");  }
     }
 
-    /*private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile(dir);
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-                Log.d("Error I/O",ex.toString());
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-            }
-        }
-    }*/
-
-    /*private int findFrontFacingCamera() {
-        int cameraId = -1;
-        // Search for the front facing camera
-        int numberOfCameras = Camera.getNumberOfCameras();
-        for (int i = 0; i < numberOfCameras; i++) {
-            CameraInfo info = new CameraInfo();
-            Camera.getCameraInfo(i, info);
-            if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
-                Log.d("Debug", "Camera found");
-                cameraId = i;
-                break;
-            }
-        }
-        return cameraId;
-    }*/
-
     private boolean checkCameraHardware(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
             // this device has a camera
@@ -313,7 +291,11 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
                 fOut.close(); // do not forget to close the stream
                 MediaStore.Images.Media.insertImage(getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
 
-                funzioniDatabase.
+                //Aggiorna brano, inserendo la nuova foto nella rispettiva colonna
+                brano.arraySpartiti+=";"+path+nomeFile;
+                brano.autore = "Giovanni muchacha!";
+                Log.d("Database",brano.arraySpartiti);
+                funzioniDatabase.aggiornaBrano(brano);
             }
             catch (Exception ex){
                 Toast.makeText(this, "Errore salvataggio immagine!", Toast.LENGTH_LONG).show();
@@ -347,3 +329,42 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     }
 
 }
+
+    /*private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile(dir);
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Log.d("Error I/O",ex.toString());
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
+    }*/
+
+    /*private int findFrontFacingCamera() {
+        int cameraId = -1;
+        // Search for the front facing camera
+        int numberOfCameras = Camera.getNumberOfCameras();
+        for (int i = 0; i < numberOfCameras; i++) {
+            CameraInfo info = new CameraInfo();
+            Camera.getCameraInfo(i, info);
+            if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
+                Log.d("Debug", "Camera found");
+                cameraId = i;
+                break;
+            }
+        }
+        return cameraId;
+    }*/

@@ -11,12 +11,16 @@ public class Brano {
     File fileBrano;
     int difficoltà;
     int autovalutazione;
+    String autore;
+    String arraySpartiti;
 
-    public Brano(long idBrano, String nomeFile, int difficoltà,int autovalutazione) {
+    public Brano(long idBrano, String nomeFile, int difficoltà,int autovalutazione, String author,String arraySheets) {
         this.idBrano = idBrano;
         this.fileBrano = new File(nomeFile);
         this.difficoltà = difficoltà;
         this.autovalutazione = autovalutazione;
+        this.autore = author;
+        this.arraySpartiti = arraySheets;
     }
 
     public Brano(long idBrano, String nomeFile, int difficoltà) {
