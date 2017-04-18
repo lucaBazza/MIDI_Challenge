@@ -90,54 +90,6 @@ public class MainActivity extends GenericMIDIChallengeActivity {
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-/*
-            // Set the adapter for the list view
-            ArrayAdapter<String> xxxx = new ArrayAdapter<String>(this, R.layout.drawer_list_item, mActivityTitles);
-            mDrawerList.setAdapter(xxxx);
-            // Set the list's click listener    //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-            mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent prossimaActivity;
-                    switch (position) { // "Home","Profilo","Registratore","Metronomo","Accordatore, Impostazioni","Logout"
-                        case 0:
-                            prossimaActivity = new Intent(getApplicationContext(), MainActivity.class);
-                            break;
-                        case 1:
-                            prossimaActivity = new Intent(getApplicationContext(), ActivityPaginaUtente.class);
-                            break;
-                        case 2:
-                            prossimaActivity = new Intent(getApplicationContext(), Registratore_Activity.class);
-                            break;
-                        case 3:
-                            prossimaActivity = new Intent(getApplicationContext(), MetronomoActivity.class);
-                            break;
-                        case 4:
-                            prossimaActivity = new Intent(getApplicationContext(), AccordatoreActivity.class);
-                            break;
-                        case 5:
-                            prossimaActivity = new Intent(getApplicationContext(), Impostazioni_Activity.class);
-                            break; //IMPOSTAZIONI ACTIVITY
-                        case 6:
-                            prossimaActivity = new Intent(getApplicationContext(), Login_Activity.class);
-                            break; //Domanda prima di uscire!
-                        default:
-                            prossimaActivity = null;
-                    }
-                    mDrawerLayout.closeDrawer(Gravity.LEFT);
-                    if (prossimaActivity != null) {  //Log.println(Log.ASSERT,"activity","Pos: "+ position+"  activity: "+testIntent.toString());
-                        if (prossimaActivity.filterEquals(new Intent(getApplicationContext(),Login_Activity.class))) {//TODO: ugly, change it. ASAP.
-                            ChooseUserDialog dg = new ChooseUserDialog();
-                            dg.show(getFragmentManager(),"Cambia Utente");
-                        }else{
-                            prossimaActivity.putExtra("id_utente", utente.getIdUtente());
-                            startActivity(prossimaActivity);
-                        }
-                    }
-                }
-            });
-*/
-
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -154,6 +106,8 @@ public class MainActivity extends GenericMIDIChallengeActivity {
             ChooseUserDialog dg = new ChooseUserDialog();
             dg.show(getFragmentManager(), "Login");
         }
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
     }
 
     @Override
