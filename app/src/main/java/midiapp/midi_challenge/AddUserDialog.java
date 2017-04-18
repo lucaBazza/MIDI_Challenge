@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
@@ -44,6 +45,9 @@ public class AddUserDialog extends DialogFragment {
                 if (idNuovoUtente != -1) {
                     Toast.makeText(getActivity().getBaseContext(), "Inserimento Completato", Toast.LENGTH_SHORT).show();
                     dismiss();
+                    Intent i = new Intent(getActivity().getApplicationContext(),MainActivity.class);
+                    i.putExtra("id_utente",idNuovoUtente);
+                    startActivity(i);
                 }
             }
         });

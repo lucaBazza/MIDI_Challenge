@@ -24,13 +24,13 @@
         <LinearLayout
             android:id="@+id/LinearLayoutContanier1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/LinearLayoutListaBrani"
                 android:layout_width="264dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:weightSum="1">
                 <!-- android:background="@android:color/holo_orange_light"-->
@@ -47,7 +47,7 @@
                 <ListView
                     android:id="@+id/lista_brani_utente"
                     android:layout_width="244dp"
-                    android:layout_height="300dp"
+                    android:layout_height="400dp"
                     android:layout_marginLeft="6dp"
                     android:layout_weight="0.93"
                     android:choiceMode="singleChoice" />
@@ -61,8 +61,7 @@
                 android:clickable="true"
                 app:elevation="24dp"
                 app:fabSize="mini"
-                app:layout_anchor="@id/content_frame"
-                app:layout_anchorGravity="bottom|right|end"
+                app:layout_anchor="@id/LinearLayoutContanier1"
                 app:srcCompat="@drawable/ic_add_something" />
 
         </LinearLayout>
