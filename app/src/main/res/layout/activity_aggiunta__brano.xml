@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <TabHost
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_aggiunta__brano"
+    android:id="@+id/aggiunta_brano_tab_host"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -12,29 +13,61 @@
     tools:context="midiapp.midi_challenge.Aggiunta_Brano_Activity"
     android:weightSum="100">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nuovi brani trovati nella cartella specificata:" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/spinner_aggiunta_brani">
-    </Spinner>
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible" />
 
-    <ListView
-        android:id="@+id/lista_brani_trovati"
-        android:layout_width="match_parent"
-        android:layout_height="100pt"
-        android:choiceMode="multipleChoice"/>
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_aggiungi_brano"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="AGGIUNGI"
-        android:textAlignment="center"
-        android:textAllCaps="true" />
+                <LinearLayout
+                    android:id="@+id/tabSelezioneCartella"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-</LinearLayout>
+                    <Spinner
+                        android:id="@+id/spinner_aggiunta_brani"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"></Spinner>
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nuovi brani trovati nella cartella specificata:" />
+
+                    <Button
+                        android:id="@+id/btn_aggiungi_brano"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="AGGIUNGI"
+                        android:textAlignment="center"
+                        android:textAllCaps="true" />
+
+                    <ListView
+                        android:id="@+id/lista_brani_trovati"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:choiceMode="multipleChoice" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tabFileBrowser"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>

@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TabHost;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -62,6 +63,23 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
         final ListView lv = (ListView)findViewById(R.id.lista_brani_trovati);
 
         lv.setAdapter(file_list_adapter);
+
+        TabHost host = (TabHost) findViewById(R.id.aggiunta_brano_tab_host);
+        host.setup();
+
+
+        TabHost.TabSpec tabSelezione = host.newTabSpec("Selezione");
+        tabSelezione.setContent(R.id.tabSelezioneCartella);
+        tabSelezione.setIndicator("Da Cartella...");
+        host.addTab(tabSelezione);
+
+
+        TabHost.TabSpec tabFileBroser = host.newTabSpec("File");
+        tabFileBroser.setContent(R.id.tabFileBrowser);
+        tabFileBroser.setIndicator("Da File...");
+        host.addTab(tabFileBroser);
+
+        host.setCurrentTab(0);
 
         final File[] midiFiles = downloadFolderPath.listFiles(midiFilter);
         if(midiFiles != null){

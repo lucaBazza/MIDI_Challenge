@@ -4,8 +4,6 @@
         <item>MIDI_FILES</item>
         <item>Musica</item>
         <item>Download</item>
-        <item>Scegli Percorso...</item>
-        <!--only two of them ATM-->
     </string-array>
 
 </resources>
