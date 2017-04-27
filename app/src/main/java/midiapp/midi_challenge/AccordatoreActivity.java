@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 
 import java.io.IOException;
 
-public class AccordatoreActivity extends AppCompatActivity {
+public class AccordatoreActivity extends GenericMIDIChallengeActivity {
     MediaPlayer mPlayer;
 
     @Override
@@ -46,19 +46,7 @@ public class AccordatoreActivity extends AppCompatActivity {
         inf.inflate(R.menu.button_action_bar,menu);
         return true;
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case android.R.id.home:
-                Intent i = new Intent(this,MainActivity.class);
-                i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));
-                NavUtils.navigateUpTo(this,i);
-                break;
-        }
-        return true;
-    }
-
+    
     public void onDestroy() {
         mPlayer.stop();
         super.onDestroy();
