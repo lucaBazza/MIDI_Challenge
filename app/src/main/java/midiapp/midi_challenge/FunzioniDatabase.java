@@ -8,6 +8,7 @@ import android.hardware.camera2.params.StreamConfigurationMap;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -57,7 +58,10 @@ public class FunzioniDatabase {
         cv.put("titolo",b.getTitolo());
         cv.put("autore",b.autore);
         cv.put("nomeFile",b.getNomeFile());
-        cv.put("arraySpartiti",b.arraySpartiti);
+        String help="";
+        for(String x : b.arraySpartiti)
+            help += x+";";
+        cv.put("arraySpartiti",help);
         cv.put("difficoltà",b.difficoltà);
 
         long result = database.insert("brano","",cv);
@@ -99,17 +103,24 @@ public class FunzioniDatabase {
         return database.update("utente", cv, "idUtente="+u.idUtente, null);
     }
 
-    public int aggiornaBrano(Brano b){ // idBrano INTEGER PRIMARY KEY, titolo VARCHAR NOT NULL, nomeFile VARCHAR, difficoltà INTEGER DEFAULT -1 NOT NULL
-        ContentValues cv = new ContentValues();
-        cv.put("titolo",b.getTitolo()); //These Fields should be your String values of actual column names
-        /*cv.put("foto",b.foto);
-        cv.put("strumento");*/
+    public int aggiornaBrano(Brano b){ // idBrano INTEGER PRIMARY KEY, titolo VARCHAR NOT NULL,autore VARCHAR, nomeFile VARCHAR, arraySpartiti VARCHAR, difficoltà INTEGER DEFAULT -1 NOT NULL
+        ContentValues cv = new ContentValues(); //These Fields should be your String values of actual column names
+        cv.put("titolo",b.getTitolo());
+        cv.put("autore",b.autore);
+        cv.put("nomeFile",b.getNomeFile());
+
+        String help="";
+        for(String x : b.arraySpartiti)
+            help += x+";";
+
+        cv.put("arraySpartiti",help);
+        cv.put("difficoltà",b.getDifficoltà());
 
         Log.d("UPDATE DB",cv.toString());
         return database.update("brano", cv, "idBrano="+b.idBrano, null);
     }
 
-    public Brano trovaBrano(long id){
+    public Brano trovaBrano(long id){ //DA AGGIORNARE!
         String[] colums = {"idBrano","titolo","nomeFile","difficoltà"};
         Cursor res = database.query(true,"brano",colums,"idBrano = ?",new String[] {Long.toString(id)},"","","","");
 
@@ -120,7 +131,7 @@ public class FunzioniDatabase {
         }
     }
 
-    public Brano trovaBrano(String titolo){
+    public Brano trovaBrano(String titolo){  //DA AGGIORNARE!
         String[] colums = {"idBrano","titolo","nomeFile","difficoltà"};
         Cursor res = database.query(true,"brano",colums,"titolo = ?",new String[] {titolo},"","","","");
 
@@ -137,7 +148,8 @@ public class FunzioniDatabase {
 
         Cursor res = database.rawQuery(selectionQuery,new String[]{Long.toString(idUtente)});
         while(res.moveToNext()){
-            tmpList.add(new Brano(res.getInt(0),res.getString(2),res.getInt(3),res.getInt(4),res.getString(5),res.getString(6)));
+            ArrayList<String> _arraySheets = new ArrayList<>(Arrays.asList(res.getString(6).split(";")));
+            tmpList.add(new Brano(res.getInt(0),res.getString(2),res.getInt(3),res.getInt(4),res.getString(5),_arraySheets));
         }
 
         return tmpList;
@@ -149,7 +161,8 @@ public class FunzioniDatabase {
 
         Cursor res = database.rawQuery(selectionQuery,new String[]{nickName});
         while(res.moveToNext()){
-            tmpList.add(new Brano(res.getInt(0),res.getString(2),res.getInt(3),res.getInt(4),res.getString(5),res.getString(6)));
+            ArrayList<String> _arraySheets = new ArrayList<>(Arrays.asList(res.getString(6).split(";")));
+            tmpList.add(new Brano(res.getInt(0),res.getString(2),res.getInt(3),res.getInt(4),res.getString(5),_arraySheets));
         }
 
         return tmpList;

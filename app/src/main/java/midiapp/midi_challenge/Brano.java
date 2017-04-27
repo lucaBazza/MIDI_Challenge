@@ -1,6 +1,7 @@
 package midiapp.midi_challenge;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Created by luca on 04/01/17.
@@ -12,9 +13,9 @@ public class Brano {
     int difficoltà;
     int autovalutazione;
     String autore;
-    String arraySpartiti;
+    ArrayList<String> arraySpartiti;
 
-    public Brano(long idBrano, String nomeFile, int difficoltà,int autovalutazione, String author,String arraySheets) {
+    public Brano(long idBrano, String nomeFile, int difficoltà,int autovalutazione, String author,ArrayList<String> arraySheets) {
         this.idBrano = idBrano;
         this.fileBrano = new File(nomeFile);
         this.difficoltà = difficoltà;
@@ -72,7 +73,9 @@ public class Brano {
     }
 
     public int getDifficoltà() {
-        return difficoltà;
+        if(difficoltà>0)
+            return difficoltà;
+        else return -1;
     }
 
     public void setDifficoltà(int difficoltà) {

@@ -37,6 +37,7 @@
 
                 <ListView
                     android:id="@+id/lista_brani_utente"
+                    style="@style/Widget.AppCompat.ListView.Menu"
                     android:layout_width="244dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"

@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -62,10 +63,13 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     public Brano brano = null;
     public Utente utente =null;
     private String dir = "MidiChallenge/";
+    String[] arraySheets = null;
     AlgoritmoMidi alMidi;
     MidiFile midiFile;
     TextView tvLog;
     TextView tvInfo1;
+    ImageButton imgBtnDeleteSpartiti;
+    Button btnBrano;
 
     Camera camera;
     Button brnFotocamera;
@@ -85,11 +89,13 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         funzioniDatabase = new FunzioniDatabase(getBaseContext());
         brano = funzioniDatabase.trovaBrano(l);
 
-        Button btnBrano = (Button) findViewById(R.id.buttonProvaCaricaBrano);       //BUTTON ELABORA MIDI
+        tvInfo1 = (TextView)findViewById(R.id.lbl_Info1);
+        imgBtnDeleteSpartiti = (ImageButton)findViewById(R.id.id_imgBtnDeleteSpartiti);
+        btnBrano = (Button) findViewById(R.id.buttonProvaCaricaBrano);       //BUTTON ELABORA MIDI
+
         btnBrano.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
                 File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file  //campanella.mid  Chopin_EtudesOp10n1.mid  happyBD.mid
                 File input = new File(brano.getNomeFile());
                 try {  midiFile = new MidiFile(input);
@@ -114,6 +120,12 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             }
         });
 
+        imgBtnDeleteSpartiti.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                CancellaArraySpartiti();
+            }
+        });
         if(brano!=null) setTitle(brano.getTitolo());
         else setTitle("Dettagli brano: non disponibile!");
         tvLog = (TextView)findViewById(R.id.tvLog);
@@ -122,20 +134,22 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
 
         ImageView imgViewSpartitoDemo = (ImageView) findViewById(R.id.imgViewSpartitoDemo);    // CARICA FOTO spartito
 
-        if(!brano.arraySpartiti.isEmpty()){
-            String[] arr = brano.arraySpartiti.split(";");
-            File imgFile = new File(arr[0]);
-            if(imgFile.exists()){  // non trovando il file comunque entra nel if
-                Bitmap myBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()) ,500,500,true);
-                imgViewSpartitoDemo.setImageBitmap(myBitmap);
-            }
-            else {
-                Log.d("Errore spartito","non trovo spartito: "+arr[0]);
-                Toast.makeText(this, "Errore non trovo spartito!", Toast.LENGTH_LONG).show();
+        if(brano.arraySpartiti!=null ) { //&& !brano.arraySpartiti.isEmpty()
+            Log.d("Carico spartiti_","totale spartiti trovati: " +arraySheets.length);
+            for(int i =0;i<arraySheets.length;i++) { //carica tutti gli spartiti
+                File imgFile = new File(arraySheets[i]);
+                if (imgFile.exists()) {  // non trovando il file comunque entra nel if
+                    Bitmap myBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()), 500, 500, true);
+                    imgViewSpartitoDemo.setImageBitmap(myBitmap);
+                } else {
+                    Log.d("Errore spartito", "non trovo spartito: " + arraySheets[0]);
+                    Toast.makeText(this, "Errore non trovo spartito!", Toast.LENGTH_LONG).show();
+                }
             }
         }
+        else { Log.d("Errore spartito","non trovo spartiti in array! _++_ NULL"); }
 
-        tvInfo1 = (TextView)findViewById(R.id.lbl_Info1);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -232,13 +246,11 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     }
 
     void shootFoto(){
-         int cameraId = 0;
-        // do we have a camera?
-        if (checkCameraHardware(this)){
+         //int cameraId = 0;
+        if (checkCameraHardware(this)){ // do we have a camera?
             ActivityCompat.requestPermissions(this, new String[]{GET_ACCOUNTS, CAMERA}, REQUEST_GET_ACCOUNT);
             try {
-                    /*CameraManager manager = (CameraManager) getBaseContext().getSystemService(Context.CAMERA_SERVICE);
-                    String[] cameraIds = manager.getCameraIdList();
+                    /*CameraManager manager = (CameraManager) getBaseContext().getSystemService(Context.CAMERA_SERVICE);   String[] cameraIds = manager.getCameraIdList();
                     CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraIds[cameraId]);*/
                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -253,11 +265,10 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     }
 
     private boolean checkCameraHardware(Context context) {
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
-            // this device has a camera
+        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){ // this device has a camera
             return true;
-        } else {
-            // no camera on this device
+        }
+        else {  // no camera on this device
             return false;
         }
     }
@@ -272,48 +283,47 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {     //restituisce l'immagine dopo che è stato chiamato l'intent alla fotocamera
+        boolean fotoCaricata = false;
+        File fileSalvataggio=null;
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ((ImageView)findViewById(R.id.imgViewSpartitoDemo)).setImageBitmap(imageBitmap); //visualizza l'immagine scattata su un imageview demo
-
             try {
-                //String path = Environment.getExternalStorageDirectory().toString();
                 String path = GenericMIDIChallengeActivity.cartellaPredefinita.toString();
-                String nomeFile = "_"+brano.getTitolo()+"_" +new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis())+ ".jpg";
-                OutputStream fOut = null;
-                File file = new File(path,nomeFile ); // the File to save , append increasing numeric counter to prevent files from getting overwritten.
-                fOut = new FileOutputStream(file);
+                //String nomeFile = "sheets_"+brano.getTitolo()+"_" +new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis())+ ".jpg";
+                String nomeFile = "sheets_"+new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis())+ ".jpg";
+                fileSalvataggio = new File(path,nomeFile); // the File to save , append increasing numeric counter to prevent files from getting overwritten.
 
+                Log.d("SalvataggioSheets:_",path);
+                Log.d("SalvataggioSheets:_",nomeFile);
+                Log.d("SalvataggioSheets:_", fileSalvataggio.getAbsolutePath());
+
+                //OutputStream fOut = null;
+                OutputStream fOut = new FileOutputStream(fileSalvataggio);
                 Bitmap pictureBitmap = (Bitmap) extras.get("data"); // obtaining the Bitmap//Bitmap pictureBitmap = getImageBitmap(myurl); // obtaining the Bitmap
-                pictureBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut); // saving the Bitmap to a file compressed as a JPEG with 85% compression rate
+                pictureBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut); // saving the Bitmap to a file compressed as a JPEG with x% compression rate
                 fOut.flush(); // Not really required
-                fOut.close(); // do not forget to close the stream
-                MediaStore.Images.Media.insertImage(getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
-
-                //Aggiorna brano, inserendo la nuova foto nella rispettiva colonna
-                brano.arraySpartiti+=";"+path+nomeFile;
-                brano.autore = "Giovanni muchacha!";
-                Log.d("Database",brano.arraySpartiti);
-                funzioniDatabase.aggiornaBrano(brano);
+                fOut.close(); // do not forget to close the stream  //MediaStore.Images.Media.insertImage(getContentResolver(), fileSalvataggio.getAbsolutePath(), fileSalvataggio.getName(), fileSalvataggio.getName());
+                fotoCaricata=true;  //passa alla fase di aggiornamento del DB
             }
             catch (Exception ex){
                 Toast.makeText(this, "Errore salvataggio immagine!", Toast.LENGTH_LONG).show();
                 Log.d("Errore i/o",ex.toString());
             }
 
-            /*try{
-                createImageFile("pippo");
-                Log.d("I/O FOTO","Foto salvata correttamente!");
+            if(fotoCaricata){ //Aggiorna brano, inserendo la nuova foto nella rispettiva colonna
+                brano.arraySpartiti.add(fileSalvataggio.getAbsolutePath()); //brano.arraySpartiti+=";"+path+nomeFile;
+                brano.autore = "Giovanni muchacha!"; //modificare!
+                Log.d("DatabaseLog_",brano.arraySpartiti.toString());
+                if(funzioniDatabase.aggiornaBrano(brano)==1) Log.d("DatabaseLog: ","Riuscito  aggiorna brano!");
+                else Log.d("DatabaseLog: ","Failure !");
             }
-            catch(IOException ex){
-                Toast.makeText(this, "Errore salvataggio immagine!", Toast.LENGTH_LONG).show();
-                Log.d("Errore i/o",ex.toString());
-            }*/
+
         }
     }
 
-    private File createImageFile(String percorso) throws IOException { //Crea un file con la foto
+    /*private File createImageFile(String percorso) throws IOException { //Crea un file con la foto
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis());
         //File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/Camera/");
@@ -321,50 +331,17 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         if (!storageDir.exists())
             storageDir.mkdirs();
         File image = File.createTempFile(
-                timeStamp,                   /* prefix */
-                ".jpeg",                     /* suffix */
-                storageDir                   /* directory */
+                timeStamp,                   // prefix
+                ".jpeg",                     //suffix
+                storageDir                   // directory
         );
         return image;
+    }*/
+
+    private void CancellaArraySpartiti(){
+        brano.arraySpartiti = null;
+        if(funzioniDatabase.aggiornaBrano(brano)==1) Log.d("DatabaseLog: ","Riuscito  aggiorna brano!");
+        else Log.d("DatabaseLog: ","Failure !");
     }
 
 }
-
-    /*private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile(dir);
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-                Log.d("Error I/O",ex.toString());
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-            }
-        }
-    }*/
-
-    /*private int findFrontFacingCamera() {
-        int cameraId = -1;
-        // Search for the front facing camera
-        int numberOfCameras = Camera.getNumberOfCameras();
-        for (int i = 0; i < numberOfCameras; i++) {
-            CameraInfo info = new CameraInfo();
-            Camera.getCameraInfo(i, info);
-            if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
-                Log.d("Debug", "Camera found");
-                cameraId = i;
-                break;
-            }
-        }
-        return cameraId;
-    }*/

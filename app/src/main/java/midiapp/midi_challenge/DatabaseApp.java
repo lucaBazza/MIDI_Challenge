@@ -15,6 +15,7 @@ import android.util.StringBuilderPrinter;
 
 public class DatabaseApp extends SQLiteOpenHelper {
 
+
     private static String NOME_DB = "databaseApp";
 
     private static String CREATE_USERS = "CREATE TABLE utente (idUtente INTEGER PRIMARY KEY, nickname VARCHAR NOT NULL,foto VARCHAR, strumento VARCHAR ,punteggioMassimo INTEGER DEFAULT -1, punteggioMedio INTEGER DEFAULT -1);";
