@@ -120,13 +120,13 @@ public class FunzioniDatabase {
         return database.update("brano", cv, "idBrano="+b.idBrano, null);
     }
 
-    public Brano trovaBrano(long id){ //DA AGGIORNARE!
-        String[] colums = {"idBrano","titolo","nomeFile","difficoltà"};
-        Cursor res = database.query(true,"brano",colums,"idBrano = ?",new String[] {Long.toString(id)},"","","","");
-
+    public Brano trovaBrano(long id){ // public Brano(long idBrano,String titolo,String autore, String nomeFile,ArrayList<String> arraySheets, int difficoltà)
+        String[] colums = {"idBrano","titolo","autore","nomeFile","arraySpartiti","difficoltà"};
+        Cursor res = database.query(true,"brano",colums,"idBrano = ?",new String[] {Long.toString(id)},"","","","");  //cotrollare che inserirsca tutti i campi!
         if (res.moveToFirst()){
-            return new Brano(res.getInt(0),res.getString(2),res.getInt(3));
-        }else{
+            ArrayList<String> _arraySheets = new ArrayList<>(Arrays.asList(res.getString(4).split(";")));
+            return new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getString(3),_arraySheets,res.getInt(5));
+        } else{
             return  new Brano(-1,"",0);
         }
     }
@@ -149,20 +149,20 @@ public class FunzioniDatabase {
         Cursor res = database.rawQuery(selectionQuery,new String[]{Long.toString(idUtente)});
         while(res.moveToNext()){
             ArrayList<String> _arraySheets = new ArrayList<>(Arrays.asList(res.getString(6).split(";")));
-            tmpList.add(new Brano(res.getInt(0),res.getString(2),res.getInt(3),res.getInt(4),res.getString(5),_arraySheets));
+            tmpList.add(new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getString(3),_arraySheets,res.getInt(5))); //controllare ordine inserimento campi!
         }
 
         return tmpList;
     }
 
-    public List<Brano> braniUtente(String nickName){
+    public List<Brano> braniUtente(String nickName){  //mai usato?
         List<Brano> tmpList = new ArrayList<>();
         String selectionQuery = "SELECT Brano.idBrano,titolo,nomeFile,difficoltà,autovalutazione,autore,arraySpartiti FROM Brano JOIN relUtenteBrano JOIN Utente WHERE nickname = ?";
 
         Cursor res = database.rawQuery(selectionQuery,new String[]{nickName});
         while(res.moveToNext()){
             ArrayList<String> _arraySheets = new ArrayList<>(Arrays.asList(res.getString(6).split(";")));
-            tmpList.add(new Brano(res.getInt(0),res.getString(2),res.getInt(3),res.getInt(4),res.getString(5),_arraySheets));
+            tmpList.add(new Brano(res.getInt(0),res.getString(1),res.getString(2),res.getString(3),_arraySheets,res.getInt(5))); //controllare ordine inserimento campi!
         }
 
         return tmpList;

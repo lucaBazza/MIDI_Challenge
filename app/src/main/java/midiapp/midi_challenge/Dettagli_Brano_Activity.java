@@ -88,7 +88,10 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         long l = getIntent().getLongExtra("id_brano",0);
         funzioniDatabase = new FunzioniDatabase(getBaseContext());
         brano = funzioniDatabase.trovaBrano(l);
-
+        if(brano.idBrano==-1) {
+            Log.d("Errore caricamento", "non trovo il brano in qeustione!: ");
+            Toast.makeText(this, "Errore non trovo il brano in qeustione!!!", Toast.LENGTH_LONG).show();
+        }
         tvInfo1 = (TextView)findViewById(R.id.lbl_Info1);
         imgBtnDeleteSpartiti = (ImageButton)findViewById(R.id.id_imgBtnDeleteSpartiti);
         btnBrano = (Button) findViewById(R.id.buttonProvaCaricaBrano);       //BUTTON ELABORA MIDI
@@ -313,7 +316,10 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             }
 
             if(fotoCaricata){ //Aggiorna brano, inserendo la nuova foto nella rispettiva colonna
+                if(brano.arraySpartiti==null)
+                    brano.arraySpartiti = new ArrayList<String>();
                 brano.arraySpartiti.add(fileSalvataggio.getAbsolutePath()); //brano.arraySpartiti+=";"+path+nomeFile;
+
                 brano.autore = "Giovanni muchacha!"; //modificare!
                 Log.d("DatabaseLog_",brano.arraySpartiti.toString());
                 if(funzioniDatabase.aggiornaBrano(brano)==1) Log.d("DatabaseLog: ","Riuscito  aggiorna brano!");

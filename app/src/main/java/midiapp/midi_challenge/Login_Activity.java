@@ -64,7 +64,6 @@ public class Login_Activity extends AppCompatActivity {
         btnInserimentoUtente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 LinearLayout layoutInserimento = (LinearLayout)findViewById(R.id.layout_inserimento_dati);
                 EditText txt = (EditText) findViewById(R.id.edtTxt_nomeUtente);
 

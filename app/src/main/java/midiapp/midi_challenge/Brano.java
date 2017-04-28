@@ -10,17 +10,27 @@ import java.util.ArrayList;
 public class Brano {
     long idBrano;
     File fileBrano;
+    String titolo;
     int difficoltà;
     int autovalutazione;
     String autore;
     ArrayList<String> arraySpartiti;
 
-    public Brano(long idBrano, String nomeFile, int difficoltà,int autovalutazione, String author,ArrayList<String> arraySheets) {
+    //idBrano INTEGER PRIMARY KEY, titolo VARCHAR NOT NULL,autore VARCHAR, nomeFile VARCHAR, arraySpartiti VARCHAR, difficoltà INTEGER
+    /*public Brano(long idBrano, String nomeFile, int difficoltà,int autovalutazione, String author,ArrayList<String> arraySheets) { //Attenzione l'ordine argomenti è diverso da quello usato in sql!
         this.idBrano = idBrano;
         this.fileBrano = new File(nomeFile);
         this.difficoltà = difficoltà;
         this.autovalutazione = autovalutazione;
         this.autore = author;
+        this.arraySpartiti = arraySheets;
+    }*/
+    public Brano(long idBrano,String titolo,String autore, String nomeFile,ArrayList<String> arraySheets, int difficoltà) {
+        this.idBrano = idBrano;
+        this.titolo = titolo;
+        this.fileBrano = new File(nomeFile);
+        this.difficoltà = difficoltà;
+        this.autore = autore;
         this.arraySpartiti = arraySheets;
     }
 
@@ -31,12 +41,12 @@ public class Brano {
         this.autovalutazione = -1;
     }
 
-    public Brano(String nomeFile, int difficoltà,int autovalutazione) {
+    /*public Brano(String nomeFile, int difficoltà,int autovalutazione) {
         this.idBrano = -1;
         this.fileBrano = new File(nomeFile);
         this.difficoltà = difficoltà;
-        this.autovalutazione = autovalutazione;
-    }
+        //this.autovalutazione = autovalutazione;
+    }*/
 
 
     public Brano(String nomeFile, int difficoltà) {
@@ -64,13 +74,13 @@ public class Brano {
         return this.fileBrano.equals(b) || this.fileBrano.getName() == b.fileBrano.getName();
     }
 
-    public int getAutovalutazione() {
+    /*public int getAutovalutazione() {
         return autovalutazione;
     }
 
     public void setAutovalutazione(int autovalutazione) {
         this.autovalutazione = autovalutazione;
-    }
+    }*/
 
     public int getDifficoltà() {
         if(difficoltà>0)
