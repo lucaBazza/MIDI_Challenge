@@ -137,15 +137,15 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
 
         ImageView imgViewSpartitoDemo = (ImageView) findViewById(R.id.imgViewSpartitoDemo);    // CARICA FOTO spartito
 
-        if(brano.arraySpartiti!=null ) { //&& !brano.arraySpartiti.isEmpty()
-            Log.d("Carico spartiti_","totale spartiti trovati: " +arraySheets.length);
-            for(int i =0;i<arraySheets.length;i++) { //carica tutti gli spartiti
-                File imgFile = new File(arraySheets[i]);
+        if(!brano.arraySpartiti.isEmpty() ) { //&& !brano.arraySpartiti.isEmpty()
+            Log.d("Carico spartiti_","totale spartiti trovati: " +brano.arraySpartiti.size());
+            for(int i =0;i<brano.arraySpartiti.size();i++) { //carica tutti gli spartiti
+                File imgFile = new File(brano.arraySpartiti.get(i));
                 if (imgFile.exists()) {  // non trovando il file comunque entra nel if
                     Bitmap myBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()), 500, 500, true);
                     imgViewSpartitoDemo.setImageBitmap(myBitmap);
                 } else {
-                    Log.d("Errore spartito", "non trovo spartito: " + arraySheets[0]);
+                    Log.d("Errore spartito", "non trovo spartito: " + brano.arraySpartiti.get(0));
                     Toast.makeText(this, "Errore non trovo spartito!", Toast.LENGTH_LONG).show();
                 }
             }

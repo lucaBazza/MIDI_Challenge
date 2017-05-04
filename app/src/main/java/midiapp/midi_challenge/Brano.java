@@ -31,7 +31,10 @@ public class Brano {
         this.fileBrano = new File(nomeFile);
         this.difficoltà = difficoltà;
         this.autore = autore;
-        this.arraySpartiti = arraySheets;
+        if(arraySheets.contains("") && arraySheets.size() == 1)
+            this.arraySpartiti = new ArrayList<>();
+        else
+            this.arraySpartiti = arraySheets;
     }
 
     public Brano(long idBrano, String nomeFile, int difficoltà) {
@@ -39,6 +42,7 @@ public class Brano {
         this.fileBrano = new File(nomeFile);
         this.difficoltà = difficoltà;
         this.autovalutazione = -1;
+        this.arraySpartiti = new ArrayList<>();
     }
 
     /*public Brano(String nomeFile, int difficoltà,int autovalutazione) {
@@ -54,6 +58,7 @@ public class Brano {
         this.fileBrano = new File(nomeFile);
         this.difficoltà = difficoltà;
         this.autovalutazione = -1;
+        this.arraySpartiti = new ArrayList<>();
     }
 
     public Brano(String nomeFile, File path, int difficoltà) {
@@ -61,6 +66,7 @@ public class Brano {
         this.fileBrano = path;
         this.difficoltà = difficoltà;
         this.autovalutazione = -1;
+        this.arraySpartiti = new ArrayList<>();
     }
 
     @Override

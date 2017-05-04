@@ -59,8 +59,9 @@ public class FunzioniDatabase {
         cv.put("autore",b.autore);
         cv.put("nomeFile",b.getNomeFile());
         String help="";
-        for(String x : b.arraySpartiti)
-            help += x+";";
+        for (String x : b.arraySpartiti)
+            help += x + ";";
+
         cv.put("arraySpartiti",help);
         cv.put("difficoltà",b.difficoltà);
 
