@@ -16,7 +16,7 @@
     tools:context="midiapp.midi_challenge.Registratore_Activity">
 
     <Button
-        android:id="@+id/btnGiu"
+        android:id="@+id/btnReg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="61dp"
@@ -32,8 +32,8 @@
         android:id="@+id/btnRip"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnGiu"
-        android:layout_alignBottom="@+id/btnGiu"
+        android:layout_alignBaseline="@+id/btnReg"
+        android:layout_alignBottom="@+id/btnReg"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="49dp"
         android:background="@drawable/roundcorner"

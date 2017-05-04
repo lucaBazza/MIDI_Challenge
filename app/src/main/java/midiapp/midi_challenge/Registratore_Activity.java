@@ -23,8 +23,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Random;
 
 public class Registratore_Activity extends GenericMIDIChallengeActivity {
@@ -119,21 +121,23 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity {
     public void onCreate(Bundle icicle) {
         setContentView(R.layout.activity_registratore_);
         super.onCreate(icicle);
-        String dir ="MidiChallenge/";
+        mStartRecording = false;
         // Record to the external cache directory for visibility
-        mFileName = getExternalCacheDir().getAbsolutePath();
-        mFileName += dir+"audiorecordtest"+new Random().nextInt(100)+".3gp";
+        mFileName = getCartellaPredefinita().getAbsolutePath() + "rec. " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis()) + ".3gp";
+        //mFileName = getExternalCacheDir().getAbsolutePath();
+        //mFileName += dir+"audiorecordtest"+new Random().nextInt(100)+".3gp";
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
         Button btnReg = null;
-        btnReg = (Button) findViewById(R.id.btnRip);
+        btnReg = (Button) findViewById(R.id.btnReg);
         if(btnReg!=null){
-            if (mStartRecording) { btnReg.setText("Stop recording"); }
+            if (mStartRecording) { btnReg.setText("Stop rec"); }
             else { btnReg.setText("Start recording"); }
             btnReg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Toast.makeText(v.getContext(), "Sto registrando...", Toast.LENGTH_LONG).show();
                     onRecord(mStartRecording);
                     mStartRecording = !mStartRecording;
                 }
