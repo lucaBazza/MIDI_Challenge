@@ -1,10 +1,7 @@
 package midiapp.midi_challenge;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -23,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -35,35 +33,66 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity {
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String mFileName = null;
 
-
     //private RecordButton mRecordButton = null;
     MediaRecorder mRecorder = null;
-
     //private PlayButton mPlayButton = null;
     private MediaPlayer mPlayer = null;
 
     boolean mStartRecording = true;
     boolean mStartPlaying = true;
 
-
     // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
+    TextView tvlog;
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
-            case REQUEST_RECORD_AUDIO_PERMISSION:
-                permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                break;
-        }
-        if (!permissionToRecordAccepted ) finish();
+    public void onCreate(Bundle icicle) {
+        setContentView(R.layout.activity_registratore_);
+        super.onCreate(icicle);
+        tvlog = (TextView)findViewById(R.id.textView3);
+        mStartRecording = false; //non sta registrando
+        mFileName = getCartellaPredefinita().getAbsolutePath() + "rec. " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis()) + ".3gp";
+        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
+        final Button btnReg = (Button) findViewById(R.id.btnReg);
+        if (mStartRecording) { btnReg.setText("Stop rec"); }
+            else { btnReg.setText("Start recording"); }
+        btnReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRecord(mStartRecording);
+                mStartRecording = !mStartRecording;
+                if (mStartRecording) { btnReg.setText("Stop rec"); }
+                else { btnReg.setText("Start recording"); }
+            }
+        });
+
+        Button btnRip = (Button) findViewById(R.id.btnRip);
+        if(btnReg!=null) {
+            if (mStartPlaying) {
+                btnRip.setText("Stop playing");
+            } else {
+                btnRip.setText("Start playing");
+            }
+            btnRip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onPlay(mStartPlaying);
+                    mStartPlaying = !mStartPlaying;
+
+                }
+            });
+        }
+
+        ActionBar ac = this.getSupportActionBar();
+        ac.setDisplayHomeAsUpEnabled(true);
+        ac.setTitle("Registratore");
     }
 
+
     private void onRecord(boolean start) {
-        if (start) {
+        if (!start) {
             startRecording();
         } else {
             stopRecording();
@@ -107,6 +136,7 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity {
             Toast.makeText(getBaseContext(), "Sto registrando...", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed" + e.toString());
+
         }
     }
 
@@ -116,58 +146,8 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity {
             mRecorder.stop();
             mRecorder.release();
             mRecorder = null;
+            Toast.makeText(getBaseContext(), "Registrazione salvata! "+mFileName.toString(), Toast.LENGTH_LONG).show();
         }
-    }
-
-
-    @Override
-    public void onCreate(Bundle icicle) {
-        setContentView(R.layout.activity_registratore_);
-        super.onCreate(icicle);
-        mStartRecording = false;
-        mFileName = getCartellaPredefinita().getAbsolutePath() + "rec. " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis()) + ".3gp";
-        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
-
-        Button btnReg = null;
-        btnReg = (Button) findViewById(R.id.btnReg);
-        if(btnReg!=null){
-            if (mStartRecording) { btnReg.setText("Stop rec"); }
-            else { btnReg.setText("Start recording"); }
-            btnReg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onRecord(mStartRecording);
-                    mStartRecording = !mStartRecording;
-                }
-            });
-        }
-
-        Button btnRip = null;
-        btnRip = (Button) findViewById(R.id.btnRip);
-        if(btnReg!=null) {
-            if (mStartPlaying) {
-                btnRip.setText("Stop playing");
-            } else {
-                btnRip.setText("Start playing");
-            }
-            btnRip.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onPlay(mStartPlaying);
-                    mStartPlaying = !mStartPlaying;
-                }
-            });
-        }
-
-        ActionBar ac = this.getSupportActionBar();
-        ac.setDisplayHomeAsUpEnabled(true);
-        ac.setTitle("Registratore");
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inf = getMenuInflater();
-        inf.inflate(R.menu.button_action_bar,menu);
-        return true;
     }
 
     @Override
@@ -182,6 +162,23 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity {
             mPlayer.release();
             mPlayer = null;
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case REQUEST_RECORD_AUDIO_PERMISSION:
+                permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                break;
+        }
+        if (!permissionToRecordAccepted ) finish();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inf = getMenuInflater();
+        inf.inflate(R.menu.button_action_bar,menu);
+        return true;
     }
 }
 
