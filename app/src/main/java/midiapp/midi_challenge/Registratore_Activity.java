@@ -37,7 +37,7 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity {
 
 
     //private RecordButton mRecordButton = null;
-    private MediaRecorder mRecorder = null;
+    MediaRecorder mRecorder = null;
 
     //private PlayButton mPlayButton = null;
     private MediaPlayer mPlayer = null;
@@ -103,17 +103,20 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity {
 
         try {
             mRecorder.prepare();
+            mRecorder.start();
+            Toast.makeText(getBaseContext(), "Sto registrando...", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
-            Log.e(LOG_TAG, "prepare() failed");
+            Log.e(LOG_TAG, "prepare() failed" + e.toString());
         }
-
-        mRecorder.start();
     }
 
     private void stopRecording() {
-        mRecorder.stop();
-        mRecorder.release();
-        mRecorder = null;
+        if(mRecorder == null) {Toast.makeText(getBaseContext(), "mRecorder è null", Toast.LENGTH_LONG).show();}
+        else {
+            mRecorder.stop();
+            mRecorder.release();
+            mRecorder = null;
+        }
     }
 
 
@@ -122,11 +125,7 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity {
         setContentView(R.layout.activity_registratore_);
         super.onCreate(icicle);
         mStartRecording = false;
-        // Record to the external cache directory for visibility
         mFileName = getCartellaPredefinita().getAbsolutePath() + "rec. " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis()) + ".3gp";
-        //mFileName = getExternalCacheDir().getAbsolutePath();
-        //mFileName += dir+"audiorecordtest"+new Random().nextInt(100)+".3gp";
-
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
         Button btnReg = null;
@@ -137,7 +136,6 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity {
             btnReg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "Sto registrando...", Toast.LENGTH_LONG).show();
                     onRecord(mStartRecording);
                     mStartRecording = !mStartRecording;
                 }
