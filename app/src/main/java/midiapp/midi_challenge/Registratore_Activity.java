@@ -65,6 +65,7 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity {
                 mStartRecording = !mStartRecording;
                 if (mStartRecording) { btnReg.setText("Stop rec"); }
                 else { btnReg.setText("Start recording"); }
+                //add descrizione
             }
         });
 
