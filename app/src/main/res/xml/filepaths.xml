@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path name="images" path="images/"></external-path>
+    <external-files-path name="photos" path="/storage/emulated/0/Android/data/midiapp.midi_challenge/files/Pictures"></external-files-path>
+    <external-files-path name="Pictures" path="Android/data/midiapp.midi_challenge/files"></external-files-path>
+    <files-path name="/storage/emulated/0/Android/data/midiapp.midi_challenge/files/Pictures" path="/storage/emulated/0/Android/data/midiapp.midi_challenge/files/Pictures"></files-path>
+    <external-files-path name="midi_challenge"></external-files-path>
+</paths>
