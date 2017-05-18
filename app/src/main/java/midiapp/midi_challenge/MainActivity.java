@@ -2,26 +2,17 @@ package midiapp.midi_challenge;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import java.io.File;
 import java.util.List;
 
 import android.text.method.ScrollingMovementMethod;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,7 +35,7 @@ public class MainActivity extends GenericMIDIChallengeActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_old);
         super.onCreate(savedInstanceState);
         funzioniDatabase = getDb();
 
