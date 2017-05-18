@@ -55,20 +55,17 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity {
         mFileName = getCartellaPredefinita().getAbsolutePath() + "rec. " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis()) + ".3gp";
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
-        if(mFileName.isEmpty()) return;
-        if(this.tvlog == null) Log.e(LOG_TAG, "can't complete log file!");
-
         final Button btnReg = (Button) findViewById(R.id.btnReg);
         if (mStartRecording) { btnReg.setText("Stop rec"); }
             else { btnReg.setText("Start recording"); }
-            btnReg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onRecord(mStartRecording);
-                    mStartRecording = !mStartRecording;
-                    if (mStartRecording) { btnReg.setText("Stop rec"); }
-                    else { btnReg.setText("Start recording"); }
-                    //add descrizione
+        btnReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRecord(mStartRecording);
+                mStartRecording = !mStartRecording;
+                if (mStartRecording) { btnReg.setText("Stop rec"); }
+                else { btnReg.setText("Start recording"); }
+                //add descrizione
             }
         });
 
@@ -117,7 +114,6 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity {
             mPlayer.setDataSource(mFileName);
             mPlayer.prepare();
             mPlayer.start();
-            Log.d(LOG_TAG, "mplayer started!");
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");
         }
@@ -186,3 +182,4 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity {
         return true;
     }
 }
+
