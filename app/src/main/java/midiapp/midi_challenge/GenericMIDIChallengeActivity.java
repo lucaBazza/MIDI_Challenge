@@ -111,6 +111,8 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
                 startActivity(prossimaActivity);
             }
         }
+        DrawerLayout dw = (DrawerLayout)findViewById(R.id.drawer_layout);
+        dw.closeDrawer(Gravity.LEFT | Gravity.START);
         return true;
     }
 
