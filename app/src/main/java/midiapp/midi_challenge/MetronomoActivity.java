@@ -41,6 +41,8 @@ public class MetronomoActivity extends GenericMIDIChallengeActivity {
         TextView displayInteger = (TextView) findViewById(
                 R.id.counter);
         displayInteger.setText("" + number);
+
+        
     }
 
 

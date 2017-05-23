@@ -2,7 +2,10 @@ package midiapp.midi_challenge;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -47,6 +51,8 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
     private String[] mActivityTitles;
 
     private TextView tv_drawer_nome = null;
+    private TextView tv_headerNomeUtente = null;
+    private ImageView iv_fotoUtente = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +75,6 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
         if (utenteCorrente != null) {
             Log.d("Utente","Utente caricato da generic midi!");
 
-            tv_drawer_nome = (TextView) findViewById(R.id.tv_drawer_nome);
-            if(tv_drawer_nome!=null)
-                tv_drawer_nome.setText(utenteCorrente.getNickName());
         }
 
 
@@ -111,6 +114,26 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
                 startActivity(prossimaActivity);
             }
         }
+
+        NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
+        View view = nv.getHeaderView(0);
+        tv_headerNomeUtente = (TextView) view.findViewById(R.id.tv_header_nome_utente);
+        if(tv_headerNomeUtente!=null)
+            tv_headerNomeUtente.setText((utenteCorrente.getNickName()));
+
+        iv_fotoUtente = (ImageView)view.findViewById(R.id.iv_header_foto_utente);
+        if(iv_fotoUtente!=null){
+            File imgFile = new File(utenteCorrente.getFoto());
+            if(!utenteCorrente.getFoto().isEmpty() && imgFile.exists()){           // non trovando il file comunque entra nel if
+                Bitmap myBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()) ,100,100,true);
+                iv_fotoUtente.setImageBitmap(myBitmap);
+            }
+            else {
+                iv_fotoUtente.setImageResource(R.mipmap.generic_user_mc);
+            }
+        }
+
+
         return true;
     }
 
@@ -167,7 +190,6 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
                 }
             });
         }
-
     }
 
     private void oldDrower() {
