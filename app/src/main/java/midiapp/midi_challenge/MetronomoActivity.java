@@ -1,6 +1,8 @@
 package midiapp.midi_challenge;
 
+import android.icu.text.DateFormat;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.ToneGenerator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,13 +10,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
-import android.media.MediaPlayer;
+
+import android.icu.text.SimpleDateFormat;
+
+
 
 public class MetronomoActivity extends GenericMIDIChallengeActivity {
     int cont = 120;
@@ -44,37 +46,38 @@ public class MetronomoActivity extends GenericMIDIChallengeActivity {
     }
 
 
-    /**
+    public void suonoBPM(View v) {
 
-     //da finire creazione suono
+        TextView t = (TextView) findViewById(R.id.counter);
+        int bpm = Integer.getInteger(t.getText().toString());
 
-    ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 50);
-    toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200); //200ms
+        //da finire creazione suono
 
-    Button start_button = (Button) findViewById(R.id.playButton);
+        ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 50);
+        toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200); //200ms
 
-    start_button.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
+        final Button start_button = (Button) findViewById(R.id.playButton);
 
-            Timer timer = new Timer("MetronomeTimer", true);
-            TimerTask tone = new TimerTask() {
-                @Override
-                public void run() {
-                    //Log
-                    DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss:SS");
-                    Date date = new Date();
-                    Log.i("Beep", df.format(date) + "_____");
-                    //Play sound
-                    music = MediaPlayer.create(MetronomoActivity.this, R.raw.beep);
-                    music.start();
-                }
-            };
-            timer.scheduleAtFixedRate(tone, 500, 500); // ogni 500ms
-        }
-    });
+        start_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-*/
+                Timer timer = new Timer("MetronomeTimer", true);
+                TimerTask tone = new TimerTask() {
+                    @Override
+                    public void run() {
+                        //riproduzione
+                        MediaPlayer suono;
+                        suono = MediaPlayer.create(MetronomoActivity.this, R.raw.a440hz05sec);
+                        suono.start();
+                    }
+                };
+                timer.scheduleAtFixedRate(tone, 500, 500); // ogni 500ms
+            }
+        });
+    }
+
+
 
 
 }
@@ -88,4 +91,9 @@ public class MetronomoActivity extends GenericMIDIChallengeActivity {
         //prendi audio
         //riproduci ogni min/bpm
     }
+
+    //Log
+    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+    Date date = new Date();
+    Log.i("Beep", df.format(date));
 */
