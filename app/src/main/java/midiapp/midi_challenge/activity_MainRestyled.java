@@ -92,8 +92,8 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
         /*
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.show_navigation_drawer) {
+            drawer.openDrawer(Gravity.LEFT | Gravity.START);
         }
         return super.onOptionsItemSelected(item); */
         drawer.openDrawer(Gravity.LEFT);
