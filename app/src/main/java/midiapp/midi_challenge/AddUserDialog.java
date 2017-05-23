@@ -45,7 +45,7 @@ public class AddUserDialog extends DialogFragment {
                 if (idNuovoUtente != -1) {
                     Toast.makeText(getActivity().getBaseContext(), "Inserimento Completato", Toast.LENGTH_SHORT).show();
                     dismiss();
-                    Intent i = new Intent(getActivity().getApplicationContext(),MainActivity.class);
+                    Intent i = new Intent(getActivity().getApplicationContext(),activity_MainRestyled.class);
                     i.putExtra("id_utente",idNuovoUtente);
                     startActivity(i);
                 }
