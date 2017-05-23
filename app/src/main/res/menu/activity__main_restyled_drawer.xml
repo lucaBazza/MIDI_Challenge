@@ -25,7 +25,7 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Metronomo" />
             <item
-                android:id="@+id/nav_manage1"
+                android:id="@+id/nav_accordatore"
                 android:icon="@drawable/img_diapason1"
                 android:title="Accordatore" />
         </menu>

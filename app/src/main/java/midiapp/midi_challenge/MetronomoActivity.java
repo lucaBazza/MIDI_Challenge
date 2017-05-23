@@ -1,87 +1,94 @@
 package midiapp.midi_challenge;
 
-import android.icu.text.DateFormat;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.ToneGenerator;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import java.util.Date;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.icu.text.SimpleDateFormat;
-
-
 
 public class MetronomoActivity extends GenericMIDIChallengeActivity {
-    int cont = 120;
+    private int sound = R.raw.a440hz05sec; //R.raw.click01;
+    private TextView tv_counterBPM = null;
+    private int bpm = 120;
+    private MediaPlayer mplayer;
+    Button playButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_metronomo);
-    }
 
-    public void increaseInteger(View view) {
-        if (cont < 300) {
-            cont = cont + 4;
-            display(cont);
-        } else {}
+        display(bpm);
+        mplayer = MediaPlayer.create(this,sound);
 
-    }public void decreaseInteger(View view) {
-        if(cont > 0) {
-            cont = cont - 4;
-            display(cont);
-        } else {}
-    }
+        tv_counterBPM = (TextView) findViewById(R.id.counterBPM);
+        bpm = Integer.parseInt(tv_counterBPM.getText().toString());
 
-    private void display(int number) {
-        TextView displayInteger = (TextView) findViewById(
-                R.id.counter);
-        displayInteger.setText("" + number);
-
-        
-    }
-
-
-    public void suonoBPM(View v) {
-
-        TextView t = (TextView) findViewById(R.id.counter);
-        int bpm = Integer.getInteger(t.getText().toString());
-
-        //da finire creazione suono
-
-        ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 50);
-        toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200); //200ms
-
-        final Button start_button = (Button) findViewById(R.id.playButton);
-
-        start_button.setOnClickListener(new View.OnClickListener() {
+        playButton = (Button) findViewById(R.id.playButton);
+        playButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                Timer timer = new Timer("MetronomeTimer", true);
-                TimerTask tone = new TimerTask() {
-                    @Override
-                    public void run() {
-                        //riproduzione
-                        MediaPlayer suono;
-                        suono = MediaPlayer.create(MetronomoActivity.this, R.raw.a440hz05sec);
-                        suono.start();
-                    }
-                };
-                timer.scheduleAtFixedRate(tone, 500, 500); // ogni 500ms
+            public void onClick(View view) {
+                try{
+                    mplayer.prepare();      //errore chiamata non asincrona!
+                    mplayer.start();
+                }
+                catch(Exception ex){
+                    Snackbar.make(getWindow().getDecorView().getRootView(), ex.toString() , Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    Log.e("Metr",ex.toString());
+                }
+                //startMetronomo();
             }
         });
     }
 
+    public void increaseInteger(View view) {
+        if (bpm < 300) {
+            bpm = bpm + 4;
+            display(bpm);
+        } else {}
+    }
+    public void decreaseInteger(View view) {
+        if(bpm > 0) {
+            bpm = bpm - 4;
+            display(bpm);
+        } else {}
+    }
 
+    private void display(int number) {
+        TextView displayInteger = (TextView) findViewById( R.id.counterBPM);
+        displayInteger.setText("" + number);
+    }
 
+    private  void startMetronomo(){
+        int periodoTimer = 500;
+        Timer timer = new Timer("MetronomeTimer", true);
+        TimerTask tone = new TimerTask() {
+            @Override
+            public void run() {  //riproduzione
+                try{
+                    mplayer.start();
+                }
+                catch(Exception ex){
+                    Snackbar.make(getWindow().getDecorView().getRootView(), ex.toString() , Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(tone, 600000/bpm, periodoTimer);
+    }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inf = getMenuInflater();
+        inf.inflate(R.menu.button_action_bar,menu);
+        return true;
+    }
 }
 
 

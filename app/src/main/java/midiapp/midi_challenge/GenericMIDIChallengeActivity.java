@@ -98,6 +98,7 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
             case R.id.nav_item_home:    prossimaActivity = new Intent(getApplicationContext(), activity_MainRestyled.class);    break;
             case R.id.nav_impostazioni: prossimaActivity =  new Intent(getApplicationContext(), Impostazioni_Activity.class);   break;
             case R.id.nav_metronomo:    prossimaActivity = new Intent(getApplicationContext(), MetronomoActivity.class);        break;
+            case R.id.nav_accordatore:  prossimaActivity = new Intent(getApplicationContext(),AccordatoreActivity.class);       break;
             case R.id.nav_cambiaUtente:  ChooseUserDialog dg = new ChooseUserDialog();
                                         dg.show(getFragmentManager(), "Cambia Utente");                                         break;
         }
@@ -117,9 +118,10 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
 
         NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
         View view = nv.getHeaderView(0);
-        tv_headerNomeUtente = (TextView) view.findViewById(R.id.tv_header_nome_utente);
+
+        /*tv_headerNomeUtente = (TextView) view.findViewById(R.id.tv);
         if(tv_headerNomeUtente!=null)
-            tv_headerNomeUtente.setText((utenteCorrente.getNickName()));
+            tv_headerNomeUtente.setText((utenteCorrente.getNickName()));*/
 
         iv_fotoUtente = (ImageView)view.findViewById(R.id.iv_header_foto_utente);
         if(iv_fotoUtente!=null){

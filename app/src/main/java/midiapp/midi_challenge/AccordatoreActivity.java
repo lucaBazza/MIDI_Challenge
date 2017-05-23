@@ -38,7 +38,7 @@ public class AccordatoreActivity extends GenericMIDIChallengeActivity {
 
         ActionBar ac = this.getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
-        ac.setTitle("Accordatore"); //prima era registratore?!
+        ac.setTitle("Accordatore");
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
