@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.text.method.ScrollingMovementMethod;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -90,8 +91,8 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.show_navigation_drawer) {
+            drawer.openDrawer(Gravity.LEFT | Gravity.START);
         }
 
         return super.onOptionsItemSelected(item);
