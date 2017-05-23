@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.File;
 
@@ -45,6 +46,8 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
     private ListView mDrawerList;
     private String[] mActivityTitles;
 
+    private TextView tv_drawer_nome = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +69,12 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
         if (utenteCorrente != null) {
             Log.d("Utente","Utente caricato da generic midi!");
 
+            tv_drawer_nome = (TextView) findViewById(R.id.tv_drawer_nome);
+            if(tv_drawer_nome!=null)
+                tv_drawer_nome.setText(utenteCorrente.getNickName());
         }
+
+
 
         //setSupportActionBar(toolbar);
         //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle( this, mDrawerLayout, , R.string.navigation_drawer_open, R.string.navigation_drawer_close);
