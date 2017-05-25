@@ -77,9 +77,6 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
             Log.d("Utente","Utente caricato da generic midi!");
 
         }
-
-
-
         //setSupportActionBar(toolbar);
         //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle( this, mDrawerLayout, , R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         /*ActionBarDrawerToggle
@@ -118,7 +115,6 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
                 startActivity(prossimaActivity);
             }
         }
-        aggiornaFoto_punteggioNavHeader();
 
         DrawerLayout dw = (DrawerLayout)findViewById(R.id.drawer_layout);   //tiene il drawer chiuso quando fa la create
         dw.closeDrawer(Gravity.LEFT | Gravity.START);
@@ -146,6 +142,15 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
         return true;
 
     }
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        aggiornaFoto_punteggioNavHeader();
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+
+    }
+
     private void aggiornaFoto_punteggioNavHeader(){
         NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
         View view = nv.getHeaderView(0);
@@ -168,7 +173,6 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
         }
 
     }
-
 
     private void inizializzaDrower(){
         mActivityTitles = new String[]{"Home", "Profilo", "Registratore", "Metronomo", "Accordatore", "Impostazioni", "Cambia Utente"};
