@@ -10,11 +10,41 @@
     <!--android:theme="@style/Theme.AppCompat.Light.NoActionBar"-->
 
 
-
-    <include
-        layout="@layout/app_bar_activity__main_restyled"
+    <LinearLayout
+        android:id="@+id/LinearLayoutListaBrani"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:orientation="vertical">
+        <!-- android:background="@android:color/holo_orange_light"-->
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:maxLines="9000000"
+            android:scrollbars="vertical"
+            android:text="..." />
+
+        <ListView
+            android:id="@+id/lista_brani_utente"
+            style="@style/Widget.AppCompat.ListView.Menu"
+            android:layout_width="244dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_weight="0.93"
+            android:choiceMode="singleChoice" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/ic_add_something" />
+
+    </LinearLayout>
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
