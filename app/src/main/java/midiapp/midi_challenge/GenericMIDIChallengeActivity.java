@@ -95,12 +95,14 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
         int id = item.getItemId();
         Intent prossimaActivity=null;
         switch (id){
-            case R.id.nav_item_home:    prossimaActivity = new Intent(getApplicationContext(), activity_MainRestyled.class);    break;
-            case R.id.nav_impostazioni: prossimaActivity =  new Intent(getApplicationContext(), Impostazioni_Activity.class);   break;
-            case R.id.nav_metronomo:    prossimaActivity = new Intent(getApplicationContext(), MetronomoActivity.class);        break;
-            case R.id.nav_accordatore:  prossimaActivity = new Intent(getApplicationContext(),AccordatoreActivity.class);       break;
-            case R.id.nav_cambiaUtente:  ChooseUserDialog dg = new ChooseUserDialog();
-                                        dg.show(getFragmentManager(), "Cambia Utente");                                         break;
+            case R.id.nav_item_home:        prossimaActivity = new Intent(getApplicationContext(), activity_MainRestyled.class);    break;
+            case R.id.nav_profilo:          prossimaActivity = new Intent(getApplicationContext(),ActivityPaginaUtente.class);      break;
+            case R.id.nav_registratore:     prossimaActivity = new Intent(getApplicationContext(), Registratore_Activity.class);    break;
+            case R.id.nav_metronomo:        prossimaActivity = new Intent(getApplicationContext(), MetronomoActivity.class);        break;
+            case R.id.nav_accordatore:      prossimaActivity = new Intent(getApplicationContext(),AccordatoreActivity.class);       break;
+            case R.id.nav_impostazioni:     prossimaActivity =  new Intent(getApplicationContext(), Impostazioni_Activity.class);   break;
+            case R.id.nav_cambiaUtente:     ChooseUserDialog dg = new ChooseUserDialog();
+                                                    dg.show(getFragmentManager(), "Cambia Utente");                                 break;
         }
 
         //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -123,7 +125,7 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
         if(tv_headerNomeUtente!=null)
             tv_headerNomeUtente.setText((utenteCorrente.getNickName()));*/
 
-        iv_fotoUtente = (ImageView)view.findViewById(R.id.iv_header_foto_utente);
+        iv_fotoUtente = (ImageView)view.findViewById(R.id.iv_header_foto_utente);       //mette la foto profilo nel drawer laterale, DA SPOSTARE
         if(iv_fotoUtente!=null){
             File imgFile = new File(utenteCorrente.getFoto());
             if(!utenteCorrente.getFoto().isEmpty() && imgFile.exists()){           // non trovando il file comunque entra nel if

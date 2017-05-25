@@ -5,10 +5,10 @@
     <group android:checkableBehavior="single">      <!-- aggiungere una larrghezza massima al drower! -->
         <item
             android:id="@+id/nav_item_home"
-            android:icon="?android:attr/fingerprintAuthDrawable"
+            android:icon="@drawable/ic_menu_slideshow"
             android:title="Home" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_profilo"
             android:icon="@mipmap/generic_user_mc"
             android:title="Profilo" />
     </group>
@@ -16,7 +16,7 @@
     <item android:title="Strumenti">
         <menu>
             <item
-                android:id="@+id/nav_slideshow"
+                android:id="@+id/nav_registratore"
                 android:icon="@drawable/ic_menu_slideshow"
                 android:title="Registratore"
                 tools:icon="@drawable/rec_icon" />
