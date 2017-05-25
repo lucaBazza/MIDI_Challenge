@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.NotificationCompatSideChannelService;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -51,7 +52,7 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
     private String[] mActivityTitles;
 
     private TextView tv_drawer_nome = null;
-    private TextView tv_headerNomeUtente = null;
+    private TextView tv_headerPunteggio = null;
     private ImageView iv_fotoUtente = null;
 
     @Override
@@ -117,18 +118,47 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
                 startActivity(prossimaActivity);
             }
         }
+        aggiornaFoto_punteggioNavHeader();
 
+        DrawerLayout dw = (DrawerLayout)findViewById(R.id.drawer_layout);   //tiene il drawer chiuso quando fa la create
+        dw.closeDrawer(Gravity.LEFT | Gravity.START);
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity__main_restyled, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+
+        if(drawer != null)
+            if(drawer.isDrawerOpen(Gravity.LEFT))
+                drawer.openDrawer(Gravity.LEFT | Gravity.START);
+            else
+                drawer.closeDrawer(Gravity.LEFT);
+        return true;
+
+    }
+    private void aggiornaFoto_punteggioNavHeader(){
         NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
         View view = nv.getHeaderView(0);
-
-        /*tv_headerNomeUtente = (TextView) view.findViewById(R.id.tv);
-        if(tv_headerNomeUtente!=null)
-            tv_headerNomeUtente.setText((utenteCorrente.getNickName()));*/
-
-        iv_fotoUtente = (ImageView)view.findViewById(R.id.iv_header_foto_utente);       //mette la foto profilo nel drawer laterale, DA SPOSTARE
+        tv_headerPunteggio = (TextView) view.findViewById(R.id.tv_header_score);
+        if(tv_headerPunteggio!=null)
+            if(utenteCorrente.getPunteggioMassimo()>0)
+                tv_headerPunteggio.setText((utenteCorrente.getPunteggioMassimo()));
+            else
+                tv_headerPunteggio.setText("Hai 0 punti!");
+        iv_fotoUtente = (ImageView)view.findViewById(R.id.iv_header_foto_utente);
         if(iv_fotoUtente!=null){
             File imgFile = new File(utenteCorrente.getFoto());
-            if(!utenteCorrente.getFoto().isEmpty() && imgFile.exists()){           // non trovando il file comunque entra nel if
+            if(!utenteCorrente.getFoto().isEmpty() && imgFile.exists()){
                 Bitmap myBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()) ,100,100,true);
                 iv_fotoUtente.setImageBitmap(myBitmap);
             }
@@ -137,11 +167,8 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
             }
         }
 
-        DrawerLayout dw = (DrawerLayout)findViewById(R.id.drawer_layout);
-        dw.closeDrawer(Gravity.LEFT | Gravity.START);
-
-        return true;
     }
+
 
     private void inizializzaDrower(){
         mActivityTitles = new String[]{"Home", "Profilo", "Registratore", "Metronomo", "Accordatore", "Impostazioni", "Cambia Utente"};
@@ -197,8 +224,9 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
             });
         }
     }
+}
 
-    private void oldDrower() {
+    /*private void oldDrower() {
         mActivityTitles = new String[]{"Home", "Profilo", "Registratore", "Metronomo", "Accordatore", "Impostazioni", "Cambia Utente"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.nav_view);
@@ -251,55 +279,4 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity__main_restyled, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-        DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
-
-        if(drawer != null)
-        drawer.openDrawer(Gravity.LEFT | Gravity.START);
-        return true;
-
-    }
-
-}
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inf = getMenuInflater();
-        inf.inflate(R.menu.button_action_bar,menu);
-        return true;
-    }*/
-
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.show_navigation_drawer :
-                DrawerLayout drw = (DrawerLayout)findViewById(R.id.drawer_layout);
-                if(drw != null) {   //alcune activiy potrebbero avere il drw layout, altre no.
-                    if (!drw.isDrawerOpen(Gravity.LEFT))
-                        drw.openDrawer(Gravity.LEFT);
-                    else
-                        drw.closeDrawer(Gravity.LEFT);
-                    break;
-                }
-                break;
-            case android.R.id.home :
-                Intent i = new Intent(this,activity_MainRestyled.class);
-                i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));
-                startActivity(i);
-                break;
-        }
-        return true;
     }*/

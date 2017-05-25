@@ -255,9 +255,9 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
         builder.show();
     }
 
-    FileFilter photoFilter = new FileFilter() {
+    private FileFilter photoFilter = new FileFilter() {
         @Override
-        public boolean accept(File file) {
+        public boolean accept(File file) {  //aggiustare
             if (file.getName().contains(".jpg")|| file.getName().contains(".png")) {
                 return true;
             } else {
