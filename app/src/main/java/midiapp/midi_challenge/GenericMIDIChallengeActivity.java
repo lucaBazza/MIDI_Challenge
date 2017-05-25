@@ -137,7 +137,6 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
             }
         }
 
-
         DrawerLayout dw = (DrawerLayout)findViewById(R.id.drawer_layout);
         dw.closeDrawer(Gravity.LEFT | Gravity.START);
 
