@@ -146,7 +146,7 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
     private void inizializzaDrower(){
         mActivityTitles = new String[]{"Home", "Profilo", "Registratore", "Metronomo", "Accordatore", "Impostazioni", "Cambia Utente"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.show_navigation_drawer);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList = (ListView) findViewById(R.id.nav_view);
 
         if (mDrawerList != null) {
             // Set the adapter for the list view
@@ -201,7 +201,7 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
     private void oldDrower() {
         mActivityTitles = new String[]{"Home", "Profilo", "Registratore", "Metronomo", "Accordatore", "Impostazioni", "Cambia Utente"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList = (ListView) findViewById(R.id.nav_view);
 
         if (mDrawerList != null) {
             // Set the adapter for the list view
