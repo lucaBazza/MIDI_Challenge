@@ -28,7 +28,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-import static midiapp.midi_challenge.MainActivity.funzioniDatabase;
+import static midiapp.midi_challenge.activity_MainRestyled.funzioniDatabase;
 
 public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
     Utente utente = null;

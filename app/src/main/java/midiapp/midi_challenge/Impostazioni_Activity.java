@@ -30,7 +30,7 @@ public class Impostazioni_Activity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case android.R.id.home:
-                Intent i = new Intent(this,MainActivity.class);
+                Intent i = new Intent(this,activity_MainRestyled.class);
                 i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));
                 NavUtils.navigateUpTo(this,i);
                 break;

@@ -159,7 +159,7 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
                     Intent prossimaActivity;
                     switch (position) { // "Home","Profilo","Registratore","Metronomo","Accordatore, Impostazioni","Logout"
                         case 0:
-                            prossimaActivity = new Intent(getApplicationContext(), MainActivity.class);
+                            prossimaActivity = new Intent(getApplicationContext(), activity_MainRestyled.class);
                             break;
                         case 1:
                             prossimaActivity = new Intent(getApplicationContext(), ActivityPaginaUtente.class);
@@ -214,7 +214,7 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
                     Intent prossimaActivity;
                     switch (position) { // "Home","Profilo","Registratore","Metronomo","Accordatore, Impostazioni","Logout"
                         case 0:
-                            prossimaActivity = new Intent(getApplicationContext(), MainActivity.class);
+                            prossimaActivity = new Intent(getApplicationContext(), activity_MainRestyled.class);
                             break;
                         case 1:
                             prossimaActivity = new Intent(getApplicationContext(), ActivityPaginaUtente.class);
@@ -296,7 +296,7 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
                 }
                 break;
             case android.R.id.home :
-                Intent i = new Intent(this,MainActivity.class);
+                Intent i = new Intent(this,activity_MainRestyled.class);
                 i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));
                 startActivity(i);
                 break;

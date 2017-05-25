@@ -61,7 +61,7 @@ public class ChooseUserDialog extends DialogFragment implements DialogInterface.
                 ed.putString("nome_utente",u.getNickName());
                 ed.apply();
 
-                //Intent activityUtente = new Intent(getActivity().getBaseContext(),MainActivity.class);    //old main
+                //Intent activityUtente = new Intent(getActivity().getBaseContext(),activity_MainRestyled.class);    //old main
                 Intent activityUtente = new Intent(getActivity().getBaseContext(),activity_MainRestyled.class);
                 activityUtente.putExtra("id_utente",u.getIdUtente());
                 activityUtente.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

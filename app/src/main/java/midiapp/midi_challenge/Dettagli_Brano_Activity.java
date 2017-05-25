@@ -170,7 +170,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                Intent i = new Intent(getBaseContext(),MainActivity.class);
+                Intent i = new Intent(getBaseContext(),activity_MainRestyled.class);
                 i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));   //find a better way to do dis
                 NavUtils.navigateUpTo(this,i);
                 break;

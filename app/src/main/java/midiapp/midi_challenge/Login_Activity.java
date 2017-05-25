@@ -54,7 +54,7 @@ public class Login_Activity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 Utente u = db.trovaUtente(listaUtenti.get(i).getIdUtente());
-                Intent activityUtente = new Intent(getBaseContext(),MainActivity.class);
+                Intent activityUtente = new Intent(getBaseContext(),activity_MainRestyled.class);
                 activityUtente.putExtra("id_utente",u.getIdUtente());
                 startActivity(activityUtente);
             }

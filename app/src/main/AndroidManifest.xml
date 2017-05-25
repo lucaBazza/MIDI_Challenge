@@ -24,13 +24,13 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths"/>
         </provider>
-        
-        <activity android:name=".MainActivity">
+
+        <!--<activity android:name=".activity_MainRestyled">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>-->
 
 
         <activity   android:name=".activity_MainRestyled"
@@ -45,26 +45,26 @@
 
         <activity
             android:name=".Dettagli_Brano_Activity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activity_MainRestyled" />
         <activity
             android:name=".Aggiunta_Brano_Activity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activity_MainRestyled" />
         <activity
             android:name=".Registratore_Activity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activity_MainRestyled" />
         <activity
             android:name=".AccordatoreActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activity_MainRestyled" />
         <activity android:name=".Login_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Impostazioni_Activity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activity_MainRestyled" />
+
         <activity android:name=".Info_Activity" />
         <activity android:name=".ActivityPaginaUtente" />
         <activity android:name=".MetronomoActivity" />

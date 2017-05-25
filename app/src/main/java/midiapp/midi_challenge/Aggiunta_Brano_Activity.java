@@ -146,7 +146,7 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
                     Utente utenteCorrente = db.trovaUtente(getIntent().getLongExtra("id_utente",-1));
                     db.inserisciBranoPerUtente(utenteCorrente,b,0);
                 }
-                Intent i = new Intent(getBaseContext(),MainActivity.class);
+                Intent i = new Intent(getBaseContext(),activity_MainRestyled.class);
                 i.putExtra("id_utente", getIntent().getLongExtra("id_utente", 1));
                 startActivity(i);
             }
@@ -156,7 +156,7 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                Intent i = new Intent(getBaseContext(), MainActivity.class);
+                Intent i = new Intent(getBaseContext(), activity_MainRestyled.class);
                 i.putExtra("id_utente", getIntent().getLongExtra("id_utente", 1));
                 NavUtils.navigateUpTo(this,i);
                 break;
