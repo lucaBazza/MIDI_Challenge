@@ -42,6 +42,8 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
         setContentView(R.layout.activity_pagina_utente);
         super.onCreate(savedInstanceState);
 
+        funzioniDatabase = getDb();
+
         if(getIntent().hasExtra("id_utente")){
             long idUtTmp = getIntent().getLongExtra("id_utente",-1);
             utente = funzioniDatabase.trovaUtente(idUtTmp);
