@@ -37,6 +37,7 @@
         android:id="@+id/tvLog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
         android:text="...log..."
         android:textAlignment="center"
         android:textColor="@android:color/black" />
@@ -49,10 +50,11 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Titolo : "
-            android:layout_weight="10"/>
+            android:layout_weight="10"
+            android:text="Titolo : " />
 
         <TextView
             android:id="@+id/txt_TitoloBrano"
@@ -62,7 +64,7 @@
 
         <Button
             android:id="@+id/btn_cambiaTitoloBrano"
-            android:layout_width="15dp"
+            android:layout_width="5dp"
             android:layout_height="match_parent"
             android:layout_weight="14"
             android:background="@mipmap/edit_text_pencil_icon"

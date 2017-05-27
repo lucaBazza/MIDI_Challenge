@@ -17,14 +17,6 @@
         android:orientation="vertical">
         <!-- android:background="@android:color/holo_orange_light"-->
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:maxLines="9000000"
-            android:scrollbars="vertical"
-            android:text="..." />
 
         <ListView
             android:id="@+id/lista_brani_utente"
@@ -34,6 +26,14 @@
             android:layout_marginLeft="6dp"
             android:layout_weight="0.93"
             android:choiceMode="singleChoice" />
+        <TextView
+            android:id="@+id/tv_mainActivity_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:maxLines="900000"
+            android:scrollbars="vertical"
+            android:text="..." />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_new"

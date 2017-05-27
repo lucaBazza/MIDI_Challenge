@@ -33,7 +33,7 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
     private ArrayAdapter<Brano> ArrayAdapterListaBrani; // per inserire i dati nella lista
     private Utente utente; //utente corrente
     static FunzioniDatabase funzioniDatabase = null;
-    private TextView tv;
+    private TextView tv_mainActivity_log;
 
     DrawerLayout drawer; // autogenerato in on backpressed
     Toolbar toolbar;
@@ -58,10 +58,9 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
         });
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        tv_mainActivity_log = (TextView) findViewById(R.id.tv_mainActivity_log);
 
         inizializzaMainRestyled();  // metodo che raggruppa tutte le funzioni
     }
@@ -107,11 +106,13 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
                 ArrayAdapterListaBrani = new ArrayAdapter<Brano>(this, R.layout.brani_list_element, braniUtente);
                 ListViewXmlListaBrani.setAdapter(ArrayAdapterListaBrani);
                 if (braniUtente.isEmpty()) {
-                    Toast.makeText(getBaseContext(), "Nessun Brano Trovato!", Toast.LENGTH_LONG);
+                    tv_mainActivity_log.setText("Nessun Brano Trovato!");
                 }
-            } else
+                else
+                    tv_mainActivity_log.setText("Totale brani: "+ArrayAdapterListaBrani.getCount());
+            } else {
                 ArrayAdapterListaBrani.notifyDataSetChanged();
-
+            }
             ListViewXmlListaBrani.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -123,8 +124,7 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
                 }
             });
 
-            tv = (TextView) findViewById(R.id.textView);
-            tv.setMovementMethod(new ScrollingMovementMethod());
+            //tv_mainActivity_log.setMovementMethod(new ScrollingMovementMethod());
 
             //mActivityTitles = new String[]{"Home", "Profilo", "Registratore", "Metronomo", "Accordatore", "Impostazioni", "Cambia Utente"};
             //mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
