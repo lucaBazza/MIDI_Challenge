@@ -16,40 +16,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="midiapp.midi_challenge.Registratore_Activity">
 
-    <Button
-        android:id="@+id/btnReg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/roundcorner"
-        android:text="START"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:layout_below="@+id/img_stop_reg"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="11dp" />
+        <Button
+            android:id="@+id/btnReg"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundcorner"
+            android:text="START"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="56dp"
+            android:layout_below="@+id/registratore_img"
+            android:layout_centerHorizontal="true" />
 
-    <Button
-        android:id="@+id/btnRip"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/roundcorner"
-        android:text="Riproduci"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:layout_marginTop="62dp"
-        android:layout_alignTop="@+id/btnReg"
-        android:layout_centerHorizontal="true" />
+        <Button
+            android:id="@+id/btnRip"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/roundcorner"
+            android:text="Riproduci"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_below="@+id/btnReg"
+            android:layout_alignStart="@+id/btnReg" />
 
-    <ImageView
-        android:id="@+id/img_stop_reg"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="8dp"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        app:srcCompat="@drawable/rec_icon"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        <ImageView
+            android:id="@+id/registratore_img"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="53dp"
+            android:background="@drawable/registratore_icona"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/textView3"

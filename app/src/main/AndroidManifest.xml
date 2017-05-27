@@ -25,14 +25,6 @@
                 android:resource="@xml/filepaths"/>
         </provider>
 
-        <!--<activity android:name=".activity_MainRestyled">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>-->
-
-
         <activity   android:name=".activity_MainRestyled"
                     android:label="@string/title_activity__main_restyled">
                     <!--android:theme="@style/AppTheme.NoActionBar"-->
@@ -55,12 +47,7 @@
         <activity
             android:name=".AccordatoreActivity"
             android:parentActivityName=".activity_MainRestyled" />
-        <activity android:name=".Login_Activity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
         <activity
             android:name=".Impostazioni_Activity"
             android:parentActivityName=".activity_MainRestyled" />
