@@ -145,7 +145,7 @@ public class FunzioniDatabase {
 
     public List<Brano> braniUtente(long idUtente){
         List<Brano> tmpList = new ArrayList<>();
-        String selectionQuery = "SELECT DISTINCT Brano.idBrano,titolo,nomeFile,difficoltà,autovalutazione,autore,arraySpartiti FROM Brano JOIN relUtenteBrano WHERE idUtente = ?";
+        String selectionQuery = "SELECT DISTINCT Brano.idBrano,titolo,nomeFile,difficoltà,autovalutazione,autore,arraySpartiti FROM Brano JOIN relUtenteBrano ON Brano.idBrano = relUtenteBrano.idBrano WHERE relUtenteBrano.idUtente = ?";
 
         Cursor res = database.rawQuery(selectionQuery,new String[]{Long.toString(idUtente)});
         while(res.moveToNext()){
