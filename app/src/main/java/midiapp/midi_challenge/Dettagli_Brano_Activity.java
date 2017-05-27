@@ -9,17 +9,20 @@ import android.hardware.Camera;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 import com.pdrogfer.mididroid.MidiFile;
@@ -31,23 +34,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
-import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import android.content.Context;
-import android.hardware.camera2.*;
-import android.hardware.Camera.PictureCallback;
-import android.os.Environment;
-import android.util.Log;
-import android.widget.Toast;
-import android.app.Activity;
-import android.content.pm.PackageManager;
-import android.hardware.Camera.CameraInfo;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import static android.Manifest.permission.CAMERA;
@@ -58,9 +47,9 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 /**
  * @author lucabazzanella
  */
-public class Dettagli_Brano_Activity extends AppCompatActivity {
+public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
     public Brano brano = null;
-    public Utente utente =null;
+    //public Utente utente =null;
     private String dir = "MidiChallenge/";
     String[] arraySheets = null;
     AlgoritmoMidi alMidi;
@@ -69,6 +58,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     TextView tvInfo1;
     ImageButton imgBtnDeleteSpartiti;
     Button btnBrano;
+    FloatingActionButton fab_share_dettagli_brano;
 
     Camera camera;
     Button brnFotocamera;
@@ -78,6 +68,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
     static final int REQUEST_TAKE_PHOTO = 1;
 
     private static FunzioniDatabase funzioniDatabase = null;
+    private ShareActionProvider mShareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +78,12 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         long l = getIntent().getLongExtra("id_brano",0);
         funzioniDatabase = new FunzioniDatabase(getBaseContext());
         brano = funzioniDatabase.trovaBrano(l);
+
         if(brano.idBrano==-1) {
             Log.d("Errore caricamento", "non trovo il brano in qeustione!: ");
             Toast.makeText(this, "Errore non trovo il brano in qeustione!!!", Toast.LENGTH_LONG).show();
         }
+
         tvInfo1 = (TextView)findViewById(R.id.lbl_Info1);
         imgBtnDeleteSpartiti = (ImageButton)findViewById(R.id.id_imgBtnDeleteSpartiti);
         btnBrano = (Button) findViewById(R.id.buttonProvaCaricaBrano);       //BUTTON ELABORA MIDI
@@ -98,19 +91,19 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         btnBrano.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file  //campanella.mid  Chopin_EtudesOp10n1.mid  happyBD.mid
-                File input = new File(brano.getNomeFile());
-                try {  midiFile = new MidiFile(input);
-                    if(midiFile!=null) {
-                        alMidi = new AlgoritmoMidi(midiFile);
-                        showResults();
-                    }   else{ tvLog.setText("file midi null!"); }
-                }
-                catch (IOException e) {
-                    System.err.println("Error parsing MIDI file:");
-                    e.printStackTrace();        //log.setText(e.toString());
-                    midiFile=null; return;
-                }
+            File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file  //campanella.mid  Chopin_EtudesOp10n1.mid  happyBD.mid
+            File input = new File(brano.getNomeFile());
+            try {  midiFile = new MidiFile(input);
+                if(midiFile!=null) {
+                    alMidi = new AlgoritmoMidi(midiFile);
+                    showResults();
+                }   else{ tvLog.setText("file midi null!"); }
+            }
+            catch (IOException e) {
+                System.err.println("Error parsing MIDI file:");
+                e.printStackTrace();        //log.setText(e.toString());
+                midiFile=null; return;
+            }
             }
         });
 
@@ -119,6 +112,21 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 shootFoto();
+            }
+        });
+        fab_share_dettagli_brano = (FloatingActionButton) findViewById(R.id.fab_share_dettagli_brano) ; //share button
+        fab_share_dettagli_brano.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = "Punteggio ottenuto da: "+utenteCorrente.getNickName() +"\n";
+                shareBody += "\t nome brano: "+ (brano.getTitolo().isEmpty() ? brano.getTitolo():"brano senza nome")+"\n";
+                shareBody += "\t punteggio: "+ (brano.getDifficoltà()>0?brano.getDifficoltà():"non calcolata!");
+                String shareSub = "Subject: punteggio";
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Condividi punteggio!"));
             }
         });
 
@@ -155,16 +163,13 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public void caricaBranoUtente(Brano brano, Utente utente){
-        this.brano= brano;
-        this.utente=utente;
-    }
-
     private void showResults(){
         List<String> out = alMidi.calc();
         Iterator i = out.iterator();
-        tvInfo1.setText("Livello di difficoltà brano: "+alMidi.punteggio);
+        brano.setDifficoltà((int)alMidi.getPunteggioFinale());
+        tvInfo1.setText("Livello di difficoltà brano: "+brano.getDifficoltà());
         tvLog.setText("Algoritmo concluso! righe output: "+out.size());
+
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -276,6 +281,7 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
             return false;
         }
     }
+
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new android.support.v7.app.AlertDialog.Builder(this)
                 .setMessage(message)
@@ -284,6 +290,8 @@ public class Dettagli_Brano_Activity extends AppCompatActivity {
                 .create()
                 .show();
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {     //restituisce l'immagine dopo che è stato chiamato l'intent alla fotocamera

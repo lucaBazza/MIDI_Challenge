@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -12,7 +14,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="midiapp.midi_challenge.Dettagli_Brano_Activity"
-    android:weightSum="1">
+        android:weightSum="1">
 
     <Button
         android:id="@+id/buttonProvaCaricaBrano"
@@ -29,7 +31,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="30px">
-
     </LinearLayout>
 
     <TextView
@@ -96,5 +97,16 @@
         android:layout_width="111dp"
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_share_dettagli_brano"
+        android:layout_width="54dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="0.11"
+        android:clickable="true"
+        android:foregroundGravity="left"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_menu_share" />
 
 </LinearLayout>

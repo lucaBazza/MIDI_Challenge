@@ -33,7 +33,7 @@ public class AlgoritmoMidi {
     private static int sizeOfLN=30;
     //static int [] tonalita = {1,3,5,6,8,10,11};                      // scala maggiore %12
     static int [] contNoteMod12 = new int[11];
-    public static long punteggio = 0;
+    private static long punteggio = 0;
     int contatorenNoteTotale=0;
     int contatoreAppoggiature =0;
     int contatoreAccordi =0;
@@ -133,7 +133,7 @@ public class AlgoritmoMidi {
             punteggio = 1 / nota.getDelta();  //DIVISIONE DOUBLE INTERO! CAST LONG A DOUBLE
         else punteggio = 0.01;
         return punteggio;
-    }
+    } //errore ritorna 0 a volte!!!!
 
     /**
      *  Questo metodo analizza l'ultima nota processata, la confronta con il vettore ln -> note recenti:
@@ -173,6 +173,10 @@ public class AlgoritmoMidi {
         }
         points =  Float.floatToIntBits(salto*moltAcco);
         return points;
+    }
+
+    public long getPunteggioFinale(){
+        return punteggio;
     }
 
 }

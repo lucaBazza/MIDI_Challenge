@@ -159,8 +159,11 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
     }
 
     private void aggiornaFoto_punteggioNavHeader(){
+        View view = null;
         NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
-        View view = nv.getHeaderView(0);
+        if(nv==null) return;
+        else
+            view = nv.getHeaderView(0);
         tv_headerPunteggio = (TextView) view.findViewById(R.id.tv_header_score);
         if(tv_headerPunteggio!=null)
             if(utenteCorrente.getPunteggioMassimo()>0)
