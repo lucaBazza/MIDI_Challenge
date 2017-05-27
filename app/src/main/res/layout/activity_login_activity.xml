@@ -12,8 +12,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:scaleType="center"
     android:src="@drawable/backgrounds_login_lowsat"
-    android:tileMode="repeat"
-    tools:context="midiapp.midi_challenge.Login_Activity">
+    android:tileMode="repeat">
 
     <GridView
         android:id="@+id/layout_griglia_utenti"

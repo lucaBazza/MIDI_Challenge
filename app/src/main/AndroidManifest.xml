@@ -48,8 +48,6 @@
             android:name=".AccordatoreActivity"
             android:parentActivityName=".activity_MainRestyled" />
 
-        <activity android:name=".Login_Activity"/>
-
         <activity
             android:name=".Impostazioni_Activity"
             android:parentActivityName=".activity_MainRestyled" />
