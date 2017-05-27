@@ -175,9 +175,11 @@ public class FunzioniDatabase {
             inserisci(b);
         }
 
+        long idBranoDaInserire = trovaBrano(b.getTitolo()).getIdBrano();    //TODO: yep, it's quite ugly. Maybe we should fix this, later
+
         ContentValues cv = new ContentValues();
         cv.put("idUtente",u.idUtente);
-        cv.put("idBrano",b.idBrano);
+        cv.put("idBrano",idBranoDaInserire);
         cv.put("autovalutazione",autovalutazione);
 
         return database.insert("relUtenteBrano","",cv);
