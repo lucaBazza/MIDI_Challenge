@@ -338,6 +338,9 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         }
     }
 
+    public void editTitoloBrano(View v){
+    }
+
     /*private File createImageFile(String percorso) throws IOException { //Crea un file con la foto
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis());
