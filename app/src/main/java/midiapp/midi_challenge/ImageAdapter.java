@@ -1,6 +1,8 @@
 package midiapp.midi_challenge;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -22,6 +25,7 @@ public class ImageAdapter extends BaseAdapter {
     private TextView textView = null;
     private List<Utente> listaUtenti = null;
     private int padding = 8*2;
+    private int dimImmagine = 200;
 
     public ImageAdapter(Context c) {
         mContext = c;
@@ -52,28 +56,37 @@ public class ImageAdapter extends BaseAdapter {
 
         if (convertView == null) { // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(150, 150)); // 85 85
+            imageView.setLayoutParams(new GridView.LayoutParams(dimImmagine, dimImmagine)); // 85 85
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(padding, padding, padding, padding);
-            imageView.setImageResource(R.drawable.icona_default_utente);  //setImmagineUtente(R.drawable.icona_default_utente);
+
+            if(listaUtenti.get(position).getFoto()!=""){
+                File imgFile = new File(listaUtenti.get(position).getFoto());
+                if(!listaUtenti.get(position).getFoto().isEmpty() && imgFile.exists()){
+                    Bitmap myBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()) ,100,100,true);
+                    imageView.setImageBitmap(myBitmap);
+                }
+            }
+            else
+                imageView.setImageResource(R.drawable.icona_default_utente);  //setImmagineUtente(R.drawable.icona_default_utente);
 
             textView = new TextView(mContext);
             textView.setText(listaUtenti.get(position).getNickName());
-            textView.setTextSize(20);
+            textView.setTextSize(25);
+            textView.setPadding(0,50,0,0);
 
             linearLayout.addView(imageView);
             linearLayout.addView(textView);
         }
         else { linearLayout = (LinearLayout) convertView; }
 
-
         return linearLayout;
     }
 
-    public void setImmagineUtente(int risorsaImmagine){
+    /*public void setImmagineUtente(int risorsaImmagine){
         if (imageView != null){
             try { imageView.setImageResource(risorsaImmagine); }
             catch (Exception e){ Toast.makeText(mContext,e.toString(),Toast.LENGTH_SHORT).show(); }
         }
-    }
+    }*/
 }

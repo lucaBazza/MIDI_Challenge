@@ -5,11 +5,11 @@
     <group android:checkableBehavior="single">      <!-- aggiungere una larrghezza massima al drower! -->
         <item
             android:id="@+id/nav_item_home"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/home_icona"
             android:title="Home" />
         <item
             android:id="@+id/nav_profilo"
-            android:icon="@mipmap/generic_user_mc"
+            android:icon="@drawable/utente_icona2"
             android:title="Profilo" />
     </group>
 
@@ -17,13 +17,13 @@
         <menu>
             <item
                 android:id="@+id/nav_registratore"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@drawable/registratore_icona"
                 android:title="Registratore"
                 tools:icon="@drawable/rec_icon" />
-        <item
-            android:id="@+id/nav_metronomo"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Metronomo" />
+            <item
+                android:id="@+id/nav_metronomo"
+                android:icon="@drawable/metronomo_icona"
+                android:title="Metronomo" />
             <item
                 android:id="@+id/nav_accordatore"
                 android:icon="@drawable/img_diapason1"
@@ -40,7 +40,7 @@
 
             <item
                 android:id="@+id/nav_cambiaUtente"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/cambia_utente"
                 android:title="Cambia utente" />
         </menu>
     </item>
