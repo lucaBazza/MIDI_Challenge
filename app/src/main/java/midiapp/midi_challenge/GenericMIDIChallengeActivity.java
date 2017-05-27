@@ -153,7 +153,9 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        aggiornaFoto_punteggioNavHeader();
+        if(utenteCorrente != null) {
+            aggiornaFoto_punteggioNavHeader();
+        }
         // Sync the toggle state after onRestoreInstanceState has occurred.
 
     }
