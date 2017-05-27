@@ -59,11 +59,13 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
     AlgoritmoMidi alMidi;
     MidiFile midiFile;
     int tracciaSelezionata = 0;
+    int autovalutazione = 0;
     TextView tvLog;
     TextView tvInfo1;
     TextView tvInfo2;
     ImageButton imgBtnDeleteSpartiti;
     Button btnBrano;
+    Button btn_autovalutazione;
     FloatingActionButton fab_share_dettagli_brano;
 
     Camera camera;
@@ -94,6 +96,8 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         tvInfo2 = (TextView)findViewById(R.id.lbl_Info2);
         imgBtnDeleteSpartiti = (ImageButton)findViewById(R.id.id_imgBtnDeleteSpartiti);
         btnBrano = (Button) findViewById(R.id.buttonProvaCaricaBrano);       //BUTTON ELABORA MIDI
+        btn_autovalutazione = (Button) findViewById(R.id.btn_autovalutazione);
+        brnFotocamera = (Button)findViewById(R.id.btnFotocamera);
 
         btnBrano.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -124,7 +128,14 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
             }
         });
 
-        brnFotocamera = (Button)findViewById(R.id.btnFotocamera);
+
+        btn_autovalutazione.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                dialogAutovalutazione();
+            }
+        });
+
         brnFotocamera.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -300,8 +311,6 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 .show();
     }
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {     //restituisce l'immagine dopo che è stato chiamato l'intent alla fotocamera
         boolean fotoCaricata = false;
@@ -389,6 +398,41 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         });
         builderSingle.show();
         return 0;
+    }
+
+    public void dialogAutovalutazione() {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(Dettagli_Brano_Activity.this);
+        builderSingle.setIcon(R.drawable.ic_menu_send);
+        builderSingle.setTitle("Valuta la tua performance ");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Dettagli_Brano_Activity.this, android.R.layout.select_dialog_item);
+        arrayAdapter.add("1: \t grandi difficolta");
+        arrayAdapter.add("2: \t piccole difficolta");
+        arrayAdapter.add("3: \t corretta didatticamente");
+        arrayAdapter.add("4: \t controllo del brano");
+        arrayAdapter.add("5: \t master");
+
+        builderSingle.setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //String strName = arrayAdapter.getItem(which);
+                autovalutazione = which+1;
+                brano.setAutovalutazione(which+1);
+                utenteCorrente.setPunteggioMassimo(utenteCorrente.getPunteggioMassimo()+brano.difficoltà); //da modificare!!!
+
+                if(db.aggiornaUtente(utenteCorrente)==-1)
+                    Snackbar.make(getWindow().getDecorView().getRootView(), "Aggiornamento profilo utente nel DB non riuscito!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+            }
+        });
+        builderSingle.show();
     }
 }
 

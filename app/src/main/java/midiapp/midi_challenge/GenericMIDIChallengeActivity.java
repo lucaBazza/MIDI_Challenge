@@ -169,7 +169,7 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
         tv_headerPunteggio = (TextView) view.findViewById(R.id.tv_header_score);
         if(tv_headerPunteggio!=null)
             if(utenteCorrente.getPunteggioMassimo()>0)
-                tv_headerPunteggio.setText((utenteCorrente.getPunteggioMassimo()));
+                tv_headerPunteggio.setText(Integer.toString(utenteCorrente.getPunteggioMassimo()));
             else
                 tv_headerPunteggio.setText("Hai 0 punti!");
         iv_fotoUtente = (ImageView)view.findViewById(R.id.iv_header_foto_utente);
