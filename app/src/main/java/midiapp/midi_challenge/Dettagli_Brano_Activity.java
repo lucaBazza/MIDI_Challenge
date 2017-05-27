@@ -1,8 +1,10 @@
 package midiapp.midi_challenge;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Entity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -12,6 +14,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.FileProvider;
@@ -19,6 +22,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -54,8 +58,10 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
     String[] arraySheets = null;
     AlgoritmoMidi alMidi;
     MidiFile midiFile;
+    int tracciaSelezionata = 0;
     TextView tvLog;
     TextView tvInfo1;
+    TextView tvInfo2;
     ImageButton imgBtnDeleteSpartiti;
     Button btnBrano;
     FloatingActionButton fab_share_dettagli_brano;
@@ -85,6 +91,7 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         }
 
         tvInfo1 = (TextView)findViewById(R.id.lbl_Info1);
+        tvInfo2 = (TextView)findViewById(R.id.lbl_Info2);
         imgBtnDeleteSpartiti = (ImageButton)findViewById(R.id.id_imgBtnDeleteSpartiti);
         btnBrano = (Button) findViewById(R.id.buttonProvaCaricaBrano);       //BUTTON ELABORA MIDI
 
@@ -94,13 +101,20 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
             File input = new File(brano.getNomeFile());
             try { midiFile = new MidiFile(input);
                 if(midiFile!=null) {
-                    alMidi = new AlgoritmoMidi(midiFile,0); //default 0, ma se ci sono più tracce va cambiato!
+                    if (midiFile.getTrackCount() > 1){
+                        Snackbar.make(view, "N. di tracce midi: " + midiFile.getTrackCount(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                        tracciaSelezionata = dialogScegliTraccia(midiFile);
+                    }
+
+                    alMidi = new AlgoritmoMidi(midiFile,tracciaSelezionata); //default 0, ma se ci sono più tracce va cambiato!
                     List<String> out = alMidi.calcolaAlgoritmo();
-                    Iterator i = out.iterator();
                     brano.setDifficoltà((int)alMidi.getPunteggioFinale());
-                    tvInfo1.setText("Livello di difficoltà brano: "+brano.getDifficoltà());
                     tvLog.setText("Algoritmo concluso! righe output: "+out.size());
-                }   else{ tvLog.setText("file midi null!"); }
+                    tvInfo1.setText("Livello di difficoltà brano: "+brano.getDifficoltà());
+                    for(String x : out)
+                        tvInfo2.append(x+"\n");
+                }
+                else{ tvLog.setText("file midi null!"); }
             }
             catch (IOException e) {
                 System.err.println("Error parsing MIDI file:");
@@ -357,6 +371,35 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         brano.arraySpartiti = null;
         if(funzioniDatabase.aggiornaBrano(brano)==1) Log.d("DatabaseLog: ","Riuscito  aggiorna brano!");
         else Log.d("DatabaseLog: ","Failure !");
+    }
+
+    public int dialogScegliTraccia(MidiFile x) {
+        final int trac =0;
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(Dettagli_Brano_Activity.this);
+        builderSingle.setIcon(R.drawable.ic_menu_send);
+        builderSingle.setTitle("Seleziona la traccia: ");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Dettagli_Brano_Activity.this, android.R.layout.select_dialog_item);
+        for(int i =0;i < x.getTrackCount();i++){
+            arrayAdapter.add(i+".: \t"+ x.getTracks().get(i).toString());
+        }
+
+        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //String strName = arrayAdapter.getItem(which);
+                tracciaSelezionata = which;
+            }
+        });
+        builderSingle.show();
+        return 0;
     }
 
 }

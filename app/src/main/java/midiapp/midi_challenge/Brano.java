@@ -61,8 +61,9 @@ public class Brano {
         this.arraySpartiti = new ArrayList<>();
     }
 
-    public Brano(String nomeFile, File path, int difficoltà) {
+    public Brano(String titolo, File path, int difficoltà) {
         this.idBrano = -1;
+        this.titolo = titolo;
         this.fileBrano = path;
         this.difficoltà = difficoltà;
         this.autovalutazione = -1;
@@ -71,7 +72,11 @@ public class Brano {
 
     @Override
     public String toString() {
-        return this.fileBrano.getName();
+        if(titolo!=null || titolo!="")
+            return titolo;
+        else
+            return fileBrano.getName();
+        //return  getTitolo();
     }
 
     @Override
@@ -79,14 +84,6 @@ public class Brano {
         Brano b = (Brano) obj;
         return this.fileBrano.equals(b) || this.fileBrano.getName() == b.fileBrano.getName();
     }
-
-    /*public int getAutovalutazione() {
-        return autovalutazione;
-    }
-
-    public void setAutovalutazione(int autovalutazione) {
-        this.autovalutazione = autovalutazione;
-    }*/
 
     public int getDifficoltà() {
         if(difficoltà>0)
@@ -116,5 +113,13 @@ public class Brano {
 
     public String getTitolo() {
         return this.fileBrano.getName();
+    }
+
+    public int getAutovalutazione() {
+        return autovalutazione;
+    }
+
+    public void setAutovalutazione(int autovalutazione) {
+        this.autovalutazione = autovalutazione;
     }
 }

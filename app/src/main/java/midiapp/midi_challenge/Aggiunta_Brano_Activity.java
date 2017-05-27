@@ -2,6 +2,7 @@ package midiapp.midi_challenge;
 
 import android.content.Intent;
 import android.os.Environment;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v4.util.ArraySet;
 import android.support.v7.app.ActionBar;
@@ -92,9 +93,12 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
         }
 
         for(File f : midiFiles){
-            Brano b = new Brano(f.getName(),f,0);
+            Brano b = new Brano(f.getName(),f,-1); //titolo , percorso , difficolta
             if(db.trovaBrano(b.getTitolo()) == null) {
                 db.inserisci(b);
+            }
+            else{
+                Snackbar.make(getWindow().getDecorView().getRootView(), "Il file "+ b.getTitolo()+" è gia presente nel DataBase!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         }
 
