@@ -41,16 +41,36 @@
         android:textAlignment="center"
         android:textColor="@android:color/black" />
 
-    <TextView
-        android:id="@+id/lbl_Titolo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Titolo : " />
 
-    <TextView
-        android:id="@+id/txt_TitoloBrano"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Titolo : "
+            android:layout_weight="10"/>
+
+        <TextView
+            android:id="@+id/txt_TitoloBrano"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="70" />
+
+        <Button
+            android:id="@+id/btn_cambiaTitoloBrano"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:layout_weight="14"
+            android:background="@mipmap/edit_text_pencil_icon"
+            android:onClick="editTitoloBrano" />
+
+    </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/lbl_Info1"

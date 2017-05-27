@@ -1,5 +1,7 @@
 package midiapp.midi_challenge;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -332,6 +334,8 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
     }
 
     public void editTitoloBrano(View v){
+        DialogFragment editTitle = new EditTitleDialog();
+        editTitle.show(getFragmentManager(),"Modifica Titolo");
     }
 
     /*private File createImageFile(String percorso) throws IOException { //Crea un file con la foto
