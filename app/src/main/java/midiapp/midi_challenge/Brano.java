@@ -88,6 +88,10 @@ public class Brano {
         this.autovalutazione = autovalutazione;
     }*/
 
+    public void setTitolo(String titolo) {
+        this.titolo = titolo;
+    }
+
     public int getDifficoltà() {
         if(difficoltà>0)
             return difficoltà;
@@ -115,6 +119,6 @@ public class Brano {
     }
 
     public String getTitolo() {
-        return this.fileBrano.getName();
+        return this.titolo;
     }
 }

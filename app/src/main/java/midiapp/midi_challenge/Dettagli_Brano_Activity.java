@@ -335,7 +335,11 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
 
     public void editTitoloBrano(View v){
         DialogFragment editTitle = new EditTitleDialog();
+        Bundle args = new Bundle();
+        args.putLong("id_brano_modificare",brano.getIdBrano());
+        editTitle.setArguments(args);
         editTitle.show(getFragmentManager(),"Modifica Titolo");
+        
     }
 
     /*private File createImageFile(String percorso) throws IOException { //Crea un file con la foto
