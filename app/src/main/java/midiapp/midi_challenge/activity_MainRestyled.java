@@ -83,24 +83,6 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-        /*
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.show_navigation_drawer) {
-            drawer.openDrawer(Gravity.LEFT | Gravity.START);
-        }
-        return super.onOptionsItemSelected(item); */
-        drawer.openDrawer(Gravity.LEFT);
-        return true;
-
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
 
 

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompatSideChannelService;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -132,14 +133,20 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
 
-        if(drawer != null)
-            if(drawer.isDrawerOpen(Gravity.LEFT))
-                drawer.openDrawer(Gravity.LEFT | Gravity.START);
-            else
-                drawer.closeDrawer(Gravity.LEFT);
-        return true;
+        switch(item.getItemId()) {
+            case R.id.show_navigation_drawer :
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+                if (drawer != null) {
+                    if (!drawer.isDrawerOpen(Gravity.LEFT))
+                        drawer.openDrawer(Gravity.LEFT | Gravity.START);
+                    else
+                        drawer.closeDrawer(Gravity.LEFT);
+                }
+            break;
+        }
+        return super.onOptionsItemSelected(item);
 
     }
 
