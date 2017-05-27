@@ -13,10 +13,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -91,12 +89,15 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         btnBrano.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-            File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file  //campanella.mid  Chopin_EtudesOp10n1.mid  happyBD.mid
             File input = new File(brano.getNomeFile());
-            try {  midiFile = new MidiFile(input);
+            try { midiFile = new MidiFile(input);
                 if(midiFile!=null) {
-                    alMidi = new AlgoritmoMidi(midiFile);
-                    showResults();
+                    alMidi = new AlgoritmoMidi(midiFile,0); //default 0, ma se ci sono più tracce va cambiato!
+                    List<String> out = alMidi.calcolaAlgoritmo();
+                    Iterator i = out.iterator();
+                    brano.setDifficoltà((int)alMidi.getPunteggioFinale());
+                    tvInfo1.setText("Livello di difficoltà brano: "+brano.getDifficoltà());
+                    tvLog.setText("Algoritmo concluso! righe output: "+out.size());
                 }   else{ tvLog.setText("file midi null!"); }
             }
             catch (IOException e) {
@@ -143,7 +144,6 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         txtTitolo.setText(brano.getTitolo());
 
         ImageView imgViewSpartitoDemo = (ImageView) findViewById(R.id.imgViewSpartitoDemo);    // CARICA FOTO spartito
-
         if(!brano.arraySpartiti.isEmpty() ) { //&& !brano.arraySpartiti.isEmpty()
             Log.d("Carico spartiti_","totale spartiti trovati: " +brano.arraySpartiti.size());
             for(int i =0;i<brano.arraySpartiti.size();i++) { //carica tutti gli spartiti
@@ -161,15 +161,6 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    private void showResults(){
-        List<String> out = alMidi.calc();
-        Iterator i = out.iterator();
-        brano.setDifficoltà((int)alMidi.getPunteggioFinale());
-        tvInfo1.setText("Livello di difficoltà brano: "+brano.getDifficoltà());
-        tvLog.setText("Algoritmo concluso! righe output: "+out.size());
-
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -194,12 +185,14 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                     File input = new File(brano.getNomeFile());
                     try {
                         midiFile = new MidiFile(input);
+
+                        /*
                         if (midiFile != null) {
-                            alMidi = new AlgoritmoMidi(midiFile);
-                            showResults();
+                            alMidi = new AlgoritmoMidi(midiFile,0); //traccia default
+
                         } else {
                             tvLog.setText("file midi null!");
-                        }
+                        }*/
                     } catch (IOException e) {
                         System.err.println("Error parsing MIDI file:");
                         e.printStackTrace();        //log.setText(e.toString());

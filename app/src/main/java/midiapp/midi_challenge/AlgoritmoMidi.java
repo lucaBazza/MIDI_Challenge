@@ -39,16 +39,15 @@ public class AlgoritmoMidi {
     int contatoreAccordi =0;
     long bestPuntTemp = 0;
 
-    AlgoritmoMidi(MidiFile x){
-        midiTrack = x.getTracks().get(0);
+    AlgoritmoMidi(MidiFile x, int nTracca){
+        midiTrack = x.getTracks().get(nTracca);
     } //seleziona la traccia 0 del file midi, è quella contentente la traccia da analizzare
 
-    public ArrayList<String> calc(){
+    public ArrayList<String> calcolaAlgoritmo(){
         Iterator<MidiEvent> it = midiTrack.getEvents().iterator();
         ArrayList<String> outPut = new ArrayList<>();
 
         long puntTemp = 0;
-
         while(it.hasNext()) {   //per ogni nota nella traccia
             MidiEvent E = it.next();
             if(E.getClass().equals(NoteOn.class) &&   ((NoteOn)E).getVelocity()!=0 ) {  // per scremare le note "fantasma" con dinamica 0
