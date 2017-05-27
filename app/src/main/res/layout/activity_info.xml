@@ -42,15 +42,15 @@
         android:layout_alignEnd="@+id/Sviluppatori" />
 
     <TextView
-        android:text="Versione:"
+        android:id="@+id/Versione"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/Versione"
-        android:textSize="28sp"
-        android:textStyle="normal|bold"
         android:layout_alignBottom="@+id/nVersione"
         android:layout_alignStart="@+id/Sviluppatori"
-        android:layout_marginStart="8dp" />
+        android:layout_marginStart="8dp"
+        android:text="Versione: "
+        android:textSize="28sp"
+        android:textStyle="normal|bold" />
 
     <TextView
         android:text="Sviluppatori:"

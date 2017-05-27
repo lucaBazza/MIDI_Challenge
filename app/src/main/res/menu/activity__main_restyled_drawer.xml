@@ -9,7 +9,7 @@
             android:title="Home" />
         <item
             android:id="@+id/nav_profilo"
-            android:icon="@mipmap/generic_user_mc"
+            android:icon="@drawable/utente_icona2"
             android:title="Profilo" />
     </group>
 
@@ -40,7 +40,7 @@
 
             <item
                 android:id="@+id/nav_cambiaUtente"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/cambia_utente"
                 android:title="Cambia utente" />
         </menu>
     </item>
