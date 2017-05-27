@@ -32,12 +32,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.2"
+        android:layout_weight="0.1"
+        android:foregroundGravity="center_vertical"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:visibility="visible">
 
-        <!--
-        <EditText
+
+        <!-- <EditText
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:id="@+id/edtTxt_nomeUtente"
@@ -50,9 +52,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:background="@drawable/roundcorner"
-            android:text="Nuovo \n Utente"
+            android:gravity="center"
+            android:text="  Nuovo \n Utente"
             android:textColor="@android:color/white"
+            android:textSize="25sp"
             android:visibility="visible" />
     </LinearLayout>
 
