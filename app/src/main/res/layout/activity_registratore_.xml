@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout">
-<RelativeLayout
+
+    <RelativeLayout
     android:id="@+id/activity_registratore_"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,7 +24,7 @@
         android:text="START"
         android:textColor="@android:color/white"
         android:textSize="18sp"
-        android:layout_below="@+id/stop_reg"
+        android:layout_below="@+id/img_stop_reg"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="11dp" />
 
@@ -40,7 +41,7 @@
         android:layout_centerHorizontal="true" />
 
     <ImageView
-        android:id="@+id/stop_reg"
+        android:id="@+id/img_stop_reg"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginTop="8dp"
@@ -58,7 +59,19 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="23dp"
         android:text="..." />
-    <!--android:id="@+id/imageView"-->
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_shareRec"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:clickable="true"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_menu_share"
+            android:layout_below="@+id/textView3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp" />
+
+        <!--android:id="@+id/imageView"-->
 </RelativeLayout>
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
@@ -68,5 +81,7 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_activity__main_restyled"
         app:menu="@menu/activity__main_restyled_drawer" />
+
 </android.support.v4.widget.DrawerLayout>
+
     <!--style="@android:style/Widget.Material.Button.Colored" -->

@@ -3,8 +3,11 @@ package midiapp.midi_challenge;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -38,13 +42,22 @@ public class Login_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_login_activity);
 
         db = new FunzioniDatabase(getBaseContext());
-
         final GridView grigliaUtenti = (GridView) findViewById(R.id.layout_griglia_utenti);
-
         final List<Utente> listaUtenti = db.prendiTuttiUtenti();
 
         final ArrayAdapter ad = new ArrayAdapter(this,R.layout.users_grid_element,R.id.txt_NomeUtenteLogin, listaUtenti);
         grigliaUtenti.setAdapter(new ImageAdapter(this,listaUtenti));
+        /*for(Utente x : listaUtenti){
+            if(x.getFoto()!=""){
+                File imgFile = new File(listaUtenti.get(0).getFoto());
+                if(!listaUtenti.get(0).getFoto().isEmpty() && imgFile.exists()) {
+                    Bitmap myBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()), 100, 100, true);
+                    ((ImageView) grigliaUtenti.getItemAtPosition(0)).setImageBitmap(myBitmap);
+                }
+            }
+            else
+                Snackbar.make(getWindow().getDecorView().getRootView(), "No foto utente: "+x.getNickName(), Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+        }*/
 
         if (!listaUtenti.isEmpty()) { setTitle("Pagina login"); }
         else { setTitle("Crea il primo utente!"); }
@@ -52,7 +65,6 @@ public class Login_Activity extends AppCompatActivity {
         grigliaUtenti.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                 Utente u = db.trovaUtente(listaUtenti.get(i).getIdUtente());
                 Intent activityUtente = new Intent(getBaseContext(),activity_MainRestyled.class);
                 activityUtente.putExtra("id_utente",u.getIdUtente());

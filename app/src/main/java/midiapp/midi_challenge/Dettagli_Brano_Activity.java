@@ -356,21 +356,6 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         
     }
 
-    /*private File createImageFile(String percorso) throws IOException { //Crea un file con la foto
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis());
-        //File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/Camera/");
-        File storageDir = new File( GenericMIDIChallengeActivity.cartellaPredefinita.toString());
-        if (!storageDir.exists())
-            storageDir.mkdirs();
-        File image = File.createTempFile(
-                timeStamp,                   // prefix
-                ".jpeg",                     //suffix
-                storageDir                   // directory
-        );
-        return image;
-    }*/
-
     private void CancellaArraySpartiti(){
         brano.arraySpartiti = null;
         if(funzioniDatabase.aggiornaBrano(brano)==1) Log.d("DatabaseLog: ","Riuscito  aggiorna brano!");
@@ -378,7 +363,7 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
     }
 
     public int dialogScegliTraccia(MidiFile x) {
-        final int trac =0;
+        //final int trac =0;
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(Dettagli_Brano_Activity.this);
         builderSingle.setIcon(R.drawable.ic_menu_send);
         builderSingle.setTitle("Seleziona la traccia: ");
@@ -405,5 +390,20 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         builderSingle.show();
         return 0;
     }
-
 }
+
+
+    /*private File createImageFile(String percorso) throws IOException { //Crea un file con la foto
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis());
+        //File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/Camera/");
+        File storageDir = new File( GenericMIDIChallengeActivity.cartellaPredefinita.toString());
+        if (!storageDir.exists())
+            storageDir.mkdirs();
+        File image = File.createTempFile(
+                timeStamp,                   // prefix
+                ".jpeg",                     //suffix
+                storageDir                   // directory
+        );
+        return image;
+    }*/
