@@ -17,11 +17,19 @@
 
     <ImageButton
         android:id="@+id/imgBtnDiapason"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
         android:layout_width="200dp"
         android:background="@drawable/img_diapason1"
-        android:layout_height="200dp" />
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="44dp" />
+
+    <Spinner
+        android:id="@+id/spinner_tuner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>
     <android.support.design.widget.NavigationView
