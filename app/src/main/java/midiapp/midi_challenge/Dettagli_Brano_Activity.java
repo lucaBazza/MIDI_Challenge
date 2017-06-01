@@ -377,11 +377,34 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
     }
 
     public void editTitoloBrano(View v){                    //manca  brano.setTitolo( ..  )
-        DialogFragment editTitle = new EditTitleDialog();
-        Bundle args = new Bundle();
-        args.putLong("id_brano_modificare",brano.getIdBrano());
-        editTitle.setArguments(args);
-        editTitle.show(getFragmentManager(),"Modifica Titolo");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Aggiorna Titolo");
+
+        final EditText input = new EditText(this);
+
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(input.getText().toString().length()>3){
+                    brano.setTitolo(input.getText().toString());
+                    ((TextView)findViewById(R.id.txt_TitoloBrano)).setText(input.getText().toString());
+                    getSupportActionBar().setTitle(input.getText().toString());
+                    getDb().aggiornaBrano(brano);
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
 
     }
 
@@ -400,6 +423,7 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 if(input.getText().toString().length()>3){
                     brano.setAutore(input.getText().toString());
                     ((TextView)findViewById(R.id.txt_TitoloAutore)).setText(input.getText().toString());
+                    getDb().aggiornaBrano(brano);
                 }
             }
         });
