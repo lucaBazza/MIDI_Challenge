@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -19,11 +20,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.FileProvider;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ShareActionProvider;
@@ -65,8 +68,10 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
     TextView tvInfo2;
     ImageButton imgBtnDeleteSpartiti;
     Button btnBrano;
+    Button btn_cambiaAutoreBrano;
     Button btn_autovalutazione;
     FloatingActionButton fab_share_dettagli_brano;
+    Button btnShareMidi;
 
     Camera camera;
     Button brnFotocamera;
@@ -98,6 +103,7 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         btnBrano = (Button) findViewById(R.id.buttonProvaCaricaBrano);       //BUTTON ELABORA MIDI
         btn_autovalutazione = (Button) findViewById(R.id.btn_autovalutazione);
         brnFotocamera = (Button)findViewById(R.id.btnFotocamera);
+        btn_cambiaAutoreBrano = (Button) findViewById(R.id.btn_cambiaAutoreBrano);
 
         btnBrano.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -109,7 +115,6 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                         Snackbar.make(view, "N. di tracce midi: " + midiFile.getTrackCount(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         tracciaSelezionata = dialogScegliTraccia(midiFile);
                     }
-
                     alMidi = new AlgoritmoMidi(midiFile,tracciaSelezionata); //default 0, ma se ci sono più tracce va cambiato!
                     List<String> out = alMidi.calcolaAlgoritmo();
                     brano.setDifficoltà((int)alMidi.getPunteggioFinale());
@@ -186,7 +191,23 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         }
         else { Log.d("Errore spartito","non trovo spartiti in array! _++_ NULL"); }
 
-
+        btnShareMidi = (Button) findViewById(R.id.btnShareMidi);
+        btnShareMidi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("image/*");
+                Uri uri = Uri.fromFile(brano.fileBrano);
+                String shareBody = "File midi: "+brano.fileBrano.getName() +"\n";
+                shareBody += "\t nome brano: "+ (brano.getTitolo().isEmpty() ? brano.getTitolo():" brano senza nome")+"\n";
+                shareBody += "\t punteggio: "+ (brano.getDifficoltà() > 0 ? brano.getDifficoltà():" non calcolata!");
+                String shareSub = "File midi"+brano.fileBrano.getName();
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                startActivity(Intent.createChooser(sharingIntent, "Condividi file midi con punteggio!"));
+            }
+        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -352,17 +373,44 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 if(funzioniDatabase.aggiornaBrano(brano)==1) Log.d("DatabaseLog: ","Riuscito  aggiorna brano!");
                 else Log.d("DatabaseLog: ","Failure !");
             }
-
         }
     }
 
-    public void editTitoloBrano(View v){
+    public void editTitoloBrano(View v){                    //manca  brano.setTitolo( ..  )
         DialogFragment editTitle = new EditTitleDialog();
         Bundle args = new Bundle();
         args.putLong("id_brano_modificare",brano.getIdBrano());
         editTitle.setArguments(args);
         editTitle.show(getFragmentManager(),"Modifica Titolo");
-        
+
+    }
+
+    public void editAutoreBrano(View v){                    //manca  brano.setAutore( ..  )
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Aggiorna Autore brano!");
+        // Set up the input
+        final EditText input = new EditText(this);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(input.getText().toString().length()>3){
+                    brano.setAutore(input.getText().toString());
+                    ((TextView)findViewById(R.id.txt_TitoloAutore)).setText(input.getText().toString());
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
     private void CancellaArraySpartiti(){
@@ -435,19 +483,3 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         builderSingle.show();
     }
 }
-
-
-    /*private File createImageFile(String percorso) throws IOException { //Crea un file con la foto
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis());
-        //File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/Camera/");
-        File storageDir = new File( GenericMIDIChallengeActivity.cartellaPredefinita.toString());
-        if (!storageDir.exists())
-            storageDir.mkdirs();
-        File image = File.createTempFile(
-                timeStamp,                   // prefix
-                ".jpeg",                     //suffix
-                storageDir                   // directory
-        );
-        return image;
-    }*/

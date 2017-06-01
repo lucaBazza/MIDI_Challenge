@@ -16,21 +16,33 @@
         tools:context="midiapp.midi_challenge.Dettagli_Brano_Activity"
         android:weightSum="1">
 
-    <Button
-        android:id="@+id/buttonProvaCaricaBrano"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/roundcorner"
-        android:elevation="0dp"
-        android:text="Elabora Brano"
-        android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        android:orientation="horizontal"
+        android:weightSum="1">
 
-    <LinearLayout
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/buttonProvaCaricaBrano"
+            android:layout_width="244dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="30px">
+            android:background="@drawable/roundcorner"
+            android:elevation="0dp"
+            android:text="Elabora Brano"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:layout_weight="1.13" />
+
+        <Button
+            android:id="@+id/btnShareMidi"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundcorner"
+            android:elevation="0dp"
+            android:text=".."
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
     </LinearLayout>
 
     <TextView
@@ -43,10 +55,9 @@
         android:textColor="@android:color/black" />
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="35dp"
         android:orientation="horizontal">
 
         <TextView
@@ -73,41 +84,86 @@
     </LinearLayout>
 
 
-
-    <TextView
-        android:id="@+id/lbl_Info1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Etc : " />
+        android:layout_height="35dp"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/txt_Info1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:text="Autore:" />
 
-    <TextView
-        android:id="@+id/lbl_Info2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Etc : " />
+        <TextView
+            android:id="@+id/txt_TitoloAutore"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="70" />
 
-    <TextView
-        android:id="@+id/txt_Info2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_cambiaAutoreBrano"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:layout_weight="14"
+            android:background="@mipmap/edit_text_pencil_icon"
+            android:onClick="editAutoreBrano" />
 
-    <Button
-        android:id="@+id/btn_autovalutazione"
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Valuta la tua performance!" />
+        android:layout_height="90dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/lbl_Info2"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:text="Etc : " />
+
+            <TextView
+                android:id="@+id/txt_Info1"
+                android:layout_width="93dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75" />
+
+            <Button
+                android:id="@+id/btn_autovalutazione"
+                android:layout_width="137dp"
+                android:layout_height="wrap_content"
+                android:text="AutoValutazione" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lbl_Info1"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:text="Etc : " />
+
+        <TextView
+            android:id="@+id/txt_Info2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imgViewSpartitoDemo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.25"
-        app:srcCompat="@android:drawable/ic_menu_report_image" />
+        android:layout_weight="0.40"
+        app:srcCompat="@android:drawable/ic_menu_slideshow" />
 
     <Button
         android:id="@+id/btnFotocamera"

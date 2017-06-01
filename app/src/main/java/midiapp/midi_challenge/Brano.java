@@ -126,4 +126,12 @@ public class Brano {
     public void setAutovalutazione(int autovalutazione) {
         this.autovalutazione = autovalutazione;
     }
+
+    public String getAutore(){
+        return autore;
+    }
+
+    public void setAutore(String _autore){
+        this.autore = _autore;
+    }
 }
