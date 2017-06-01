@@ -1,4 +1,4 @@
-package midiapp.midi_challenge;
+package midiapp.midi_challenge.accordatoreClasses;
 
 public class ConfigFlags {
 	/* To retrieve use the following command:

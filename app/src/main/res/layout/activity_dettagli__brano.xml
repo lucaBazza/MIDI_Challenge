@@ -24,14 +24,14 @@
 
         <Button
             android:id="@+id/buttonProvaCaricaBrano"
-            android:layout_width="244dp"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1.13"
             android:background="@drawable/roundcorner"
             android:elevation="0dp"
             android:text="Elabora Brano"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:layout_weight="1.13" />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btnShareMidi"

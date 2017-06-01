@@ -1,4 +1,4 @@
-package midiapp.midi_challenge;
+package midiapp.midi_challenge.accordatoreClasses;
 
 import android.app.Activity;
 import android.widget.ArrayAdapter;

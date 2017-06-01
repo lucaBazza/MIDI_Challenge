@@ -1,9 +1,10 @@
-package midiapp.midi_challenge;
+package midiapp.midi_challenge.accordatoreClasses;
 
 import java.util.Observable;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_1D;
+
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -86,7 +87,7 @@ public class SoundAnalyzer extends Observable implements AudioRecord.OnRecordPos
 	}
 	
 	private void onNotifyRateChanged() {
-		if(Math.random() < ConfigFlags.howOftenLogNotifyRate) 
+		if(Math.random() < ConfigFlags.howOftenLogNotifyRate)
 			Log.d(TAG, "Notify rate: " + notifyRateinS);
 		if(audioRecord.setPositionNotificationPeriod(
 				(int)(notifyRateinS*AUDIO_SAMPLING_RATE)) !=
@@ -253,17 +254,21 @@ public class SoundAnalyzer extends Observable implements AudioRecord.OnRecordPos
         return 0.5*(1.0 -Math.cos(2*Math.PI*(double)n/(double)(N-1)));
 	}
 	
-	private void computeAutocorrelation() {
+	private void computeAutocorrelation() {								//ATTENZIONE CRASH  n-> must be greather than 0  ?
 		// Fourier Transform to calculate autocorrelation. This kind of magic,
 		// but it works :) Also some stupid people confuse definition of forward
 		// transforms with inverse transforms. But the same people write multi-
 		// threaded apps for computing them, so we kind of like them :)
 		// Below i use circular convolution theorem.
-		
-		// Should save some memory.
-		if(2*elementsRead != currentFftMethodSize) {
-			fft_method = new DoubleFFT_1D(2*elementsRead);
-			currentFftMethodSize = 2*elementsRead;
+		try{															//ATTENZIONE CRASH  n-> must be greather than 0  ?
+			// Should save some memory.
+			if(2*elementsRead != currentFftMethodSize) {
+				fft_method = new DoubleFFT_1D(2*elementsRead);
+				currentFftMethodSize = 2*elementsRead;
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
 		}
 		
 		// Check out memory layout of fft methods in Jtransforms.
