@@ -16,60 +16,81 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="midiapp.midi_challenge.Registratore_Activity">
 
-        <Button
-            android:id="@+id/btnReg"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/roundcorner"
-            android:text="START"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:layout_marginTop="56dp"
-            android:layout_below="@+id/registratore_img"
-            android:layout_centerHorizontal="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_alignParentStart="true">
 
-        <Button
-            android:id="@+id/btnRip"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:background="@drawable/roundcorner"
-            android:text="Riproduci"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:layout_below="@+id/btnReg"
-            android:layout_alignStart="@+id/btnReg" />
+            <ImageView
+                android:id="@+id/registratore_img"
+                android:layout_width="212dp"
+                android:layout_height="200dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="84dp"
+                android:layout_marginTop="53dp"
+                android:layout_weight="0.47"
+                android:background="@drawable/registratore_icona"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
 
-        <ImageView
-            android:id="@+id/registratore_img"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="53dp"
-            android:background="@drawable/registratore_icona"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="172dp"
+                android:layout_weight="0.82">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnRip"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        android:text="..." />
+                <Button
+                    android:id="@+id/btnRip"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="21dp"
+                    android:layout_weight="0.47"
+                    android:background="@drawable/roundcorner"
+                    android:text="Riproduci"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:layout_below="@+id/btnReg"
+                    android:layout_alignStart="@+id/btnReg" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_shareRec"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:clickable="true"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/ic_menu_share"
-            android:layout_below="@+id/textView3"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp" />
+                <Button
+                    android:id="@+id/btnReg"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="42dp"
+                    android:layout_weight="0.47"
+                    android:background="@drawable/roundcorner"
+                    android:text="START"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnRip"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="23dp"
+                    android:layout_weight="1"
+                    android:text="..." />
+            </RelativeLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_shareRec"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/textView3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="165dp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/ic_menu_share" />
+
+        </LinearLayout>
 
         <!--android:id="@+id/imageView"-->
 </RelativeLayout>
