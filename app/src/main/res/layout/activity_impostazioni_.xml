@@ -10,40 +10,58 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="midiapp.midi_challenge.Impostazioni_Activity">
 
-    <Button
-        android:text="INFO"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_info"
-        android:onClick="openNewActivity"
-        android:textColor="@android:color/white"
-        android:background="@drawable/roundcorner"
-        android:textSize="18sp"
-        android:layout_marginBottom="82dp"
-        android:layout_above="@+id/btn_import"
-        android:layout_centerHorizontal="true" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:text="IMPORTA DATI"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_import"
-        android:textColor="@android:color/white"
-        android:background="@drawable/roundcorner"
-        android:textSize="18sp"
-        android:layout_width="160dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        <Button
+            android:id="@+id/btn_export"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:background="@drawable/roundcorner"
+            android:text="ESPORTA DATI"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_below="@+id/btn_import"
+            android:layout_alignStart="@+id/btn_import" />
 
-    <Button
-        android:text="ESPORTA DATI"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_export"
-        android:textColor="@android:color/white"
-        android:background="@drawable/roundcorner"
-        android:textSize="18sp"
-        android:layout_width="160dp"
-        android:layout_alignTop="@+id/btn_import"
-        android:layout_alignStart="@+id/btn_import"
-        android:layout_marginTop="124dp" />
+        <Button
+            android:id="@+id/btn_import"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundcorner"
+            android:text="IMPORTA DATI"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="109dp"
+            android:layout_alignTop="@+id/btn_info"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/btn_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundcorner"
+            android:onClick="openNewActivity"
+            android:text="INFO"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="102dp" />
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_export"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="65dp"
+            android:background="@drawable/roundcorner"
+            android:text="Cancella Dati"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
 
 </RelativeLayout>
