@@ -219,4 +219,6 @@ public class FunzioniDatabase {
         String whereClause = "idUtente='" + idUtente+"'";
         return database.delete("relUtenteBrano",whereClause, null);
     }
+
+
 }

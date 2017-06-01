@@ -44,6 +44,7 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
         this.db = db;
     }
 
+
     public File getCartellaPredefinita() {
         return cartellaPredefinita;
     }

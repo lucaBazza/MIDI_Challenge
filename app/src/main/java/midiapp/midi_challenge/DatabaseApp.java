@@ -45,4 +45,6 @@ public class DatabaseApp extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE utente, brano, relUtentiBrano;");
         onCreate(sqLiteDatabase);
     }
+
+    public String getNOME_DB(){ return  "databaseApp"; }
 }

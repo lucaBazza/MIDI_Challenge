@@ -22,7 +22,7 @@ import midiapp.midi_challenge.accordatoreClasses.SoundAnalyzer;
 import midiapp.midi_challenge.accordatoreClasses.Tuning;
 import midiapp.midi_challenge.accordatoreClasses.UiController;
 
-public class AccordatoreActivity extends GenericMIDIChallengeActivity {
+public class AccordatoreActivity extends GenericMIDIChallengeActivity {   //No drawer view found with gravity LEFT
     // switch off gc logs.
     // System.setProperty("log.tag.falvikvm", "SUPPRESS");
     public static final String TAG = "RealGuitarTuner";

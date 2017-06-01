@@ -13,15 +13,20 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import android.os.Environment;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.Toast;
 import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 
 
-public class Impostazioni_Activity extends AppCompatActivity implements OnClickListener {
+public class Impostazioni_Activity extends GenericMIDIChallengeActivity implements OnClickListener {
 
-    private static final String SAMPLE_DB_NAME = "TrekBook";
-    private static final String SAMPLE_TABLE_NAME = "Info";
+    private static  String SAMPLE_DB_NAME = "provaDbName"; //
+    private static  String SAMPLE_TABLE_NAME = "provaDbTableName"; // utenti  brano relabranoutente
+
+    private Button btn_import;
+    private Button btn_export;
+    private Button btn_delete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +34,21 @@ public class Impostazioni_Activity extends AppCompatActivity implements OnClickL
         setContentView(R.layout.activity_impostazioni_);
         this.setTitle("Impostazioni");
 
+        //SAMPLE_DB_NAME = FunzioniDatabase.getname();
+        SAMPLE_DB_NAME = "databaseApp";
+        SAMPLE_TABLE_NAME  = "utente";
+
         android.support.v7.app.ActionBar ac = this.getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
 
-        findViewById(R.id.btn_import).setOnClickListener(this);
-        findViewById(R.id.btn_export).setOnClickListener(this);
+        btn_import  = (Button) findViewById(R.id.btn_import);
+        btn_import.setOnClickListener(this);
+
+        btn_export = (Button) findViewById(R.id.btn_export);
+        btn_export.setOnClickListener(this);
+
+        btn_delete = (Button) findViewById(R.id.btn_delete);
+        btn_delete.setOnClickListener(this);
     }
 
     @Override
@@ -95,18 +110,20 @@ public class Impostazioni_Activity extends AppCompatActivity implements OnClickL
         File data = Environment.getDataDirectory();
         FileChannel source=null;
         FileChannel destination=null;
-        String currentDBPath = "/data/"+ "com.authorwjf.sqliteexport" +"/databases/"+SAMPLE_DB_NAME;
-        String backupDBPath = SAMPLE_DB_NAME;
+        //String currentDBPath = "/data/"+ "com.authorwjf.sqliteexport" +"/databases/"+SAMPLE_DB_NAME; //    "/data/user/0/midiapp.midi_challenge/databases/"+SAMPLE_DB_NAME;
+        String currentDBPath = "/user/0/midiapp.midi_challenge/databases/"+SAMPLE_DB_NAME;
+        String backupDBPath = cartellaPredefinita.getAbsolutePath();
         File currentDB = new File(data, currentDBPath);
         File backupDB = new File(sd, backupDBPath);
         try {
             source = new FileInputStream(currentDB).getChannel();
-            destination = new FileOutputStream(backupDB).getChannel();
+            destination = new FileOutputStream(backupDB).getChannel(); //errore
             destination.transferFrom(source, 0, source.size());
             source.close();
             destination.close();
-            Toast.makeText(this, "Dati esportati!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Dati esportati in: "+cartellaPredefinita.getAbsolutePath()+"!", Toast.LENGTH_LONG).show();
         } catch(IOException e) {
+            Toast.makeText(this, "Errore esportazione", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }
