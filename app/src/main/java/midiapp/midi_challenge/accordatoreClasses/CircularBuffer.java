@@ -40,7 +40,7 @@ public class CircularBuffer {
         static private double smoothFrequency=0.0;
         static private int invalidDataCounter;
 
-        public static double getSmoothFrequency(AnalyzedSound result) {
+        public static double getSmoothFrequency(SoundAnalyzer.AnalyzedSound result) {
             if(!result.frequencyAvailable) {
                 invalidDataCounter=Math.min(invalidDataCounter+1, 2*invalidDataAllowed);
             } else {

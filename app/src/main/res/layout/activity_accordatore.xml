@@ -6,17 +6,17 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout">
 
-    <TextView
-        android:id="@+id/mainMessage"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text=" "
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
+
+        <TextView
+            android:id="@+id/mainMessage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ImageView
             android:id="@+id/tune"
@@ -24,10 +24,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            android:src="@drawable/tune_horizontal" />
+            android:src="@drawable/tune_horizontal"
+            android:layout_below="@+id/mainMessage" />
 
         <Spinner
             android:id="@+id/spinner_tuner"

@@ -43,7 +43,7 @@ public class UiController implements Observer, OnItemSelectedListener {
 				SoundAnalyzer.AnalyzedSound result = (SoundAnalyzer.AnalyzedSound)obj;
 				// result.getDebug();
 				frequency = CircularBuffer.FrequencySmoothener.getSmoothFrequency(result);
-				if(result.error==AnalyzedSound.ReadingType.BIG_FREQUENCY ||
+				if(result.error== SoundAnalyzer.AnalyzedSound.ReadingType.BIG_FREQUENCY ||
 						result.error== SoundAnalyzer.AnalyzedSound.ReadingType.BIG_VARIANCE ||
 						result.error== SoundAnalyzer.AnalyzedSound.ReadingType.ZERO_SAMPLES)
 					proposedMessage = MessageClass.TOO_NOISY;
@@ -59,15 +59,15 @@ public class UiController implements Observer, OnItemSelectedListener {
 					result.getDebug();
 				//Log.e(TAG,"Frequency: " + frequency);
 				updateUi();
-			} else if(obj instanceof ArrayToDump) {
-				ArrayToDump a = (ArrayToDump)obj;
+			} else if(obj instanceof SoundAnalyzer.ArrayToDump) {
+				SoundAnalyzer.ArrayToDump a = (SoundAnalyzer.ArrayToDump)obj;
 				ui.dumpArray(a.arr, a.elements);
 			}
 		}
 	}
 	
 	private void updateUi() {
-		GuitarString current = tuning.getString(frequency);
+		Tuning.GuitarString current = tuning.getString(frequency);
 		// Mark a string in red on a big picture of guitar.
 		ui.changeString(current.stringId);
 		
