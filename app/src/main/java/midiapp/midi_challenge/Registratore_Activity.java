@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
@@ -32,7 +33,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 
-public class Registratore_Activity extends GenericMIDIChallengeActivity {
+public class Registratore_Activity extends GenericMIDIChallengeActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;

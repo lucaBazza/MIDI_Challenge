@@ -1,5 +1,6 @@
 package midiapp.midi_challenge;
 
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,6 +50,11 @@ public class Impostazioni_Activity extends GenericMIDIChallengeActivity implemen
 
         btn_delete = (Button) findViewById(R.id.btn_delete);
         btn_delete.setOnClickListener(this);
+
+        NavigationView v = (NavigationView) findViewById(R.id.nav_view);
+        if (v != null){
+            v.setNavigationItemSelectedListener(this);
+        }
     }
 
     @Override
@@ -80,6 +86,7 @@ public class Impostazioni_Activity extends GenericMIDIChallengeActivity implemen
                 NavUtils.navigateUpTo(this,i);
                 break;
         }
+        super.onOptionsItemSelected(item);
         return true;
     }
 
