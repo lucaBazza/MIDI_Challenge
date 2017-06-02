@@ -2,7 +2,6 @@ package midiapp.midi_challenge;
 
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,20 +9,18 @@ import android.content.Intent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.channels.FileChannel;
 import android.os.Environment;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
-import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 
 
 public class Impostazioni_Activity extends GenericMIDIChallengeActivity implements OnClickListener {
 
-    private static  String SAMPLE_DB_NAME = "provaDbName"; //
-    private static  String SAMPLE_TABLE_NAME = "provaDbTableName"; // utenti  brano relabranoutente
+    private static String SAMPLE_DB_NAME = "provaDbName"; //
+    private static String SAMPLE_TABLE_NAME = "provaDbTableName"; // utenti  brano relabranoutente
 
     private Button btn_import;
     private Button btn_export;
@@ -90,7 +87,6 @@ public class Impostazioni_Activity extends GenericMIDIChallengeActivity implemen
         return true;
     }
 
-
     private void deleteDB(){
         boolean result = this.deleteDatabase(SAMPLE_DB_NAME);
         if (result==true) {
@@ -109,30 +105,54 @@ public class Impostazioni_Activity extends GenericMIDIChallengeActivity implemen
                 " Values ('Kirk','James, T','Captain');");
         sampleDB.close();
         sampleDB.getPath();
-        Toast.makeText(this, "Dati Importati @ "+sampleDB.getPath(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Dati importati @ "+sampleDB.getPath(), Toast.LENGTH_LONG).show();
     }
 
-    private void exportDB(){
-        File sd = Environment.getExternalStorageDirectory();
-        File data = Environment.getDataDirectory();
-        FileChannel source=null;
-        FileChannel destination=null;
-        //String currentDBPath = "/data/"+ "com.authorwjf.sqliteexport" +"/databases/"+SAMPLE_DB_NAME; //    "/data/user/0/midiapp.midi_challenge/databases/"+SAMPLE_DB_NAME;
-        String currentDBPath = "/user/0/midiapp.midi_challenge/databases/"+SAMPLE_DB_NAME;
-        String backupDBPath = cartellaPredefinita.getAbsolutePath();
-        File currentDB = new File(data, currentDBPath);
-        File backupDB = new File(sd, backupDBPath);
+//    private void exportDB(){
+//        File sd = Environment.getExternalStorageDirectory();
+//        File data = Environment.getDataDirectory();
+//        FileChannel source=null;
+//        FileChannel destination=null;
+//        //String currentDBPath = "/data/"+ "com.authorwjf.sqliteexport" +"/databases/"+SAMPLE_DB_NAME; //    "/data/user/0/midiapp.midi_challenge/databases/"+SAMPLE_DB_NAME;
+//        String currentDBPath = "/user/0/midiapp.midi_challenge/databases/"+SAMPLE_DB_NAME;
+//        String backupDBPath = cartellaPredefinita.getAbsolutePath();
+//        File currentDB = new File(data, currentDBPath);
+//        File backupDB = new File(sd, backupDBPath);
+//        try {
+//            source = new FileInputStream(currentDB).getChannel();
+//            destination = new FileOutputStream(backupDB).getChannel(); //errore
+//            destination.transferFrom(source, 0, source.size());
+//            source.close();
+//            destination.close();
+//            Toast.makeText(this, "Dati esportati in: "+cartellaPredefinita.getAbsolutePath()+"!", Toast.LENGTH_LONG).show();
+//        } catch(IOException e) {
+//            Toast.makeText(this, "Errore esportazione", Toast.LENGTH_LONG).show();
+//            e.printStackTrace();
+//        }
+//    }
+
+    private void exportDB() {
+        FileChannel source = null;
+        FileChannel destination = null;
         try {
-            source = new FileInputStream(currentDB).getChannel();
-            destination = new FileOutputStream(backupDB).getChannel(); //errore
-            destination.transferFrom(source, 0, source.size());
-            source.close();
-            destination.close();
-            Toast.makeText(this, "Dati esportati in: "+cartellaPredefinita.getAbsolutePath()+"!", Toast.LENGTH_LONG).show();
-        } catch(IOException e) {
-            Toast.makeText(this, "Errore esportazione", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            if (sd.canWrite()) {
+                //String currentDBPath = "//data//" + "<package name>" + "//databases//" + "<db name>";
+                String currentDBPath = "/user/0/midiapp.midi_challenge/databases/"+SAMPLE_DB_NAME;
+                String backupDBPath = cartellaPredefinita.getAbsolutePath();
+                File currentDB = new File(data, currentDBPath);
+                File backupDB = new File(sd, backupDBPath);
+                source = new FileInputStream(currentDB).getChannel();
+                destination = new FileOutputStream(backupDB).getChannel();
+                destination.transferFrom(source, 0, source.size());
+                source.close();
+                destination.close();
+                Toast.makeText(getApplicationContext(), "Export Successful!", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Export Failed!", Toast.LENGTH_SHORT).show();
         }
     }
-
 }
