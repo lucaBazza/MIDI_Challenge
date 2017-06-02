@@ -4,14 +4,16 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.ButtonBarLayout;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,11 +26,8 @@ import midiapp.midi_challenge.accordatoreClasses.UiController;
 
 public class AccordatoreActivity extends GenericMIDIChallengeActivity {   //No drawer view found with gravity LEFT
     // switch off gc logs.
-    // System.setProperty("log.tag.falvikvm", "SUPPRESS");
-    public static final String TAG = "RealGuitarTuner";
-
+    public static final String TAG = "Accordatore_tag";     // System.setProperty("log.tag.falvikvm", "SUPPRESS");
     private final boolean LAUNCHANALYZER = true;
-
 
     private ImageView guitar = null;
     private ImageView tune = null;
@@ -44,11 +43,12 @@ public class AccordatoreActivity extends GenericMIDIChallengeActivity {   //No d
         Log.d(TAG,"onCreate()");
         setContentView(R.layout.activity_accordatore);
         uiController = new UiController(this);
+        setTitle("Accordatore");
         if(LAUNCHANALYZER) {
             try {
                 soundAnalyzer = new SoundAnalyzer();
             } catch(Exception e) {
-                Toast.makeText(this, "The are problems with your microphone :(", Toast.LENGTH_LONG ).show();
+                Toast.makeText(this, "Ci sono problemi con il tuo microfono :(", Toast.LENGTH_LONG ).show();
                 Log.e(TAG, "Exception when instantiating SoundAnalyzer: " + e.getMessage());
             }
             soundAnalyzer.addObserver(uiController);
@@ -131,11 +131,7 @@ public class AccordatoreActivity extends GenericMIDIChallengeActivity {   //No d
             R.drawable.strings6
     };
 
-
-
-
-    int oldString = 0;
-    // 1-6 strings (ascending frequency), 0 - no string.
+    int oldString = 0;  // 1-6 strings (ascending frequency), 0 - no string.
     public void changeString(int stringId) {
         if(oldString!=stringId) {
             guitar.setImageBitmap(getAndCacheBitmap(stringNumberToImageId[stringId]));
@@ -145,7 +141,6 @@ public class AccordatoreActivity extends GenericMIDIChallengeActivity {   //No d
 
     int [] targetColor =         new int[]{160,80,40};
     int [] awayFromTargetColor = new int[]{160,160,160};
-
 
     public void coloredGuitarMatch(double match) {
         tune.setBackgroundColor(
@@ -161,12 +156,10 @@ public class AccordatoreActivity extends GenericMIDIChallengeActivity {   //No d
         mainMessage.setTextColor(textColor);
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG,"onDestroy()");
-
     }
 
     @Override
@@ -205,23 +198,14 @@ public class AccordatoreActivity extends GenericMIDIChallengeActivity {   //No d
         if(soundAnalyzer!=null)
             soundAnalyzer.stop();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inf = getMenuInflater();
+        inf.inflate(R.menu.button_action_bar,menu);
+        return true;
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

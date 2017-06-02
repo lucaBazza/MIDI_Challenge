@@ -13,7 +13,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 
 public class UiController implements Observer, OnItemSelectedListener {
-	public static final String TAG = "RealGuitarTuner";
+	public static final String TAG = "Accordatore_tag";
 
 	private AccordatoreActivity ui;
 	private double frequency;
@@ -106,19 +106,19 @@ public class UiController implements Observer, OnItemSelectedListener {
 			}
 		}
 		switch(message) {
-			case TUNING_IN_PROGRESS:
-				ui.displayMessage("Currently tuning string " + current.name +
-						" from " + tuning.getName() + " tuning, matched in " + 
+			case TUNING_IN_PROGRESS:	//Currently tuning string
+				ui.displayMessage("Accordatura corrente sulla corda: " + current.name +
+						" da " + tuning.getName() + " tuning, matched in " +
 						Math.round(100.0*match) + "%.", true);
 				break;
-			case TOO_NOISY:
-				ui.displayMessage("Please reduce background noise (or play louder).", false);
+			case TOO_NOISY:	//Please reduce background noise (or play louder)
+				ui.displayMessage("Riduci il rumore circostante.", false);
 				break;
-			case TOO_QUIET:
-				ui.displayMessage("Please play louder!", false);
+			case TOO_QUIET:	//Please play louder!
+				ui.displayMessage("Suona con più volume!", false);
 				break;
-			case WEIRD_FREQUENCY:
-				ui.displayMessage("Are you sure instrument you are playing is guitar? :)", false);
+			case WEIRD_FREQUENCY:	//Are you sure instrument you are playing is guitar? :)
+				ui.displayMessage("Sicuro che stai suonando una chitarra?", false);
 			default:
 				Log.d(TAG, "No message");
 		}

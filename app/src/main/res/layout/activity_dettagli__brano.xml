@@ -117,46 +117,26 @@
         android:layout_height="90dp"
         android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/lbl_Info2"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <TextView
-                android:id="@+id/lbl_Info2"
-                android:layout_width="70dp"
-                android:layout_height="30dp"
-                android:text="Etc : " />
-
-            <TextView
-                android:id="@+id/txt_Info1"
-                android:layout_width="93dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.75" />
-
-            <Button
-                android:id="@+id/btn_autovalutazione"
-                android:layout_width="137dp"
-                android:layout_height="wrap_content"
-                android:text="AutoValutazione" />
-        </LinearLayout>
+            android:layout_weight="0.52"
+            android:text="Dettagli:" />
 
         <TextView
-            android:id="@+id/lbl_Info1"
+            android:id="@+id/txt_dettagliAlgo"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:text="Etc : " />
-
-        <TextView
-            android:id="@+id/txt_Info2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_height="58dp"
+            android:layout_weight="0.52" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_autovalutazione"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AutoValutazione" />
 
     <ImageView
         android:id="@+id/imgViewSpartitoDemo"
@@ -182,15 +162,32 @@
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/ic_menu_delete" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_share_dettagli_brano"
-        android:layout_width="54dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_weight="0.11"
-        android:clickable="true"
-        android:foregroundGravity="left"
-        app:fabSize="mini"
-        app:srcCompat="@drawable/ic_menu_share" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_playmidi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="0.11"
+            android:clickable="true"
+            android:foregroundGravity="left"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_media_play" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_share_dettagli_brano"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginLeft="250dp"
+            android:layout_weight="0.11"
+            android:clickable="true"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_menu_share" />
+    </LinearLayout>
 
 </LinearLayout>

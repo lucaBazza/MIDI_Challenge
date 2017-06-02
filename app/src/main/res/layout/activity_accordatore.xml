@@ -15,33 +15,34 @@
             android:id="@+id/mainMessage"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
             android:text="..."
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ImageView
             android:id="@+id/tune"
-            android:contentDescription="Tunign Plane"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_alignParentLeft="true"
+            android:layout_below="@+id/mainMessage"
             android:adjustViewBounds="true"
+            android:contentDescription="Tunign Plane"
             android:scaleType="fitXY"
-            android:src="@drawable/tune_horizontal"
-            android:layout_below="@+id/mainMessage" />
+            android:src="@drawable/tune_horizontal" />
 
         <Spinner
             android:id="@+id/spinner_tuner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true" />
+            android:layout_below="@+id/guitar"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="12dp"
+            android:layout_alignParentEnd="true" />
 
         <ImageView
             android:id="@+id/guitar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/spinner_tuner"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/tune"
             android:adjustViewBounds="true"

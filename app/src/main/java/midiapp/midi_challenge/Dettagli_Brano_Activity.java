@@ -97,8 +97,8 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
             Toast.makeText(this, "Errore non trovo il brano in qeustione!!!", Toast.LENGTH_LONG).show();
         }
 
-        tvInfo1 = (TextView)findViewById(R.id.lbl_Info1);
-        tvInfo2 = (TextView)findViewById(R.id.lbl_Info2);
+        tvInfo1 = (TextView)findViewById(R.id.txt_dettagliAlgo);
+        //tvInfo2 = (TextView)findViewById(R.id.lbl_Info2);
         imgBtnDeleteSpartiti = (ImageButton)findViewById(R.id.id_imgBtnDeleteSpartiti);
         btnBrano = (Button) findViewById(R.id.buttonProvaCaricaBrano);       //BUTTON ELABORA MIDI
         btn_autovalutazione = (Button) findViewById(R.id.btn_autovalutazione);
