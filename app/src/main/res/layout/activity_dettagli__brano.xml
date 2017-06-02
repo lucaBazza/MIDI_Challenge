@@ -166,7 +166,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
+        android:layout_weight="0.15"
         android:orientation="horizontal">
 
         <android.support.design.widget.FloatingActionButton
@@ -178,7 +179,7 @@
             android:clickable="true"
             android:foregroundGravity="left"
             app:fabSize="mini"
-            app:srcCompat="@android:drawable/ic_media_play" />
+            app:srcCompat="@drawable/playbutton" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_share_dettagli_brano"

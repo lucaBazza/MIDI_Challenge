@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -72,7 +73,9 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
     Button btn_autovalutazione;
     FloatingActionButton fab_share_dettagli_brano;
     FloatingActionButton fab_playmidi;
+    boolean isPlayingMidi = false;
     Button btnShareMidi;
+    MediaPlayer mediaPlayerForMidi = null;
 
     Camera camera;
     Button brnFotocamera;
@@ -209,15 +212,36 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 startActivity(Intent.createChooser(sharingIntent, "Condividi file midi con punteggio!"));
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         fab_playmidi = (FloatingActionButton)findViewById(R.id.fab_playmidi);
         fab_playmidi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(getWindow().getDecorView().getRootView(), "Play midi!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                if(mediaPlayerForMidi==null)
+                    mediaPlayerForMidi = new MediaPlayer();
+                if(isPlayingMidi){
+                    mediaPlayerForMidi.stop();
+                    mediaPlayerForMidi = null;
+                    fab_playmidi.setImageResource(R.drawable.playbutton);
+                    isPlayingMidi=false;
+                }
+                else{
+                    try{
+                        mediaPlayerForMidi.setDataSource(brano.fileBrano.getAbsolutePath());
+                        mediaPlayerForMidi.prepare();
+                        mediaPlayerForMidi.start();
+                        Snackbar.make(getWindow().getDecorView().getRootView(), "Brano" +brano.getTitolo() +" in riproduzione...", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                        fab_playmidi.setImageResource(R.drawable.pausebutton);
+                        isPlayingMidi=true;
+                    }
+                    catch(IOException ioe){
+                        Snackbar.make(getWindow().getDecorView().getRootView(), "Errore path caricamento midi!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                        ioe.printStackTrace();
+                    }
+                }
             }
         });
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

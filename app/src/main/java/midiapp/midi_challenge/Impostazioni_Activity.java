@@ -116,8 +116,7 @@ public class Impostazioni_Activity extends GenericMIDIChallengeActivity implemen
             File sd = Environment.getExternalStorageDirectory();
             File data = Environment.getDataDirectory();
 
-            if (sd.canWrite()) {
-                //String currentDBPath = "//data//" + "<package name>" + "//databases//" + "<db name>";
+            if (sd.canWrite()) {    //String currentDBPath = "//data//" + "<package name>" + "//databases//" + "<db name>";
                 String currentDBPath = "/user/0/midiapp.midi_challenge/databases/"+SAMPLE_DB_NAME;
                 String backupDBPath = cartellaPredefinita.getAbsolutePath();
                 File currentDB = new File(data, currentDBPath);
