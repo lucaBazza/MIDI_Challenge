@@ -1,10 +1,12 @@
 package midiapp.midi_challenge;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v4.util.ArraySet;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,9 +17,11 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -64,6 +68,24 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
         final ListView lv = (ListView)findViewById(R.id.lista_brani_trovati);
 
         lv.setAdapter(file_list_adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            SparseBooleanArray selected = lv.getCheckedItemPositions();
+                if(selected.get(i)){
+                    View layout = (LinearLayout)lv.getChildAt(i);
+                    layout.setBackgroundColor(R.color.colorPrimaryDark);
+                    TextView t = (TextView) findViewById(R.id.textview_multiple_selection_item);
+                    t.setTextColor(Color.WHITE);
+                }else{
+                    View layout = (LinearLayout)lv.getChildAt(i);
+                    layout.setBackgroundColor(Color.TRANSPARENT);
+                    TextView t = (TextView) findViewById(R.id.textview_multiple_selection_item);
+                    t.setTextColor(Color.BLACK);
+                }
+            }
+        });
 
         TabHost host = (TabHost) findViewById(R.id.aggiunta_brano_tab_host);
         host.setup();
@@ -167,6 +189,4 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
         }
         return true;
     }
-
-
 }

@@ -5,20 +5,10 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="220dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Empty Text"
         android:id="@+id/textview_multiple_selection_item"
         android:padding="24dp"/>
-
-    <CheckBox
-        android:id="@+id/checkbox_multiple_selection_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:shadowColor="@color/colorPrimaryDark"
-        app:buttonTint="@color/colorPrimaryDark"
-        android:focusable="false"
-        android:clickable="false"/>
 
 </LinearLayout>
