@@ -302,7 +302,7 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                     CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraIds[cameraId]);*/
                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     File fileImmagine = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),"midi_challenge");
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(getBaseContext(),"midiapp.midi_challenge.fileprovider",fileImmagine));
+                    takePictureIntent.putExtra("percorso", FileProvider.getUriForFile(getBaseContext(),"midiapp.midi_challenge.fileprovider",fileImmagine));
                     if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                     }
@@ -438,7 +438,7 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
     }
 
     private void CancellaArraySpartiti(){
-        brano.arraySpartiti = null;
+        brano.arraySpartiti.clear();
         if(funzioniDatabase.aggiornaBrano(brano)==1) Log.d("DatabaseLog: ","Riuscito  aggiorna brano!");
         else Log.d("DatabaseLog: ","Failure !");
     }
