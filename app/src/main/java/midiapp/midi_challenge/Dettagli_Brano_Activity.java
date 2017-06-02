@@ -64,13 +64,14 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
     int tracciaSelezionata = 0;
     int autovalutazione = 0;
     TextView tvLog;
-    TextView tvInfo1;
-    TextView tvInfo2;
+    TextView txt_dettagliAlgo;
+    //TextView tvInfo2;
     ImageButton imgBtnDeleteSpartiti;
     Button btnBrano;
     Button btn_cambiaAutoreBrano;
     Button btn_autovalutazione;
     FloatingActionButton fab_share_dettagli_brano;
+    FloatingActionButton fab_playmidi;
     Button btnShareMidi;
 
     Camera camera;
@@ -97,7 +98,7 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
             Toast.makeText(this, "Errore non trovo il brano in qeustione!!!", Toast.LENGTH_LONG).show();
         }
 
-        tvInfo1 = (TextView)findViewById(R.id.txt_dettagliAlgo);
+        txt_dettagliAlgo = (TextView)findViewById(R.id.txt_dettagliAlgo);
         //tvInfo2 = (TextView)findViewById(R.id.lbl_Info2);
         imgBtnDeleteSpartiti = (ImageButton)findViewById(R.id.id_imgBtnDeleteSpartiti);
         btnBrano = (Button) findViewById(R.id.buttonProvaCaricaBrano);       //BUTTON ELABORA MIDI
@@ -119,9 +120,9 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                     List<String> out = alMidi.calcolaAlgoritmo();
                     brano.setDifficoltà((int)alMidi.getPunteggioFinale());
                     tvLog.setText("Algoritmo concluso! righe output: "+out.size());
-                    tvInfo1.setText("Livello di difficoltà brano: "+brano.getDifficoltà());
+                    txt_dettagliAlgo.setText("Livello di difficoltà brano: "+brano.getDifficoltà());
                     for(String x : out)
-                        tvInfo2.append(x+"\n");
+                        txt_dettagliAlgo.append(x+"\n");
                 }
                 else{ tvLog.setText("file midi null!"); }
             }
@@ -209,6 +210,14 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        fab_playmidi = (FloatingActionButton)findViewById(R.id.fab_playmidi);
+        fab_playmidi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(getWindow().getDecorView().getRootView(), "Play midi!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            }
+        });
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
