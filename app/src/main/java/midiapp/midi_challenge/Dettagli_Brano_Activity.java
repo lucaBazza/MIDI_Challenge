@@ -66,6 +66,8 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
     int autovalutazione = 0;
     TextView tvLog;
     TextView txt_dettagliAlgo;
+    TextView txt_TitoloBrano;
+    TextView txt_TitoloAutore;
     //TextView tvInfo2;
     ImageButton imgBtnDeleteSpartiti;
     Button btnBrano;
@@ -91,7 +93,6 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettagli__brano);
-
         long l = getIntent().getLongExtra("id_brano",0);
         funzioniDatabase = new FunzioniDatabase(getBaseContext());
         brano = funzioniDatabase.trovaBrano(l);
@@ -101,8 +102,10 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
             Toast.makeText(this, "Errore non trovo il brano in qeustione!!!", Toast.LENGTH_LONG).show();
         }
 
+        tvLog = (TextView)findViewById(R.id.tvLog);
+        txt_TitoloBrano = (TextView) findViewById(R.id.txt_TitoloBrano);
         txt_dettagliAlgo = (TextView)findViewById(R.id.txt_dettagliAlgo);
-        //tvInfo2 = (TextView)findViewById(R.id.lbl_Info2);
+        txt_TitoloAutore = (TextView)findViewById(R.id.txt_TitoloAutore);
         imgBtnDeleteSpartiti = (ImageButton)findViewById(R.id.id_imgBtnDeleteSpartiti);
         btnBrano = (Button) findViewById(R.id.buttonProvaCaricaBrano);       //BUTTON ELABORA MIDI
         btn_autovalutazione = (Button) findViewById(R.id.btn_autovalutazione);
@@ -113,26 +116,26 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
             @Override
             public void onClick(View view) {
             File input = new File(brano.getNomeFile());
-            try { midiFile = new MidiFile(input);
-                if(midiFile!=null) {
-                    if (midiFile.getTrackCount() > 1){
-                        Snackbar.make(view, "N. di tracce midi: " + midiFile.getTrackCount(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                        tracciaSelezionata = dialogScegliTraccia(midiFile);
-                    }
-                    alMidi = new AlgoritmoMidi(midiFile,tracciaSelezionata); //default 0, ma se ci sono più tracce va cambiato!
-                    List<String> out = alMidi.calcolaAlgoritmo();
-                    brano.setDifficoltà((int)alMidi.getPunteggioFinale());
-                    tvLog.setText("Algoritmo concluso! righe output: "+out.size());
-                    txt_dettagliAlgo.setText("Livello di difficoltà brano: "+brano.getDifficoltà());
-                    for(String x : out)
-                        txt_dettagliAlgo.append(x+"\n");
-                }
-                else{ tvLog.setText("file midi null!"); }
-            }
+            try { midiFile = new MidiFile(input); }
             catch (IOException e) {
-                System.err.println("Error parsing MIDI file:");
-                e.printStackTrace();        //log.setText(e.toString());
-                midiFile=null; return;
+                tvLog.setText("File midi corrottos!");
+                System.err.println("Error parsing MIDI file:"); e.printStackTrace();
+                midiFile=null;
+            }
+            if(midiFile!=null) {
+                if (midiFile.getTrackCount() > 1){
+                    Snackbar.make(view, "N. di tracce midi: " + midiFile.getTrackCount(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    tracciaSelezionata = dialogScegliTraccia(midiFile);
+                }
+                alMidi = new AlgoritmoMidi(midiFile,tracciaSelezionata); //default 0, ma se ci sono più tracce va cambiato!
+                List<String> out = alMidi.calcolaAlgoritmo();
+                brano.setDifficoltà((int)alMidi.getPunteggioFinale());
+                funzioniDatabase.aggiornaBrano(brano);
+                tvLog.setText("Algoritmo concluso!");
+                txt_dettagliAlgo.setText("Livello di difficoltà brano: "+brano.getDifficoltà()+"\n");
+                for(String x : out)
+                    txt_dettagliAlgo.append(x+"\n");
+
             }
             }
         });
@@ -175,9 +178,8 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         });
         if(brano!=null) setTitle(brano.getTitolo());
         else setTitle("Dettagli brano: non disponibile!");
-        tvLog = (TextView)findViewById(R.id.tvLog);
-        TextView txtTitolo = (TextView) findViewById(R.id.txt_TitoloBrano);
-        txtTitolo.setText(brano.getTitolo());
+        txt_TitoloBrano.setText(brano.getTitolo());
+        txt_TitoloAutore.setText(brano.getAutore());
 
         ImageView imgViewSpartitoDemo = (ImageView) findViewById(R.id.imgViewSpartitoDemo);    // CARICA FOTO spartito
         if(!brano.arraySpartiti.isEmpty() ) { //&& !brano.arraySpartiti.isEmpty()
@@ -240,7 +242,6 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 }
             }
         });
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -328,7 +329,7 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
 
     void shootFoto(){
          //int cameraId = 0;
-        if (checkCameraHardware(this)){ // do we have a camera?
+        if (this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){ // do we have a camera?
             ActivityCompat.requestPermissions(this, new String[]{GET_ACCOUNTS, CAMERA}, REQUEST_GET_ACCOUNT);
             try {
                     /*CameraManager manager = (CameraManager) getBaseContext().getSystemService(Context.CAMERA_SERVICE);   String[] cameraIds = manager.getCameraIdList();
@@ -344,15 +345,9 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 Log.d("Debug", e.toString());
             }
         }
-        else { Log.println(Log.ASSERT,"Foto","No camera found!");  }
-    }
-
-    private boolean checkCameraHardware(Context context) {
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){ // this device has a camera
-            return true;
-        }
-        else {  // no camera on this device
-            return false;
+        else {
+            Snackbar.make(getWindow().getDecorView().getRootView(), "Non trovo la fotocamera!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            Log.println(Log.ASSERT,"Foto","No camera found!");
         }
     }
 
@@ -367,44 +362,35 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {     //restituisce l'immagine dopo che è stato chiamato l'intent alla fotocamera
-        boolean fotoCaricata = false;
         File fileSalvataggio=null;
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ((ImageView)findViewById(R.id.imgViewSpartitoDemo)).setImageBitmap(imageBitmap); //visualizza l'immagine scattata su un imageview demo
             try {
-                String path = GenericMIDIChallengeActivity.cartellaPredefinita.toString();
-                //String nomeFile = "sheets_"+brano.getTitolo()+"_" +new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis())+ ".jpg";
+                String path = GenericMIDIChallengeActivity.cartellaPredefinita.toString();  //String nomeFile = "sheets_"+brano.getTitolo()+"_" +new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis())+ ".jpg";
                 String nomeFile = "sheets_"+new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis())+ ".jpg";
                 fileSalvataggio = new File(path,nomeFile); // the File to save , append increasing numeric counter to prevent files from getting overwritten.
-
-                Log.d("SalvataggioSheets:_",path);
-                Log.d("SalvataggioSheets:_",nomeFile);
-                Log.d("SalvataggioSheets:_", fileSalvataggio.getAbsolutePath());
-
+//                Log.d("SalvataggioSheets:_",path);
+//                Log.d("SalvataggioSheets:_",nomeFile);
+//                Log.d("SalvataggioSheets:_", fileSalvataggio.getAbsolutePath());
                 //OutputStream fOut = null;
                 OutputStream fOut = new FileOutputStream(fileSalvataggio);
                 Bitmap pictureBitmap = (Bitmap) extras.get("data"); // obtaining the Bitmap//Bitmap pictureBitmap = getImageBitmap(myurl); // obtaining the Bitmap
                 pictureBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut); // saving the Bitmap to a file compressed as a JPEG with x% compression rate
                 fOut.flush(); // Not really required
                 fOut.close(); // do not forget to close the stream  //MediaStore.Images.Media.insertImage(getContentResolver(), fileSalvataggio.getAbsolutePath(), fileSalvataggio.getName(), fileSalvataggio.getName());
-                fotoCaricata=true;  //passa alla fase di aggiornamento del DB
+
+                if(brano.arraySpartiti==null)
+                    brano.arraySpartiti = new ArrayList<String>();
+                brano.arraySpartiti.add(fileSalvataggio.getAbsolutePath()); //brano.arraySpartiti+=";"+path+nomeFile;
+                if(funzioniDatabase.aggiornaBrano(brano)==1)    //Log.d("DatabaseLog_",brano.arraySpartiti.toString());
+                    Log.d("DatabaseLog: ","Riuscito  aggiorna brano!");
+                else Log.d("DatabaseLog: ","Failure !");
             }
             catch (Exception ex){
                 Toast.makeText(this, "Errore salvataggio immagine!", Toast.LENGTH_LONG).show();
                 Log.d("Errore i/o",ex.toString());
-            }
-
-            if(fotoCaricata){ //Aggiorna brano, inserendo la nuova foto nella rispettiva colonna
-                if(brano.arraySpartiti==null)
-                    brano.arraySpartiti = new ArrayList<String>();
-                brano.arraySpartiti.add(fileSalvataggio.getAbsolutePath()); //brano.arraySpartiti+=";"+path+nomeFile;
-
-                brano.autore = "Giovanni muchacha!"; //modificare!
-                Log.d("DatabaseLog_",brano.arraySpartiti.toString());
-                if(funzioniDatabase.aggiornaBrano(brano)==1) Log.d("DatabaseLog: ","Riuscito  aggiorna brano!");
-                else Log.d("DatabaseLog: ","Failure !");
             }
         }
     }
@@ -455,7 +441,7 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if(input.getText().toString().length()>3){
                     brano.setAutore(input.getText().toString());
-                    ((TextView)findViewById(R.id.txt_TitoloAutore)).setText(input.getText().toString());
+                    txt_TitoloAutore.setText(input.getText().toString());
                     getDb().aggiornaBrano(brano);
                 }
             }
@@ -472,7 +458,10 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
 
     private void CancellaArraySpartiti(){
         brano.arraySpartiti.clear();
-        if(funzioniDatabase.aggiornaBrano(brano)==1) Log.d("DatabaseLog: ","Riuscito  aggiorna brano!");
+        if(funzioniDatabase.aggiornaBrano(brano)==1) {
+            ((ImageView)findViewById(R.id.imgViewSpartitoDemo)).setImageResource(R.drawable.ic_menu_camera);
+            Log.d("DatabaseLog: ","Riuscito  aggiorna brano!");
+        }
         else Log.d("DatabaseLog: ","Failure !");
     }
 
@@ -527,14 +516,15 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //String strName = arrayAdapter.getItem(which);
-                autovalutazione = which+1;
-                brano.setAutovalutazione(which+1);
-                utenteCorrente.setPunteggioMassimo(utenteCorrente.getPunteggioMassimo()+brano.difficoltà); //da modificare!!!
-
-                if(db.aggiornaUtente(utenteCorrente)==-1)
+                int difficoltaBranoAutoValutato = brano.difficoltà*(10/which-2);
+                brano.setAutovalutazione(which-2); // -2 , -1 , 0 , 1 , 2    => -20% -10%  0  +10%  +20%s
+                utenteCorrente.setPunteggioMassimo(utenteCorrente.getPunteggioMassimo()+difficoltaBranoAutoValutato);
+                funzioniDatabase.aggiornaBrano(brano);
+                if(db.aggiornaUtente(utenteCorrente)==-1){
                     Snackbar.make(getWindow().getDecorView().getRootView(), "Aggiornamento profilo utente nel DB non riuscito!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
+                    return;
+                }
+                Snackbar.make(getWindow().getDecorView().getRootView(), "Aggiornamento profilo utente nel DB riuscito!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
         builderSingle.show();

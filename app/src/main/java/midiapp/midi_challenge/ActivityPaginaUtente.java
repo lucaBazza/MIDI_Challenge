@@ -53,7 +53,6 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
         else setTitle("Pagina Utente - NONAME");
 
         tw_log_pagUser = (TextView)findViewById(R.id.tw_log_pagUser);
-
         imgProfilo = (ImageView) findViewById(R.id.imageViewFotoUtente);    // CARICA FOTO UTENTE
         File imgFile = new File(utente.getFoto());
         if(!utente.getFoto().isEmpty() && imgFile.exists()){           // non trovando il file comunque entra nel if
