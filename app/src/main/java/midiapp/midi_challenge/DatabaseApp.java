@@ -46,5 +46,5 @@ public class DatabaseApp extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public String getNOME_DB(){ return  "databaseApp"; }
+    public String getNOME_DB(){ return getDatabaseName();}
 }

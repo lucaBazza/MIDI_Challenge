@@ -220,5 +220,8 @@ public class FunzioniDatabase {
         return database.delete("relUtenteBrano",whereClause, null);
     }
 
+    public String getNomeDatabase(){
+        return  dbHelper.getNOME_DB();
+    }
 
 }
