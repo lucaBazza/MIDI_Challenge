@@ -28,7 +28,7 @@ import android.widget.TextView;
 
 import java.io.File;
 
-public class GenericMIDIChallengeActivity extends AppCompatActivity {
+public class GenericMIDIChallengeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     FunzioniDatabase db = null;
 
@@ -79,6 +79,11 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
             Log.d("Utente", "Utente caricato da generic midi!");
 
         }
+
+        NavigationView v = (NavigationView) findViewById(R.id.nav_view);
+        if (v != null){
+            v.setNavigationItemSelectedListener(this);
+        }
         //setSupportActionBar(toolbar);
         //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle( this, mDrawerLayout, , R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         /*ActionBarDrawerToggle
@@ -90,7 +95,8 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
 
     }
 
-    //@Override
+
+    @Override
     public boolean onNavigationItemSelected(MenuItem item) {    // Handle navigation view item clicks here.
         int id = item.getItemId();
         Intent prossimaActivity = null;
@@ -100,6 +106,7 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity {
                 break;
             case R.id.nav_profilo:
                 prossimaActivity = new Intent(getApplicationContext(), ActivityPaginaUtente.class);
+                prossimaActivity.putExtra("id_utente",utenteCorrente.getIdUtente());
                 break;
             case R.id.nav_registratore:
                 prossimaActivity = new Intent(getApplicationContext(), Registratore_Activity.class);

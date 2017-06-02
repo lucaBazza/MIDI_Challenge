@@ -1,21 +1,22 @@
 package midiapp.midi_challenge;
 
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import midiapp.midi_challenge.accordatoreClasses.ConfigFlags;
 import midiapp.midi_challenge.accordatoreClasses.SoundAnalyzer;
@@ -59,6 +60,12 @@ public class AccordatoreActivity extends GenericMIDIChallengeActivity {   //No d
         tuningSelector = (Spinner)findViewById(R.id.spinner_tuner);
         Tuning.populateSpinner(this, tuningSelector);
         tuningSelector.setOnItemSelectedListener(uiController);
+
+
+        DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+
+        drawer.bringToFront();
+        drawer.requestLayout();
     }
 
     private Map<Integer, Bitmap> preloadedImages;
