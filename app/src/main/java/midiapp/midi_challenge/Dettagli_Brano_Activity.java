@@ -261,17 +261,14 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         switch (requestCode) {
             case 1: { // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) { // permission was granted, yay! Do the contacts-related task you need to do.
-                    File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file
+                    //File sdcard = Environment.getExternalStorageDirectory();         // apro MIDI file
                     //File input = new File(sdcard, dir+"Chopin_EtudesOp10n1.mid"); //campanella.mid  Chopin_EtudesOp10n1.mid  happyBD.mid
-
                     File input = new File(brano.getNomeFile());
                     try {
                         midiFile = new MidiFile(input);
-
                         /*
                         if (midiFile != null) {
                             alMidi = new AlgoritmoMidi(midiFile,0); //traccia default
-
                         } else {
                             tvLog.setText("file midi null!");
                         }*/
@@ -298,7 +295,7 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                         Toast.makeText(getApplicationContext(), "Permission Denied, You cannot access location data and camera", Toast.LENGTH_LONG).show();
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             if (shouldShowRequestPermissionRationale(WRITE_EXTERNAL_STORAGE)) {
-                                showMessageOKCancel("You need to allow access to both the permissions",
+                                showMessageOKCancel("Devi darci l'accesso per ottenere il permesso di lettura sulla SD ", //You need to allow access to both the permissions
                                         new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
@@ -465,15 +462,14 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         else Log.d("DatabaseLog: ","Failure !");
     }
 
-    public int dialogScegliTraccia(MidiFile x) {
-        //final int trac =0;
+    public int dialogScegliTraccia(MidiFile x) {     //final int trac =0;
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(Dettagli_Brano_Activity.this);
         builderSingle.setIcon(R.drawable.ic_menu_send);
         builderSingle.setTitle("Seleziona la traccia: ");
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Dettagli_Brano_Activity.this, android.R.layout.select_dialog_item);
         for(int i =0;i < x.getTrackCount();i++){
-            arrayAdapter.add(i+".: \t"+ x.getTracks().get(i).toString());
+            arrayAdapter.add("Traccia "+i+" : \t n.note: \t"+ x.getTracks().get(i).getEventCount());
         }
 
         builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {

@@ -18,15 +18,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:weightSum="1">
 
         <Button
             android:id="@+id/buttonProvaCaricaBrano"
-            android:layout_width="230dp"
+            android:layout_width="274dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.13"
             android:background="@drawable/roundcorner"
             android:elevation="0dp"
             android:text="Elabora Brano"
@@ -35,14 +34,14 @@
 
         <Button
             android:id="@+id/btnShareMidi"
-            android:layout_width="60dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/roundcorner"
+            android:layout_weight="1"
+            android:background="@android:drawable/ic_menu_upload"
             android:elevation="0dp"
             android:text=".."
             android:textColor="@android:color/white"
             android:textSize="20sp" />
-
     </LinearLayout>
 
     <TextView
@@ -50,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="15dp"
-        android:text="...log..."
+        android:text="..."
         android:textAlignment="center"
         android:textColor="@android:color/black" />
 
@@ -141,7 +140,9 @@
         android:id="@+id/btn_autovalutazione"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AutoValutazione" />
+        android:background="@drawable/roundcorner"
+        android:text="AutoValutazione"
+        android:textColor="@android:color/background_light" />
 
     <ImageView
         android:id="@+id/imgViewSpartitoDemo"
@@ -152,7 +153,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="55dp"
         android:orientation="horizontal">
 
         <Button
@@ -177,7 +178,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="45dp"
         android:layout_weight="0.15"
         android:orientation="horizontal">
 

@@ -1,5 +1,7 @@
 package midiapp.midi_challenge;
 
+import android.content.DialogInterface;
+import android.os.Build;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
@@ -19,6 +21,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 import android.database.sqlite.SQLiteDatabase;
+
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 
 public class Impostazioni_Activity extends GenericMIDIChallengeActivity implements OnClickListener {
@@ -94,10 +99,18 @@ public class Impostazioni_Activity extends GenericMIDIChallengeActivity implemen
     }
 
     private void deleteDB(){
-        boolean result = this.deleteDatabase(SAMPLE_DB_NAME);
-        if (result==true) {
-            Toast.makeText(this, "Dati cancellati!", Toast.LENGTH_LONG).show();
-        }
+        showMessageOKCancel("Sicuro di voler cancellare tutti i dati? non potrai tornare indietro ",
+            new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    /*boolean result = this.deleteDatabase(SAMPLE_DB_NAME);
+                    if (result==true) {
+                        Toast.makeText(this, "Dati cancellati!", Toast.LENGTH_LONG).show();
+                    }*/
+
+                    Snackbar.make(getWindow().getDecorView().getRootView(),"Dati cancellati!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }
+            });
     }
 
     private void importDB() {
@@ -159,5 +172,13 @@ public class Impostazioni_Activity extends GenericMIDIChallengeActivity implemen
             }
         }
         else Toast.makeText(getApplicationContext(), "Export fallito, non trovo destinazione", Toast.LENGTH_SHORT).show();
+    }
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new android.support.v7.app.AlertDialog.Builder(this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
     }
 }
