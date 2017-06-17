@@ -63,14 +63,6 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
             imgProfilo.setImageResource(R.mipmap.generic_user_mc);
         }
 
-        Button btnCancellaBrani = (Button)findViewById(R.id.buttonCancellaBrani);           //CANCELLA TUTTI I BRANI
-        btnCancellaBrani.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { //Toast.makeText(getBaseContext(),"Cancella lista brani!",Toast.LENGTH_SHORT).show();
-                AltDlgCancellaTuttiBrani();
-            }
-        });
-
         utente.braniUtente = funzioniDatabase.braniUtente(utente.idUtente);     //AGGIORNA STATISTICHE
         TextView tbPuntMax = (TextView) findViewById(R.id.textViewPU1);
         int max = 0; int media = 0; int tot = 0;
@@ -98,14 +90,6 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
                     AltDlgCambiaStrum();
             }
         });
-
-        Button btnCambiaFoto = (Button) findViewById(R.id.btnCambiaFoto);       //CAMBIA FOTO PROFILO
-        btnCambiaFoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AltDlgCambiaFoto();
-            }
-        });
     }
 
     @Override
@@ -115,7 +99,7 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
         return true;
     }
 
-    void AltDlgCancellaTuttiBrani(){
+    public  void AltDlgCancellaTuttiBrani(View v){
         AlertDialog.Builder builder1 = new AlertDialog.Builder(ActivityPaginaUtente.this,R.style.Theme_AppCompat_Dialog);
         builder1.setMessage("Sicuro di cancellare la tua lista pezzi?"); builder1.setTitle("Attenzione!");
         builder1.setCancelable(true);
@@ -138,7 +122,7 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
         alert.show();
     }
 
-    void AltDlgCambiaFoto(){
+    public void AltDlgCambiaFoto(View view){
         final CharSequence[] cartelle = {"Download","Cartella predefinita","Galleria foto","WhatsApp","Cancella"};
         AlertDialog.Builder builder = new AlertDialog.Builder(ActivityPaginaUtente.this);
 
