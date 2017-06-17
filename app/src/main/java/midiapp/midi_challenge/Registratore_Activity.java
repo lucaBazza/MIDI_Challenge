@@ -39,15 +39,12 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity implemen
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String mFileName = null;
 
-    //private RecordButton mRecordButton = null;
     MediaRecorder mRecorder = null;
-    //private PlayButton mPlayButton = null;
     private MediaPlayer mPlayer = null;
 
     boolean mStartRecording = true;
     boolean mStartPlaying = true;
 
-    // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
     TextView tvlogRec;
@@ -73,7 +70,8 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity implemen
             btnReg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mFileName = getCartellaPredefinita().getAbsolutePath() + "rec. " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis()) + ".m4a";
+                    String path = getCartellaPredefinita().getPath();
+                    mFileName = path + "/rec. " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis()) + ".m4a";
                     onRecord(mStartRecording);
                     mStartRecording = !mStartRecording;
                     if (mStartRecording) { btnReg.setText("Stop"); }

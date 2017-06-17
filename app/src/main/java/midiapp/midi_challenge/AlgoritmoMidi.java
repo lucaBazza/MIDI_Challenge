@@ -29,6 +29,7 @@ import java.util.Iterator;
 
 public class AlgoritmoMidi {
     MidiTrack midiTrack;
+    private  int nTraccia;
     private static ArrayList <NoteOn> ln = new ArrayList<NoteOn>();  // la lista sarebbe meglio se dinamica in base al delta time
     private static int sizeOfLN=30;
     //static int [] tonalita = {1,3,5,6,8,10,11};                      // scala maggiore %12
@@ -37,10 +38,12 @@ public class AlgoritmoMidi {
     int contatorenNoteTotale=0;
     int contatoreAppoggiature =0;
     int contatoreAccordi =0;
+    int contatoreEventsNotNote = 0;
     long bestPuntTemp = 0;
 
     AlgoritmoMidi(MidiFile x, int nTracca){
         midiTrack = x.getTracks().get(nTracca);
+        this.nTraccia = nTracca;
     } //seleziona la traccia 0 del file midi, è quella contentente la traccia da analizzare
 
     public ArrayList<String> calcolaAlgoritmo(){
@@ -61,7 +64,7 @@ public class AlgoritmoMidi {
                 contatorenNoteTotale++;
                 contNoteMod12[EveNota.getNoteValue()%11]++;
 
-                Log.println(Log.ASSERT," Analisi","Nota: "+convIntStrNota(EveNota.getNoteValue())+ " \t tick: "+EveNota.getTick()+" \t delta: "+EveNota.getDelta()); //DEBUG
+                Log.println(Log.ASSERT," Algoritmo midi","Nota: "+convIntStrNota(EveNota.getNoteValue())+ " \t tick: "+EveNota.getTick()+" \t delta: "+EveNota.getDelta()); //DEBUG
 
                 puntTemp +=  punteggioVelocita() * punteggioMelArm();
                 if(puntTemp>bestPuntTemp)  {
@@ -72,9 +75,10 @@ public class AlgoritmoMidi {
                 double pv = punteggioVelocita();
 
                 punteggio +=  pv * pma;
-                Log.println(Log.ASSERT," Analisi","Punt Vel: "+pv+ " \t Punt MelArm: "+pma+" \t totale: "+ punteggio); //DEBUG
+                Log.println(Log.ASSERT," Algoritmo midi","Punt Vel: "+pv+ " \t Punt MelArm: "+pma+" \t totale: "+ punteggio); //DEBUG
                 puntTemp = 0;
             }
+            else contatoreEventsNotNote++;
         }
 
         Log.println(Log.ASSERT,"Algoritmo midi","punteggio pre raffinazione: "+punteggio);
@@ -82,6 +86,14 @@ public class AlgoritmoMidi {
         punteggio *= calcolaBiasTonalità();
         punteggio /= 1000*1000;            //miniaturizzazione
 
+        Log.println(Log.ASSERT,"Algoritmo midi","==================================");
+        Log.println(Log.ASSERT,"Algoritmo midi","==========  Conclusioni   ========");
+        Log.println(Log.ASSERT,"Algoritmo midi","==================================");
+        if(contatoreEventsNotNote > midiTrack.getEventCount()/4){
+            String msg = "Alto numero di eventi != note: "+contatoreEventsNotNote + " su eventi totali:"+ midiTrack.getEventCount();
+            Log.println(Log.ASSERT,"Algoritmo midi",msg);
+            outPut.add(msg);
+        }
         outPut.add("Punteggio totale realizzato: \t"+ Long.toString(punteggio));
         Log.println(Log.ASSERT,"Algoritmo midi","numero di note in totale: "+contatorenNoteTotale);
         Log.println(Log.ASSERT,"Algoritmo midi","numero di appoggiature in totale: "+contatoreAppoggiature);
@@ -129,7 +141,7 @@ public class AlgoritmoMidi {
         double punteggio;
         NoteOn nota = ln.get(ln.size()-1);
         if(nota.getDelta()>0)
-            punteggio = 1 / nota.getDelta();  //DIVISIONE DOUBLE INTERO! CAST LONG A DOUBLE
+            punteggio = (1.0000000000) / nota.getDelta();  //DIVISIONE DOUBLE INTERO! CAST LONG A DOUBLE
         else punteggio = 0.01;
         return punteggio;
     } //errore ritorna 0 a volte!!!!
@@ -181,17 +193,18 @@ public class AlgoritmoMidi {
 }
 
 
-    /*private void aggiornaTonalita(){    //confronta l'ultima nota inserita con il vettore ton e dopo il vettore last, e decide se una nota è diatonica, non, o se è avvenuto un cambio ton
-        NoteOn lastNota = ln.get(ln.size());
-        boolean diatonica = true;
-        for(int i=0;i<7;i++)   {} //controllo se diatonica
-            //if(lastNota.getNoteValue()%12 == tonalita[i]) diatonica = false;
 
-        if(!diatonica)          //Se NON è diatonica procedo con un controllo per vedere se è necessario un cambio tonalità
-            for(int i=ln.size()-1; i>0; i--){ //for dall'ultimo al primo
-                if(lastNota.getNoteValue()%12 == ln.get(i).getNoteValue()%12) { //se è la stessa nota vuol dire che la nota diatonica è stata ripetuta, quindi la ton va aggiornata
-                    Log.println(Log.ASSERT,"Evento refreshTonalita","Cambio tonalità a: "+lastNota.getDelta()/1000);
-                }
+
+/*private void aggiornaTonalita(){    //confronta l'ultima nota inserita con il vettore ton e dopo il vettore last, e decide se una nota è diatonica, non, o se è avvenuto un cambio ton
+    NoteOn lastNota = ln.get(ln.size());
+    boolean diatonica = true;
+    for(int i=0;i<7;i++)   {} //controllo se diatonica
+        //if(lastNota.getNoteValue()%12 == tonalita[i]) diatonica = false;
+
+    if(!diatonica)          //Se NON è diatonica procedo con un controllo per vedere se è necessario un cambio tonalità
+        for(int i=ln.size()-1; i>0; i--){ //for dall'ultimo al primo
+            if(lastNota.getNoteValue()%12 == ln.get(i).getNoteValue()%12) { //se è la stessa nota vuol dire che la nota diatonica è stata ripetuta, quindi la ton va aggiornata
+                Log.println(Log.ASSERT,"Evento refreshTonalita","Cambio tonalità a: "+lastNota.getDelta()/1000);
             }
-    }
-    */
+        }
+}*/

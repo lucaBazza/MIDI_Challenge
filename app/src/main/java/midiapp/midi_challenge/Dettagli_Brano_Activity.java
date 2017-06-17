@@ -123,6 +123,10 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 midiFile=null;
             }
             if(midiFile!=null) {
+                if(midiFile.getTrackCount() < 1) {
+                    Snackbar.make(view, "File midi corrotto, non ci sono tracce disponibili! ", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    return;
+                }
                 if (midiFile.getTrackCount() > 1){
                     Snackbar.make(view, "N. di tracce midi: " + midiFile.getTrackCount(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     tracciaSelezionata = dialogScegliTraccia(midiFile);
@@ -131,11 +135,10 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 List<String> out = alMidi.calcolaAlgoritmo();
                 brano.setDifficoltà((int)alMidi.getPunteggioFinale());
                 funzioniDatabase.aggiornaBrano(brano);
-                tvLog.setText("Algoritmo concluso!");
+                tvLog.setText("Traccia: "+tracciaSelezionata+" Algoritmo concluso!");
                 txt_dettagliAlgo.setText("Livello di difficoltà brano: "+brano.getDifficoltà()+"\n");
                 for(String x : out)
                     txt_dettagliAlgo.append(x+"\n");
-
             }
             }
         });
@@ -368,10 +371,6 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 String path = GenericMIDIChallengeActivity.cartellaPredefinita.toString();  //String nomeFile = "sheets_"+brano.getTitolo()+"_" +new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis())+ ".jpg";
                 String nomeFile = "sheets_"+new SimpleDateFormat("yyyyMMdd_HHmmss").format(System.currentTimeMillis())+ ".jpg";
                 fileSalvataggio = new File(path,nomeFile); // the File to save , append increasing numeric counter to prevent files from getting overwritten.
-//                Log.d("SalvataggioSheets:_",path);
-//                Log.d("SalvataggioSheets:_",nomeFile);
-//                Log.d("SalvataggioSheets:_", fileSalvataggio.getAbsolutePath());
-                //OutputStream fOut = null;
                 OutputStream fOut = new FileOutputStream(fileSalvataggio);
                 Bitmap pictureBitmap = (Bitmap) extras.get("data"); // obtaining the Bitmap//Bitmap pictureBitmap = getImageBitmap(myurl); // obtaining the Bitmap
                 pictureBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut); // saving the Bitmap to a file compressed as a JPEG with x% compression rate
@@ -418,10 +417,7 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 dialog.cancel();
             }
         });
-
         builder.show();
-
-
     }
 
     public void editAutoreBrano(View v){                    //manca  brano.setAutore( ..  )
@@ -449,7 +445,6 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 dialog.cancel();
             }
         });
-
         builder.show();
     }
 
@@ -487,7 +482,7 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
             }
         });
         builderSingle.show();
-        return 0;
+        return tracciaSelezionata;
     }
 
     public void dialogAutovalutazione() {
