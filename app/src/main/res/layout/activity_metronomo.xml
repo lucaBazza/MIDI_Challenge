@@ -45,7 +45,7 @@
             android:id="@+id/counterBPM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="185dp"
+            android:layout_marginBottom="128dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:text="120"
@@ -82,14 +82,13 @@
         android:id="@+id/playButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/counterBPM"
-        android:layout_alignEnd="@+id/counterBPM"
-        android:layout_alignStart="@+id/counterBPM"
-        android:layout_marginBottom="41dp"
         android:background="@drawable/roundcorner"
         android:text="Play"
         android:textColor="@android:color/white"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/textBPM"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

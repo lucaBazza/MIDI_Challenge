@@ -15,7 +15,7 @@ import java.util.TimerTask;
 
 
 public class MetronomoActivity extends GenericMIDIChallengeActivity {
-    private int sound = R.raw.a440hz05sec; //R.raw.click01;
+    private int sound = R.raw.a440hz05sec;
     private TextView tv_counterBPM = null;
     private TextView tv_metronomoLog = null;
     private int bpm = 120;
@@ -107,19 +107,3 @@ public class MetronomoActivity extends GenericMIDIChallengeActivity {
         return true;
     }
 }
-
-
-
-/*
-    public void suonoBPM(View v){
-        TextView t = (TextView) findViewById(R.id.counter);
-        int bpm = Integer.getInteger(t.getText().toString());
-        //prendi audio
-        //riproduci ogni min/bpm
-    }
-
-    //Log
-    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-    Date date = new Date();
-    Log.i("Beep", df.format(date));
-*/

@@ -13,12 +13,13 @@
     tools:context="midiapp.midi_challenge.ActivityPaginaUtente"
     android:layout_gravity="left">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/activity_pagina_utente"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
@@ -33,27 +34,30 @@
             android:layout_alignParentTop="true"
             android:maxHeight="150dp"
             android:maxWidth="150dp"
+            android:onClick="AltDlgCambiaFoto"
             app:srcCompat="@android:drawable/sym_def_app_icon" />
 
-        <Button
-            android:id="@+id/buttonCancellaBrani"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="72dp"
-            android:background="@drawable/roundcorner"
-            android:text="Cancella Brani"
-            android:textColor="@android:color/white"
-            android:layout_above="@+id/tw_log_pagUser"
-            android:layout_alignParentStart="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tbStrum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/imageViewFotoUtente"
-            android:layout_marginTop="25dp"
-            android:text="Strumento:" />
+            <TextView
+                android:id="@+id/tbStrum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Strumento:"
+                android:textSize="24sp"
+                android:layout_weight="92"/>
+
+            <Button
+                android:id="@+id/btnChangeStr"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:background="@mipmap/edit_text_pencil_icon"
+                android:textColor="@android:color/white"
+                android:layout_weight="8"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textViewPU2"
@@ -61,8 +65,9 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textViewPU3"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="28dp"
-            android:text="Punteggio medio: " />
+            android:layout_marginBottom="5dp"
+            android:text="Punteggio medio: "
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/textViewPU1"
@@ -70,8 +75,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/btnChangeStr"
-            android:layout_marginTop="9dp"
-            android:text="Punteggio massimo: " />
+            android:layout_marginTop="5dp"
+            android:text="Punteggio massimo: "
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/textViewPU3"
@@ -79,18 +85,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:text="Totale Brani: " />
-
-        <Button
-            android:id="@+id/btnCambiaFoto"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/roundcorner"
-            android:text="Cambia foto"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:text="Totale Brani: "
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/tw_log_pagUser"
@@ -100,18 +96,18 @@
             android:layout_alignParentStart="true"
             android:text="..." />
 
-        <Button
-            android:id="@+id/btnChangeStr"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/roundcorner"
-            android:text="Aggiorna Strumento"
-            android:textColor="@android:color/white"
-            android:layout_below="@+id/textViewPU2"
-            android:layout_alignParentStart="true" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabCancellaBrani"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom|end"
+            android:background="@drawable/ic_remove"
+            android:onClick="AltDlgCancellaTuttiBrani"
+            app:backgroundTint="@android:color/holo_red_light"
+            app:elevation="0dp"
+            app:srcCompat="@drawable/ic_remove" />
 
-        </RelativeLayout>
+    </LinearLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
@@ -121,4 +117,5 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_activity__main_restyled"
         app:menu="@menu/activity__main_restyled_drawer" />
+
 </android.support.v4.widget.DrawerLayout>
