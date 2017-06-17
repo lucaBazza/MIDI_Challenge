@@ -42,7 +42,7 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
         setContentView(R.layout.activity_pagina_utente);
         super.onCreate(savedInstanceState);
 
-    funzioniDatabase = getDb();
+        funzioniDatabase = getDb();
 
         if(getIntent().hasExtra("id_utente")){
             long idUtTmp = getIntent().getLongExtra("id_utente",-1);
@@ -81,10 +81,11 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
                 max = utente.braniUtente.get(i).difficoltà;
                 tbPuntMax.setText("Punteggio massimo: "+ Integer.toString(max)+" - "+utente.braniUtente.get(i).getTitolo());  }
         }
+
         TextView tbPuntMedio = (TextView) findViewById(R.id.textViewPU2);
-        if(tot!= 0)
-            { media/=tot; }
-            tbPuntMedio.append(Integer.toString(media));
+        /*if(tot!= 0)
+            { media/=tot; } */
+        tbPuntMedio.append(Integer.toString(utente.punteggioMedio));
         TextView tvBRaniTot = (TextView) findViewById(R.id.textViewPU3);
             tvBRaniTot.append(Integer.toString(tot));
 

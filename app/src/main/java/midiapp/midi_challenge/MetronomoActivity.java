@@ -17,6 +17,7 @@ import java.util.TimerTask;
 public class MetronomoActivity extends GenericMIDIChallengeActivity {
     private int sound = R.raw.a440hz05sec; //R.raw.click01;
     private TextView tv_counterBPM = null;
+    private TextView tv_metronomoLog = null;
     private int bpm = 120;
     private MediaPlayer mplayer;
     Button playButton;
@@ -30,21 +31,14 @@ public class MetronomoActivity extends GenericMIDIChallengeActivity {
         mplayer = MediaPlayer.create(this,sound);
 
         tv_counterBPM = (TextView) findViewById(R.id.counterBPM);
+        tv_metronomoLog = (TextView) findViewById(R.id.tv_metronomoLog);
         bpm = Integer.parseInt(tv_counterBPM.getText().toString());
 
         playButton = (Button) findViewById(R.id.playButton);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try{
-                    mplayer.prepare();      //errore chiamata non asincrona!
-                    mplayer.start();
-                }
-                catch(Exception ex){
-                    Snackbar.make(getWindow().getDecorView().getRootView(), ex.toString() , Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                    Log.e("Metr",ex.toString());
-                }
-                //startMetronomo();
+                startMetronomo();
             }
         });
     }
@@ -68,20 +62,43 @@ public class MetronomoActivity extends GenericMIDIChallengeActivity {
     }
 
     private  void startMetronomo(){
-        int periodoTimer = 500;
+
+        final int periodoTimer = 500;
+
+        /*
         Timer timer = new Timer("MetronomeTimer", true);
+        timer.scheduleAtFixedRate(tone, 600000/bpm, periodoTimer);
         TimerTask tone = new TimerTask() {
             @Override
             public void run() {  //riproduzione
                 try{
+                    mplayer.prepare();
                     mplayer.start();
                 }
                 catch(Exception ex){
                     Snackbar.make(getWindow().getDecorView().getRootView(), ex.toString() , Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                 }
             }
-        };
-        timer.scheduleAtFixedRate(tone, 600000/bpm, periodoTimer);
+        }; */
+
+
+
+        new java.util.Timer().schedule(new TimerTask(){
+            int contaTempoPassato = 0;
+            @Override
+            public void run() {
+                try{
+                    contaTempoPassato += periodoTimer;
+                    tv_metronomoLog.setText("tempo passato: "+contaTempoPassato);
+                    /*
+                    mplayer.prepare();
+                    mplayer.start();*/
+                }
+                catch(Exception ex){
+                    Snackbar.make(getWindow().getDecorView().getRootView(), ex.toString() , Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                }
+            }
+        },periodoTimer,periodoTimer);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

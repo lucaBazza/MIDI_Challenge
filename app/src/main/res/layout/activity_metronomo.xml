@@ -21,7 +21,13 @@
     android:orientation="vertical"
     tools:context="midiapp.midi_challenge.MetronomoActivity">
 
-        <Button
+    <TextView
+        android:id="@+id/tv_metronomoLog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="..." />
+
+    <Button
             android:id="@+id/decrease"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
@@ -39,14 +45,14 @@
             android:id="@+id/counterBPM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="78dp"
+            android:layout_marginBottom="185dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:text="120"
             android:textSize="70sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:id="@+id/increase"
@@ -88,6 +94,7 @@
 
 </RelativeLayout>
     <!--drawer-->
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -96,4 +103,5 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_activity__main_restyled"
         app:menu="@menu/activity__main_restyled_drawer" />
+
 </android.support.v4.widget.DrawerLayout>

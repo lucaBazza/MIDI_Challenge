@@ -99,7 +99,16 @@ public class FunzioniDatabase {
         cv.put("foto",u.foto);
         cv.put("strumento",u.strumento);
         cv.put("punteggioMassimo",u.punteggioMassimo);
-        cv.put("punteggioMedio", u.punteggioMedio);
+        if(u.punteggioMedio==0){
+            if(braniUtente(u.idUtente).size()>0){
+                for(Brano x :  braniUtente(u.idUtente))
+                    u.punteggioMedio += x.difficoltà;
+                u.punteggioMedio = u.punteggioMedio / braniUtente(u.idUtente).size();
+            }
+            else Log.d("UPDATE DB","aggiorna utente ha 0 dati");
+        }
+        else
+            cv.put("punteggioMedio", u.punteggioMedio);
         Log.d("UPDATE DB",cv.toString());
         return database.update("utente", cv, "idUtente="+u.idUtente, null);
     }

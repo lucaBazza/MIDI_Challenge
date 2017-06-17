@@ -509,13 +509,14 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
             public void onClick(DialogInterface dialog, int which) {
                 int difficoltaBranoAutoValutato = brano.difficoltà*(10/which-2);
                 brano.setAutovalutazione(which-2); // -2 , -1 , 0 , 1 , 2    => -20% -10%  0  +10%  +20%s
-                utenteCorrente.setPunteggioMassimo(utenteCorrente.getPunteggioMassimo()+difficoltaBranoAutoValutato);
+                utenteCorrente.setPunteggioMassimo(utenteCorrente.getPunteggioMassimo()+difficoltaBranoAutoValutato); // SBAGIATA!
                 funzioniDatabase.aggiornaBrano(brano);
                 if(db.aggiornaUtente(utenteCorrente)==-1){
                     Snackbar.make(getWindow().getDecorView().getRootView(), "Aggiornamento profilo utente nel DB non riuscito!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     return;
                 }
-                Snackbar.make(getWindow().getDecorView().getRootView(), "Aggiornamento profilo utente nel DB riuscito!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                else
+                    Snackbar.make(getWindow().getDecorView().getRootView(), "Aggiornamento profilo utente nel DB riuscito!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
         builderSingle.show();
