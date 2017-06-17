@@ -89,9 +89,8 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
         funzioniDatabase = getDb();
         File cartellaPredefinita = getCartellaPredefinita();
 
-        if (!cartellaPredefinita.exists()) {
+        if (!cartellaPredefinita.exists())
             cartellaPredefinita.mkdir();
-        }
 
         utente = utenteCorrente;
         if (utente == null) {
@@ -106,7 +105,8 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
                 ArrayAdapterListaBrani = new ArrayAdapter<Brano>(this, R.layout.brani_list_element, braniUtente);
                 ListViewXmlListaBrani.setAdapter(ArrayAdapterListaBrani);
                 if (braniUtente.isEmpty()) {
-                    tv_mainActivity_log.setText("Nessun Brano Trovato!");
+                    Toast.makeText(getBaseContext(),"Clicca su + per aggiungere dei brani alla tua lista!",Toast.LENGTH_LONG).show();
+                    tv_mainActivity_log.setText("Non ha ancora studiato nessun brano...");
                 }
                 else
                     tv_mainActivity_log.setText("Totale brani: "+ArrayAdapterListaBrani.getCount());
@@ -124,24 +124,6 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
                 }
             });
 
-            //tv_mainActivity_log.setMovementMethod(new ScrollingMovementMethod());
-
-            //mActivityTitles = new String[]{"Home", "Profilo", "Registratore", "Metronomo", "Accordatore", "Impostazioni", "Cambia Utente"};
-            //mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            //mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-            /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new);
-            if(fab!=null)
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                            Intent i = new Intent(getBaseContext(), Aggiunta_Brano_Activity.class);
-                            i.putExtra("id_utente", utente.getIdUtente());
-                            startActivity(i);
-                        }
-                    }
-                });*/
             setTitle(utente.getNickName());
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
         }
@@ -166,12 +148,4 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
             ArrayAdapterListaBrani.notifyDataSetChanged();
         else {}
     }
-
-    /*@Override
-    public void onBackPressed() {                           // backpressed creato da paolo per oldMain
-        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-        homeIntent.addCategory(Intent.CATEGORY_HOME);
-        startActivity(homeIntent);
-        finish();
-    }*/
 }

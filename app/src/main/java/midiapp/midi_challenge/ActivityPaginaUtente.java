@@ -60,6 +60,7 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
             imgProfilo.setImageBitmap(myBitmap);
         }
         else {
+            Toast.makeText(getBaseContext(),"Clicca sulla foto utente per aggiornarla con una tua!",Toast.LENGTH_LONG).show();
             imgProfilo.setImageResource(R.mipmap.generic_user_mc);
         }
 
