@@ -7,48 +7,50 @@
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/btn_export"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
+            android:layout_alignStart="@+id/btn_import"
+            android:layout_below="@+id/btn_import"
+            android:layout_marginTop="50dp"
             android:background="@drawable/roundcorner"
             android:text="ESPORTA DATI"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:layout_below="@+id/btn_import"
-            android:layout_alignStart="@+id/btn_import" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn_import"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/btn_info"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
             android:background="@drawable/roundcorner"
             android:text="IMPORTA DATI"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:layout_marginTop="109dp"
-            android:layout_alignTop="@+id/btn_info"
-            android:layout_centerHorizontal="true" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
             android:background="@drawable/roundcorner"
             android:onClick="openNewActivity"
             android:text="INFO"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="102dp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn_delete"
@@ -56,12 +58,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/btn_export"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="65dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/roundcorner"
             android:text="Cancella Dati"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
