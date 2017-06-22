@@ -2,6 +2,7 @@ package midiapp.midi_challenge;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.Menu;
@@ -41,6 +42,9 @@ public class MetronomoActivity extends GenericMIDIChallengeActivity {
                 startMetronomo();
             }
         });
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     public void increaseInteger(View view) {

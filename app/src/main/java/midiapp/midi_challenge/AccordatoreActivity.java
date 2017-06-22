@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v7.widget.ButtonBarLayout;
 
 import android.support.v4.widget.DrawerLayout;
@@ -51,11 +52,11 @@ public class AccordatoreActivity extends GenericMIDIChallengeActivity {   //No d
         if(LAUNCHANALYZER) {
             try {
                 soundAnalyzer = new SoundAnalyzer();
+                soundAnalyzer.addObserver(uiController);
             } catch(Exception e) {
                 Toast.makeText(this, "Ci sono problemi con il tuo microfono :(", Toast.LENGTH_LONG ).show();
                 Log.e(TAG, "Exception when instantiating SoundAnalyzer: " + e.getMessage());
             }
-            soundAnalyzer.addObserver(uiController);
         }
         guitar = (ImageView)findViewById(R.id.guitar);
         tune = (ImageView)findViewById(R.id.tune);
@@ -63,6 +64,9 @@ public class AccordatoreActivity extends GenericMIDIChallengeActivity {   //No d
         tuningSelector = (Spinner)findViewById(R.id.spinner_tuner);
         Tuning.populateSpinner(this, tuningSelector);
         tuningSelector.setOnItemSelectedListener(uiController);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     private Map<Integer, Bitmap> preloadedImages;

@@ -129,8 +129,10 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity implements N
         //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         //drawer.closeDrawer(GravityCompat.START);
 
-        if(prossimaActivity != null)
+        if(prossimaActivity != null) {  
+            prossimaActivity.putExtra("id_utente", utenteCorrente.getIdUtente());
             startActivity(prossimaActivity);
+        }
 
         DrawerLayout dw = (DrawerLayout) findViewById(R.id.drawer_layout);   //tiene il drawer chiuso quando fa la create
         dw.closeDrawer(Gravity.LEFT | Gravity.START);
