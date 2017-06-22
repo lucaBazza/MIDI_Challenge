@@ -52,6 +52,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="8"
                 android:background="@mipmap/edit_text_pencil_icon"
+                android:backgroundTint="@drawable/roundcorner"
                 android:textColor="@android:color/white" />
         </LinearLayout>
 
@@ -102,6 +103,13 @@
             app:backgroundTint="@android:color/holo_red_light"
             app:elevation="0dp"
             app:srcCompat="@drawable/ic_remove" />
+
+        <Button
+            android:id="@+id/btnConsigliUtente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundcorner"
+            android:text="consigli" />
 
     </LinearLayout>
 

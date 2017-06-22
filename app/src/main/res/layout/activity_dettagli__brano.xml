@@ -24,7 +24,7 @@
 
         <Button
             android:id="@+id/buttonProvaCaricaBrano"
-            android:layout_width="271dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/roundcorner"
             android:elevation="0dp"
@@ -177,9 +177,9 @@
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_playmidi"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="47dp"
             android:layout_gravity="left"
-            android:layout_weight="0.01"
+            android:layout_weight="0.00"
             android:clickable="true"
             android:foregroundGravity="left"
             app:fabSize="mini"

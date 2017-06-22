@@ -67,9 +67,10 @@ public class ImageAdapter extends BaseAdapter {
                     imageView.setImageBitmap(myBitmap);
                 }
             }
-            else
-                imageView.setImageResource(R.drawable.icona_default_utente);  //setImmagineUtente(R.drawable.icona_default_utente);
-
+            else {
+                //imageView.setImageIcon(R.drawable.cambia_utente);
+                imageView.setImageResource(R.drawable.ic_menu_share);  //setImmagineUtente(R.drawable.icona_default_utente);
+            }
             textView = new TextView(mContext);
             textView.setText(listaUtenti.get(position).getNickName());
             textView.setTextSize(25);
