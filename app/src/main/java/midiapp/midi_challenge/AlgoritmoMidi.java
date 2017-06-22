@@ -60,6 +60,10 @@ public class AlgoritmoMidi {
                 long when = EveNota.getTick();
                 long durata = EveNota.getDelta();
 
+                if(nota<12  || nota >108) { //troppo alta o bassa non conteggiabile
+                    contatoreEventsNotNote++;
+                    continue;
+                }
                 if(ln.size()>sizeOfLN) ln.clear();      //ogni X note viene resettato il contatore, deve (in più) cancellare dimanicaente in base a nota.tick
                 ln.add(EveNota);                        //aggiungo la nota nel vettore temporaneo
                 contatorenNoteTotale++;
@@ -70,7 +74,8 @@ public class AlgoritmoMidi {
                 puntTemp +=  punteggioVelocita() * punteggioMelArm();
                 if(puntTemp>bestPuntTemp)  {
                     bestPuntTemp = puntTemp;
-                    outPut.add("Fraseggio difficile a: " + when/1000+" sec.");
+                    if(!outPut.contains("Fraseggio difficile a: " + when/1000+" sec.")) //se non è gia presente
+                        outPut.add("Fraseggio difficile a: " + when/1000+" sec.");
                 }
                 int pma = punteggioMelArm();
                 double pv = punteggioVelocita();
@@ -165,6 +170,7 @@ public class AlgoritmoMidi {
         int vociAccordo = 0;
 
         NoteOn notaCorrente =ln.get(ln.size()-1);
+
         if(ln.size()>1) { //se il vettore non contiene  più di una nota
             NoteOn notaPrec = ln.get(ln.size() - 2);
             if(notaCorrente.getNoteValue() > notaPrec.getNoteValue())
