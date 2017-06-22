@@ -32,16 +32,6 @@
             android:textColor="@android:color/white"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/btnShareMidi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:drawable/ic_menu_upload"
-            android:elevation="0dp"
-            android:text=".."
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
     </LinearLayout>
 
     <TextView
@@ -180,6 +170,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_weight="0.15"
+        android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <android.support.design.widget.FloatingActionButton
@@ -193,17 +184,6 @@
             app:fabSize="mini"
             app:srcCompat="@drawable/playbutton" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_share_dettagli_brano"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:layout_marginLeft="200dp"
-            android:layout_weight="0.01"
-            android:clickable="true"
-            android:foregroundGravity="right"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/ic_menu_share" />
     </LinearLayout>
 
 </LinearLayout>

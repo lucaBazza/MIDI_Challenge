@@ -23,6 +23,8 @@ import android.support.v4.content.FileProvider;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -88,6 +90,15 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
 
     private static FunzioniDatabase funzioniDatabase = null;
     private ShareActionProvider mShareActionProvider;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inf = getMenuInflater();
+        inf.inflate(R.menu.opzioni_condivisione_brano,menu);
+        return true;
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,21 +168,6 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 shootFoto();
             }
         });
-        fab_share_dettagli_brano = (FloatingActionButton) findViewById(R.id.fab_share_dettagli_brano) ; //share button
-        fab_share_dettagli_brano.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                String shareBody = "Punteggio ottenuto da: "+utenteCorrente.getNickName() +"\n";
-                shareBody += "\t nome brano: "+ (brano.getTitolo().isEmpty() ? brano.getTitolo():"brano senza nome")+"\n";
-                shareBody += "\t punteggio: "+ (brano.getDifficoltà()>0?brano.getDifficoltà():"non calcolata!");
-                String shareSub = "Subject: punteggio";
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                startActivity(Intent.createChooser(sharingIntent, "Condividi punteggio!"));
-            }
-        });
 
         imgBtnDeleteSpartiti.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -199,24 +195,7 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
             }
         }
         else { Log.d("Errore spartito","non trovo spartiti in array! _++_ NULL"); }
-
-        btnShareMidi = (Button) findViewById(R.id.btnShareMidi);
-        btnShareMidi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("image/*");
-                Uri uri = Uri.fromFile(brano.fileBrano);
-                String shareBody = "File midi: "+brano.fileBrano.getName() +"\n";
-                shareBody += "\t nome brano: "+ (brano.getTitolo().isEmpty() ? brano.getTitolo():" brano senza nome")+"\n";
-                shareBody += "\t punteggio: "+ (brano.getDifficoltà() > 0 ? brano.getDifficoltà():" non calcolata!");
-                String shareSub = "File midi"+brano.fileBrano.getName();
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                startActivity(Intent.createChooser(sharingIntent, "Condividi file midi con punteggio!"));
-            }
-        });
+        
         fab_playmidi = (FloatingActionButton)findViewById(R.id.fab_playmidi);
         fab_playmidi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,6 +233,32 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 Intent i = new Intent(getBaseContext(),activity_MainRestyled.class);
                 i.putExtra("id_utente",getIntent().getLongExtra("id_utente",-1));   //find a better way to do dis
                 NavUtils.navigateUpTo(this,i);
+                break;
+
+            case R.id.condividi_file:
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("image/*");
+                Uri uri = Uri.fromFile(brano.fileBrano);
+                String shareBody = "File midi: "+brano.fileBrano.getName() +"\n";
+                shareBody += "\t nome brano: "+ (brano.getTitolo().isEmpty() ? brano.getTitolo():" brano senza nome")+"\n";
+                shareBody += "\t punteggio: "+ (brano.getDifficoltà() > 0 ? brano.getDifficoltà():" non calcolata!");
+                String shareSub = "File midi"+brano.fileBrano.getName();
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                startActivity(Intent.createChooser(sharingIntent, "Condividi file midi con punteggio!"));
+                break;
+
+            case R.id.condividi_punteggio:
+                Intent sharingIntentPunteggio = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntentPunteggio.setType("text/plain");
+                String shareBodyPunteggio = "Punteggio ottenuto da: "+utenteCorrente.getNickName() +"\n";
+                shareBodyPunteggio += "\t nome brano: "+ (brano.getTitolo().isEmpty() ? brano.getTitolo():"brano senza nome")+"\n";
+                shareBodyPunteggio += "\t punteggio: "+ (brano.getDifficoltà()>0?brano.getDifficoltà():"non calcolata!");
+                String shareSubPunteggio = "Subject: punteggio";
+                sharingIntentPunteggio.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSubPunteggio);
+                sharingIntentPunteggio.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyPunteggio);
+                startActivity(Intent.createChooser(sharingIntentPunteggio, "Condividi punteggio!"));
                 break;
         }
         return true;
