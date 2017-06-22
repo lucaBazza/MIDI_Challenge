@@ -106,9 +106,8 @@
 
         <Button
             android:id="@+id/btnConsigliUtente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/roundcorner"
+            android:layout_width="245dp"
+            android:layout_height="60dp"
             android:text="consigli" />
 
     </LinearLayout>

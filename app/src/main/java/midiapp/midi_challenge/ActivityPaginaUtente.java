@@ -35,6 +35,7 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
     ImageView imgProfilo;
     TextView tw_log_pagUser;
     Button btnChangeStr;
+    Button btnConsigliUtente;
     TextView tbStrum;
 
     @Override
@@ -90,6 +91,14 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
             @Override
             public void onClick(View view) {
                     AltDlgCambiaStrum();
+            }
+        });
+
+        btnConsigliUtente = (Button) findViewById(R.id.btnConsigliUtente);
+        btnConsigliUtente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getBaseContext(),"acitivity con suggerimenti brani e siti",Toast.LENGTH_LONG).show();
             }
         });
     }
