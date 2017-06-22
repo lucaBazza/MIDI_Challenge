@@ -42,14 +42,15 @@ public class AlgoritmoMidi {
     long bestPuntTemp = 0;
 
     AlgoritmoMidi(MidiFile x, int nTracca){
+        resetValori();
         midiTrack = x.getTracks().get(nTracca);
         this.nTraccia = nTracca;
     } //seleziona la traccia 0 del file midi, è quella contentente la traccia da analizzare
 
     public ArrayList<String> calcolaAlgoritmo(){
+        resetValori();
         Iterator<MidiEvent> it = midiTrack.getEvents().iterator();
         ArrayList<String> outPut = new ArrayList<>();
-
         long puntTemp = 0;
         while(it.hasNext()) {   //per ogni nota nella traccia
             MidiEvent E = it.next();
@@ -134,17 +135,22 @@ public class AlgoritmoMidi {
     /**
      *  Per calcolare la velocità viene dedotto da noteOn.tick rispetto alla precendente:
      *  -> in primis viene confrontanta la velocità con dei valori static
-     *
+     *  -> in base alla velocita della nota, viene applicato un bonus al punteggio (più è bassa la velocita più è basso il moltiplicatore che verrà moltiplicato al resto dell'algoritmo)
+     *  ->
      * @return punteggio di velocità di esecuzione della nota proecessata, ne restituisce un valore compreso fra { 0.01 e 1.00 }
      */
     private double punteggioVelocita(){
+        int arrotondamentoValue = 100;
         double punteggio;
         NoteOn nota = ln.get(ln.size()-1);
-        if(nota.getDelta()>0)
-            punteggio = (1.0000000000) / nota.getDelta();  //DIVISIONE DOUBLE INTERO! CAST LONG A DOUBLE
+        if(nota.getDelta()>0) {
+            punteggio = (1.00) / nota.getDelta();  //DIVISIONE DOUBLE INTERO! CAST LONG A DOUBLE
+            punteggio = Math.floor(punteggio * arrotondamentoValue) / arrotondamentoValue;
+            if(punteggio <0.01) punteggio = 0.01;
+        }
         else punteggio = 0.01;
         return punteggio;
-    } //errore ritorna 0 a volte!!!!
+    }
 
     /**
      *  Questo metodo analizza l'ultima nota processata, la confronta con il vettore ln -> note recenti:
@@ -188,6 +194,21 @@ public class AlgoritmoMidi {
 
     public long getPunteggioFinale(){
         return punteggio;
+    }
+
+    private void resetValori(){
+        nTraccia = -1;
+        if(ln!=null) ln.clear();
+        else
+            ln = new ArrayList<NoteOn>();  // la lista sarebbe meglio se dinamica in base al delta time
+        sizeOfLN=30;
+        contNoteMod12 = new int[11];
+        punteggio = 0;
+        contatorenNoteTotale=0;
+        contatoreAppoggiature =0;
+        contatoreAccordi =0;
+        contatoreEventsNotNote = 0;
+        bestPuntTemp = 0;
     }
 
 }
