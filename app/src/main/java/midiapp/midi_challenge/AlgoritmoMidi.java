@@ -64,7 +64,7 @@ public class AlgoritmoMidi {
                 contatorenNoteTotale++;
                 contNoteMod12[EveNota.getNoteValue()%11]++;
 
-                Log.println(Log.ASSERT," Algoritmo midi","Nota: "+convIntStrNota(EveNota.getNoteValue())+ " \t tick: "+EveNota.getTick()+" \t delta: "+EveNota.getDelta()); //DEBUG
+                Log.println(Log.ASSERT," Algoritmo midi","Nota: "+nota+" \t- "+convIntStrNota(EveNota.getNoteValue())+ " \t\t tick: "+EveNota.getTick()+" \t\t delta: "+EveNota.getDelta()); //DEBUG
 
                 puntTemp +=  punteggioVelocita() * punteggioMelArm();
                 if(puntTemp>bestPuntTemp)  {
@@ -75,7 +75,7 @@ public class AlgoritmoMidi {
                 double pv = punteggioVelocita();
 
                 punteggio +=  pv * pma;
-                Log.println(Log.ASSERT," Algoritmo midi","Punt Vel: "+pv+ " \t Punt MelArm: "+pma+" \t totale: "+ punteggio); //DEBUG
+                Log.println(Log.ASSERT," Algoritmo midi","Punt Vel: "+pv+ " \t\t\t Punt MelArm: "+pma+" \t\t\t totale: "+ punteggio); //DEBUG
                 puntTemp = 0;
             }
             else contatoreEventsNotNote++;
@@ -191,9 +191,6 @@ public class AlgoritmoMidi {
     }
 
 }
-
-
-
 
 /*private void aggiornaTonalita(){    //confronta l'ultima nota inserita con il vettore ton e dopo il vettore last, e decide se una nota è diatonica, non, o se è avvenuto un cambio ton
     NoteOn lastNota = ln.get(ln.size());
