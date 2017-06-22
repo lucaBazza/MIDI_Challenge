@@ -121,8 +121,15 @@
             android:layout_width="match_parent"
             android:layout_height="58dp"
             android:layout_weight="10.40"
-            android:scrollbarStyle="insideOverlay"
-            android:scrollbars="vertical" />
+            android:scrollIndicators="right"
+            android:scrollbarStyle="insideOverlay" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10.40"
+            android:text="Punteggio" />
 
     </LinearLayout>
 

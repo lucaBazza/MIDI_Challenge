@@ -22,6 +22,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.content.FileProvider;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +33,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Scroller;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
@@ -122,6 +124,8 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         btn_autovalutazione = (Button) findViewById(R.id.btn_autovalutazione);
         brnFotocamera = (Button)findViewById(R.id.btnFotocamera);
         btn_cambiaAutoreBrano = (Button) findViewById(R.id.btn_cambiaAutoreBrano);
+
+        txt_dettagliAlgo.setMovementMethod(new ScrollingMovementMethod());
 
         btnBrano.setOnClickListener(new View.OnClickListener(){
             @Override
