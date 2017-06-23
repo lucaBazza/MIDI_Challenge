@@ -28,6 +28,10 @@
                 android:id="@+id/nav_accordatore"
                 android:icon="@drawable/img_diapason1"
                 android:title="Accordatore" />
+            <item
+                android:id="@+id/nav_consigli"
+                android:icon="@android:drawable/ic_menu_info_details"
+                android:title="Consigli" />
         </menu>
     </item>
 

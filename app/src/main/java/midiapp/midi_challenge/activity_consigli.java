@@ -25,7 +25,7 @@ import java.util.List;
 import static midiapp.midi_challenge.activity_MainRestyled.funzioniDatabase;
 
 
-public class activity_consigli extends AppCompatActivity {
+public class activity_consigli extends GenericMIDIChallengeActivity {
 
     Button btnLinkJazzAdvice;
     Button btnLinkJazzitalia;
@@ -96,9 +96,8 @@ public class activity_consigli extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
                                 try{
-                                funzioniDatabase.inserisciBranoPerUtente(utente,selezione,-1);
+                                funzioniDatabase.inserisciBranoPerUtente(utente,selezione,0);
                                 Snackbar.make(getWindow().getDecorView().getRootView(),"brano inserito nel tuo profilo!", Snackbar.LENGTH_LONG).setAction("Action", null).show();}
                                 catch (Exception sqlex){
                                     Snackbar.make(getWindow().getDecorView().getRootView(),"errore inserimento db", Snackbar.LENGTH_LONG).setAction("Action", null).show();

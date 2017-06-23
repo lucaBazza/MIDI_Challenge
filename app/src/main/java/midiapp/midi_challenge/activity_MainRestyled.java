@@ -47,20 +47,12 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Toast.makeText(getBaseContext(),"acitivity con suggerimenti brani e siti",Toast.LENGTH_LONG).show();        //temporaneoS
-                Intent activityConsigli =  new Intent(getApplicationContext(), activity_consigli.class);
-                activityConsigli.putExtra("id_utente", utenteCorrente.getIdUtente());
-                startActivity(activityConsigli);
-
-
-                /*
                 if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     Intent i = new Intent(getBaseContext(), Aggiunta_Brano_Activity.class);
                     i.putExtra("id_utente", utente.getIdUtente());
                     startActivity(i);
                 }
-                else Snackbar.make(view, "No pulsante!", Snackbar.LENGTH_LONG).setAction("Action", null).show(); */
+                else Snackbar.make(view, "No pulsante!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
