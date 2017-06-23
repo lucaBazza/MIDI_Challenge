@@ -104,11 +104,12 @@
             app:elevation="0dp"
             app:srcCompat="@drawable/ic_remove" />
 
-        <Button
+        <!-- <Button
             android:id="@+id/btnConsigliUtente"
             android:layout_width="245dp"
             android:layout_height="60dp"
-            android:text="consigli" />
+            android:background="@drawable/roundcorner"
+            android:text="consigli" /> -->
 
     </LinearLayout>
 

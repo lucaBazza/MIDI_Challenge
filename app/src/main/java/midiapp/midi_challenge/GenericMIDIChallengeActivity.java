@@ -117,6 +117,9 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity implements N
             case R.id.nav_accordatore:
                 prossimaActivity = new Intent(getApplicationContext(), AccordatoreActivity.class);
                 break;
+            /*case R.id.nav_consigli:
+                prossimaActivity = new Intent(getApplicationContext(),activity_consigli.class);
+                break;*/
             case R.id.nav_impostazioni:
                 prossimaActivity = new Intent(getApplicationContext(), Impostazioni_Activity.class);
                 break;

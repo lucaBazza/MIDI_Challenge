@@ -94,13 +94,16 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
             }
         });
 
-        btnConsigliUtente = (Button) findViewById(R.id.btnConsigliUtente);
+        /*btnConsigliUtente = (Button) findViewById(R.id.btnConsigliUtente);
         btnConsigliUtente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getBaseContext(),"acitivity con suggerimenti brani e siti",Toast.LENGTH_LONG).show();
+                Intent activityConsigli =  new Intent(getApplicationContext(), activity_consigli.class); //temporaneo
+                activityConsigli.putExtra("id_utente", utenteCorrente.getIdUtente());
+                startActivity(activityConsigli);
             }
-        });
+        });*/
     }
 
     @Override

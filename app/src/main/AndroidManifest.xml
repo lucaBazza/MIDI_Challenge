@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -14,27 +15,27 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <provider
-            android:authorities="midiapp.midi_challenge.fileprovider"
             android:name="android.support.v4.content.FileProvider"
+            android:authorities="midiapp.midi_challenge.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepaths"/>
+                android:resource="@xml/filepaths" />
         </provider>
 
-        <activity   android:name=".activity_MainRestyled"
-                    android:label="@string/title_activity__main_restyled">
-                    <!--android:theme="@style/AppTheme.NoActionBar"-->
+        <activity
+            android:name=".activity_MainRestyled"
+            android:label="@string/title_activity__main_restyled">
+
+            <!-- android:theme="@style/AppTheme.NoActionBar" -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".Dettagli_Brano_Activity"
             android:parentActivityName=".activity_MainRestyled" />
@@ -47,23 +48,20 @@
         <activity
             android:name=".AccordatoreActivity"
             android:parentActivityName=".activity_MainRestyled" />
-
         <activity
             android:name=".Impostazioni_Activity"
             android:parentActivityName=".activity_MainRestyled">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Info_Activity" />
         <activity android:name=".ActivityPaginaUtente" />
         <activity android:name=".MetronomoActivity" />
         <activity android:name=".GenericMIDIChallengeActivity" />
-
+        <activity android:name=".activity_consigli"></activity>
     </application>
 
 </manifest>

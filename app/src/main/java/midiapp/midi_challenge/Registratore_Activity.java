@@ -12,26 +12,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NavUtils;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Random;
 
 public class Registratore_Activity extends GenericMIDIChallengeActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -56,7 +47,7 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity implemen
     public void onCreate(Bundle icicle) {
         setContentView(R.layout.activity_registratore_);
         super.onCreate(icicle);
-        tvlogRec = (TextView)findViewById(R.id.textView3);
+        tvlogRec = (TextView)findViewById(R.id.tv_logConsigli);
         fab_shareRec = (FloatingActionButton)findViewById(R.id.fab_shareRec);
         mStartRecording = false; //non sta registrando
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
@@ -64,7 +55,7 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity implemen
         //if(mFileName.isEmpty()) return;
         //if(this.tvlog == null) Log.e(LOG_TAG, "can't complete log file!");
 
-        btnReg = (Button) findViewById(R.id.btnReg);
+        btnReg = (Button) findViewById(R.id.btnLinkJazzitalia);
         if (mStartRecording) { btnReg.setText("Stop"); }
             else { btnReg.setText("Registra"); }
             btnReg.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +69,7 @@ public class Registratore_Activity extends GenericMIDIChallengeActivity implemen
                     else { btnReg.setText("Registra"); }
             }
         });
-        btnRip = (Button) findViewById(R.id.btnRip);
+        btnRip = (Button) findViewById(R.id.btnLinkJazzAdvice);
         btnRip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

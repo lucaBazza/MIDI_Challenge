@@ -107,8 +107,7 @@ public class Impostazioni_Activity extends GenericMIDIChallengeActivity implemen
                     if (result==true) {
                         Toast.makeText(this, "Dati cancellati!", Toast.LENGTH_LONG).show();
                     }*/
-
-                    Snackbar.make(getWindow().getDecorView().getRootView(),"Dati cancellati!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    Snackbar.make(getWindow().getDecorView().getRootView(),"Dati cancellati <per finta>!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 }
             });
     }
