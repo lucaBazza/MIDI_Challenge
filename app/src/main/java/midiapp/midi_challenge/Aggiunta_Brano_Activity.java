@@ -1,5 +1,6 @@
 package midiapp.midi_challenge;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Environment;
@@ -22,14 +23,18 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.util.List;
 
-public class Aggiunta_Brano_Activity extends AppCompatActivity{
+import static midiapp.midi_challenge.activity_MainRestyled.funzioniDatabase;
+
+public class Aggiunta_Brano_Activity extends GenericMIDIChallengeActivity{
 
     FunzioniDatabase db = null;
+
 
     FileFilter midiFilter = new FileFilter() {
         @Override
@@ -43,8 +48,8 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
     };
 
     ArrayAdapter<Brano> file_list_adapter = null;
-
     ArraySet<Brano> selectedFiles = new ArraySet<Brano>();
+    TextView tv_addBraniDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +104,8 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
 
         TabHost.TabSpec tabFileBroser = host.newTabSpec("File");
         tabFileBroser.setContent(R.id.tabFileBrowser);
-        tabFileBroser.setIndicator("Da File...");
+        tabFileBroser.setIndicator("Da archivio interno...");
         host.addTab(tabFileBroser);
-
         host.setCurrentTab(0);
 
         final File[] midiFiles = downloadFolderPath.listFiles(midiFilter);
@@ -177,6 +181,56 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
                 startActivity(i);
             }
         });
+
+        sp.setSelection(2);                                                 //BAZZA
+        /*tv_addBraniDb = (TextView) findViewById(R.id.tv_addBraniDb);
+        final ListView lista_brani_trovatiDB = (ListView)findViewById(R.id.lista_brani_trovatiDB);
+        final List<Brano> braniDb = activity_MainRestyled.funzioniDatabase.prendiTuttiBrani();
+        ArrayAdapter ArrayAdapterListaBrani = null;
+        if (braniDb != null) {
+            ArrayAdapterListaBrani = new ArrayAdapter<Brano>(this, R.layout.brani_list_element, braniDb);
+            lista_brani_trovatiDB.setAdapter(ArrayAdapterListaBrani);
+            if (braniDb.isEmpty()) {
+                Toast.makeText(getBaseContext(),"Non ci sono titoli adatti!",Toast.LENGTH_LONG).show();
+                tv_addBraniDb.setText("Non ha ancora studiato nessun brano...");
+            }
+            else
+                tv_addBraniDb.setText("Totale brani nel db: "+ArrayAdapterListaBrani.getCount());
+        } else {
+            ArrayAdapterListaBrani.notifyDataSetChanged();
+        }
+        lista_brani_trovatiDB.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final Brano selezione = braniDb.get(position);
+                showMessageOKCancel("Vuoi inserire questo brano consigliato fra i tuoi? "+selezione.fileBrano.getName(),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try{
+                                    funzioniDatabase.inserisciBranoPerUtente(utenteCorrente,selezione,0);
+                                    Snackbar.make(getWindow().getDecorView().getRootView(),"brano inserito nel tuo profilo!", Snackbar.LENGTH_LONG).setAction("Action", null).show();}
+                                catch(Exception sqlex){
+                                    Snackbar.make(getWindow().getDecorView().getRootView(),"errore inserimento db", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                                    sqlex.printStackTrace();
+                                }
+
+                            }
+                        });
+                //Toast.makeText(getBaseContext(),"selezionato brano: "+position,Toast.LENGTH_LONG).show();
+            }
+        });
+        */
+    }
+
+
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new android.support.v7.app.AlertDialog.Builder(this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

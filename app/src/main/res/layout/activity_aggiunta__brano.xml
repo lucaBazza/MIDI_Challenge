@@ -29,6 +29,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+
+                <LinearLayout
+                    android:id="@+id/tabFileBrowser"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/tabSelezioneCartella"
                     android:layout_width="match_parent"
@@ -41,7 +49,7 @@
                         android:layout_height="40dp"></Spinner>
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/tv_addBrani1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Nuovi brani trovati nella cartella specificata:" />
@@ -61,13 +69,44 @@
                         android:choiceMode="multipleChoice" />
                 </LinearLayout>
 
+
+
+                <!-- <LinearLayout
+                    android:id="@+id/tabFileBrowserDB"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                </LinearLayout>
+
                 <LinearLayout
-                    android:id="@+id/tabFileBrowser"
+                    android:id="@+id/tabSelezionaDaDb"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/tv_addBraniDb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Brani dell'archivio interno: " />
+
+                    <Button
+                        android:id="@+id/btn_aggiungi_branoDB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="AGGIUNGI"
+                        android:textAlignment="center"
+                        android:textAllCaps="true" />
+
+                    <ListView
+                        android:id="@+id/lista_brani_trovatiDB"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:choiceMode="multipleChoice" />
                 </LinearLayout>
+                -->
+
+
             </FrameLayout>
         </LinearLayout>
     </TabHost>
