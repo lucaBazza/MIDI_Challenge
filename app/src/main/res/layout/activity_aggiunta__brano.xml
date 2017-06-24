@@ -29,6 +29,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+
+                <LinearLayout
+                    android:id="@+id/tabBraniGiaAggiunti"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/lista_brani_recenti"/>
+
+                </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/tabSelezioneCartella"
                     android:layout_width="match_parent"
@@ -59,14 +73,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:choiceMode="multipleChoice" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/tabFileBrowser"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>

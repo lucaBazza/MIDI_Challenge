@@ -6,18 +6,17 @@ import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v4.util.ArraySet;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
@@ -90,17 +89,15 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
         TabHost host = (TabHost) findViewById(R.id.aggiunta_brano_tab_host);
         host.setup();
 
+        TabHost.TabSpec tabFileBroser = host.newTabSpec("Brani Recenti");
+        tabFileBroser.setContent(R.id.tabBraniGiaAggiunti);
+        tabFileBroser.setIndicator("Brani Recenti...");
+        host.addTab(tabFileBroser);
 
         TabHost.TabSpec tabSelezione = host.newTabSpec("Selezione");
         tabSelezione.setContent(R.id.tabSelezioneCartella);
         tabSelezione.setIndicator("Da Cartella...");
         host.addTab(tabSelezione);
-
-
-        TabHost.TabSpec tabFileBroser = host.newTabSpec("File");
-        tabFileBroser.setContent(R.id.tabFileBrowser);
-        tabFileBroser.setIndicator("Da File...");
-        host.addTab(tabFileBroser);
 
         host.setCurrentTab(0);
 
@@ -177,6 +174,12 @@ public class Aggiunta_Brano_Activity extends AppCompatActivity{
                 startActivity(i);
             }
         });
+
+        ListView listaBraniRecenti = (ListView)findViewById(R.id.lista_brani_recenti);
+        ArrayAdapter<Brano> adapterBraniRecenti = new ArrayAdapter<Brano>(this,R.layout.drawer_list_item,R.id.testo_list_item);
+        List<Brano> tuttiBrani = db.prendiTuttiBrani();
+        adapterBraniRecenti.addAll(tuttiBrani);
+        listaBraniRecenti.setAdapter(adapterBraniRecenti);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
