@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,10 +15,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
-import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static midiapp.midi_challenge.activity_MainRestyled.funzioniDatabase;
@@ -32,7 +29,7 @@ public class activity_consigli extends GenericMIDIChallengeActivity {
     ListView lista_braniSuggeriti;
     TextView tv_logConsigli;
     Utente utente;
-
+    ArrayAdapter ArrayAdapterListaBrani = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,8 +70,28 @@ public class activity_consigli extends GenericMIDIChallengeActivity {
         });
 
         lista_braniSuggeriti = (ListView) findViewById(R.id.lista_braniSuggeriti);
-        final List<Brano> braniDb = activity_MainRestyled.funzioniDatabase.prendiTuttiBrani();
-        ArrayAdapter ArrayAdapterListaBrani = null;                     //occorre creare lista filtrata di brani con difficolta simile a quella dell'utente
+        final List<Brano> braniDb = activity_MainRestyled.funzioniDatabase.prendiTuttiBrani();     //occorre creare lista filtrata di brani con difficolta simile a quella dell'utente
+
+        Collections.sort(braniDb, new Comparator<Brano>() {
+            public int compare(Brano c1, Brano c2) {
+                if (c1.getDifficoltà() > c2.getDifficoltà()) return 1;  //ordinati con difficolta crescente
+                if (c1.getDifficoltà() < c2.getDifficoltà()) return -1;
+                return 0;
+            }
+        });
+
+        int deltaDiff = 1;
+        for(Brano x : braniDb){
+            if(x.difficoltà>1)
+            {
+                System.out.println("Consigli: "+x.fileBrano.getName()+"\t\t\t\t livello user: "+utenteCorrente.getPunteggioMedio()+ "\t difficolta: "+x.getDifficoltà()+"\t\t delta diff: "+(utenteCorrente.getPunteggioMedio()-x.getDifficoltà()));
+                if((utenteCorrente.getPunteggioMedio()-x.getDifficoltà())>deltaDiff){
+                    deltaDiff = (utenteCorrente.getPunteggioMedio()-x.getDifficoltà());
+                    System.out.println("Consigli: aumento diff!");
+                }
+            }
+        }
+
 
         if (braniDb != null) {
             ArrayAdapterListaBrani = new ArrayAdapter<Brano>(this, R.layout.brani_list_element, braniDb);
@@ -97,9 +114,9 @@ public class activity_consigli extends GenericMIDIChallengeActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 try{
-                                funzioniDatabase.inserisciBranoPerUtente(utente,selezione,0);
-                                Snackbar.make(getWindow().getDecorView().getRootView(),"brano inserito nel tuo profilo!", Snackbar.LENGTH_LONG).setAction("Action", null).show();}
-                                catch (Exception sqlex){
+                                    funzioniDatabase.inserisciBranoPerUtente(utente,selezione,0);
+                                    Snackbar.make(getWindow().getDecorView().getRootView(),"brano inserito nel tuo profilo!", Snackbar.LENGTH_LONG).setAction("Action", null).show();}
+                                catch(Exception sqlex){
                                     Snackbar.make(getWindow().getDecorView().getRootView(),"errore inserimento db", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                     sqlex.printStackTrace();
                                 }
@@ -114,9 +131,9 @@ public class activity_consigli extends GenericMIDIChallengeActivity {
                 //Toast.makeText(getBaseContext(),"selezionato brano: "+position,Toast.LENGTH_LONG).show();
             }
         });
-
-
-
+        if(utenteCorrente.getPunteggioMedio()<100){
+            tv_logConsigli.setText("Per adesso i pezzi salvati sono troppo difficili, esercitati solo primo brano!");
+        }
     }
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new android.support.v7.app.AlertDialog.Builder(this)
@@ -138,5 +155,13 @@ public class activity_consigli extends GenericMIDIChallengeActivity {
         }
         super.onOptionsItemSelected(item);
         return true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+        if(ArrayAdapterListaBrani!=null)
+            ArrayAdapterListaBrani.notifyDataSetChanged();
+        else {}
     }
 }
