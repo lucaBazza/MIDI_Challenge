@@ -104,12 +104,6 @@ public class Aggiunta_Brano_Activity extends GenericMIDIChallengeActivity{
         tabSelezione.setIndicator("Da Cartella...");
         host.addTab(tabSelezione);
 
-
-        TabHost.TabSpec tabFileBroser = host.newTabSpec("File");
-        tabFileBroser.setContent(R.id.tabFileBrowser);
-        tabFileBroser.setIndicator("Da archivio interno...");
-        host.addTab(tabFileBroser);
-
         host.setCurrentTab(0);
 
         final File[] midiFiles = downloadFolderPath.listFiles(midiFilter);

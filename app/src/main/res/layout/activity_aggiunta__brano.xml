@@ -31,12 +31,6 @@
 
 
                 <LinearLayout
-<<<<<<< HEAD
-                    android:id="@+id/tabFileBrowser"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-=======
                     android:id="@+id/tabBraniGiaAggiunti"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -47,7 +41,6 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/lista_brani_recenti"/>
 
->>>>>>> origin/master
                 </LinearLayout>
 
                 <LinearLayout
@@ -81,9 +74,6 @@
                         android:layout_height="match_parent"
                         android:choiceMode="multipleChoice" />
                 </LinearLayout>
-<<<<<<< HEAD
-
-
 
                 <!-- <LinearLayout
                     android:id="@+id/tabFileBrowserDB"
@@ -119,10 +109,6 @@
                         android:choiceMode="multipleChoice" />
                 </LinearLayout>
                 -->
-
-
-=======
->>>>>>> origin/master
             </FrameLayout>
         </LinearLayout>
     </TabHost>

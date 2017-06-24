@@ -40,8 +40,8 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_pagina_utente);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pagina_utente);
 
         funzioniDatabase = getDb();
 
