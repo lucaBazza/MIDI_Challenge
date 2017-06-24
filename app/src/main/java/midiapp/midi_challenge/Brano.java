@@ -37,12 +37,14 @@ public class Brano {
             this.arraySpartiti = arraySheets;
     }
 
+    //costruttore 'parziale'. ASSUME che il nome del file sia anche il titolo del brano
     public Brano(long idBrano, String nomeFile, int difficoltà) {
         this.idBrano = idBrano;
         this.fileBrano = new File(nomeFile);
         this.difficoltà = difficoltà;
         this.autovalutazione = -1;
         this.arraySpartiti = new ArrayList<>();
+        this.titolo = new File(nomeFile).getName();
     }
 
     /*public Brano(String nomeFile, int difficoltà,int autovalutazione) {
