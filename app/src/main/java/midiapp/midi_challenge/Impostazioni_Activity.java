@@ -20,10 +20,6 @@ import android.os.Environment;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
-import android.database.sqlite.SQLiteDatabase;
-
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 
 public class Impostazioni_Activity extends GenericMIDIChallengeActivity implements OnClickListener {
@@ -99,15 +95,16 @@ public class Impostazioni_Activity extends GenericMIDIChallengeActivity implemen
     }
 
     private void deleteDB(){
-        showMessageOKCancel("Sicuro di voler cancellare tutti i dati? non potrai tornare indietro ",
+        showMessageOnCancel("Sicuro di voler cancellare tutti i dati? Non potrai tornare indietro.",
             new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    /*boolean result = this.deleteDatabase(SAMPLE_DB_NAME);
-                    if (result==true) {
-                        Toast.makeText(this, "Dati cancellati!", Toast.LENGTH_LONG).show();
-                    }*/
-                    Snackbar.make(getWindow().getDecorView().getRootView(),"Dati cancellati <per finta>!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    db.dropAllTables();
+                    if (db.dropAllTables()) {
+                        Snackbar.make(getWindow().getDecorView().getRootView(),"DATABASE ELIMINATO!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    } else {
+                        Snackbar.make(getWindow().getDecorView().getRootView(), "DATABASE NON ELIMINATO!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    }
                 }
             });
     }
@@ -122,20 +119,6 @@ public class Impostazioni_Activity extends GenericMIDIChallengeActivity implemen
         catch (Exception e){
             Snackbar.make(getWindow().getDecorView().getRootView(),"Dati non importati", Snackbar.LENGTH_LONG).setAction("Action", null).show();
         }
-    }
-
-    private void createDB() {
-        SQLiteDatabase sampleDB =  this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-        sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " +
-                SAMPLE_TABLE_NAME +
-                " (LastName VARCHAR, FirstName VARCHAR," +
-                " Rank VARCHAR);");
-        sampleDB.execSQL("INSERT INTO " +
-                SAMPLE_TABLE_NAME +
-                " Values ('Kirk','James, T','Captain');");
-        sampleDB.close();
-        sampleDB.getPath();
-        Snackbar.make(getWindow().getDecorView().getRootView(),"Dati importati"+sampleDB.getPath(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
     }
 
     private void exportDB(String nomeFileExport) {
@@ -172,7 +155,26 @@ public class Impostazioni_Activity extends GenericMIDIChallengeActivity implemen
         }
         else Toast.makeText(getApplicationContext(), "Export fallito, non trovo destinazione", Toast.LENGTH_SHORT).show();
     }
-    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+
+    public static boolean deleteDirectory(File path) {
+        if(path.exists()) {
+            File[] files = path.listFiles();
+            if (files == null) {
+                return true;
+            }
+            for(int i=0; i<files.length; i++) {
+                if(files[i].isDirectory()) {
+                    deleteDirectory(files[i]);
+                }
+                else {
+                    files[i].delete();
+                }
+            }
+        }
+        return( path.delete() );
+    }
+
+    private void showMessageOnCancel(String message, DialogInterface.OnClickListener okListener) {
         new android.support.v7.app.AlertDialog.Builder(this)
                 .setMessage(message)
                 .setPositiveButton("OK", okListener)

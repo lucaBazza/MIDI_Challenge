@@ -16,6 +16,19 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/btn_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/roundcorner"
+            android:onClick="openNewActivity"
+            android:text="INFO"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <Button
             android:id="@+id/btn_export"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
@@ -36,19 +49,6 @@
             android:layout_marginTop="50dp"
             android:background="@drawable/roundcorner"
             android:text="IMPORTA DATI"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/btn_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/roundcorner"
-            android:onClick="openNewActivity"
-            android:text="INFO"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 

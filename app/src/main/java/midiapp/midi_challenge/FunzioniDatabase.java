@@ -3,8 +3,10 @@ package midiapp.midi_challenge;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.hardware.camera2.params.StreamConfigurationMap;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -34,11 +36,18 @@ public class FunzioniDatabase {
         internalContextDatabase = context;
     }
 
-    //resetta il db e lo ricrea. Usare con cautela.
-    public void dropAllTables(){
-        database.execSQL("DROP TABLE IF EXISTS utente");
-        database.execSQL("DROP TABLE IF EXISTS brano");
-        database.execSQL("DROP TABLE IF EXISTS relUtenteBrano");
+    //resetta il db. Usare con cautela.
+    public boolean dropAllTables(){
+        try {
+            database.execSQL("DROP TABLE IF EXISTS utente");
+            database.execSQL("DROP TABLE IF EXISTS brano");
+            database.execSQL("DROP TABLE IF EXISTS relUtenteBrano");
+            return true;
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public long inserisci(Utente u){
