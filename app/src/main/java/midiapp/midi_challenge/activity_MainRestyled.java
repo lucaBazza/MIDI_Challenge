@@ -103,38 +103,39 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
                 });
 
         utente = utenteCorrente;
-        if (utente.getIdUtente() == -1 || utente == null) {
-            ChooseUserDialog dg = new ChooseUserDialog();
-            dg.show(getFragmentManager(), "Login");
+        if(utente != null) {
+            if (utente.getIdUtente() != -1) {
+                final ListView ListViewXmlListaBrani = (ListView) findViewById(R.id.lista_brani_utente);
+                final List<Brano> braniUtente = funzioniDatabase.braniUtente(utente.getIdUtente());
+                if (braniUtente != null) {
+                    ArrayAdapterListaBrani = new ArrayAdapter<Brano>(this, R.layout.brani_list_element, braniUtente);
+                    ListViewXmlListaBrani.setAdapter(ArrayAdapterListaBrani);
+                    if (braniUtente.isEmpty()) {
+                        Toast.makeText(getBaseContext(), "Clicca su + per aggiungere dei brani alla tua lista!", Toast.LENGTH_LONG).show();
+                        tv_mainActivity_log.setText("Non ha ancora studiato nessun brano...");
+                    } else
+                        tv_mainActivity_log.setText("Totale brani: " + ArrayAdapterListaBrani.getCount());
+                } else {
+                    ArrayAdapterListaBrani.notifyDataSetChanged();
+                }
+                ListViewXmlListaBrani.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Brano selezione = braniUtente.get(position);
+                        Intent aperturaDettagliBrano = new Intent(getApplicationContext(), Dettagli_Brano_Activity.class);
+                        aperturaDettagliBrano.putExtra("id_brano", selezione.getIdBrano());
+                        aperturaDettagliBrano.putExtra("id_utente", utente.getIdUtente());
+                        startActivity(aperturaDettagliBrano);
+                    }
+                });
+
+                setTitle(utente.getNickName());
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+            }
         }
         else{
-            final ListView ListViewXmlListaBrani = (ListView) findViewById(R.id.lista_brani_utente);
-            final List<Brano> braniUtente = funzioniDatabase.braniUtente(utente.getIdUtente());
-            if (braniUtente != null) {
-                ArrayAdapterListaBrani = new ArrayAdapter<Brano>(this, R.layout.brani_list_element, braniUtente);
-                ListViewXmlListaBrani.setAdapter(ArrayAdapterListaBrani);
-                if (braniUtente.isEmpty()) {
-                    Toast.makeText(getBaseContext(),"Clicca su + per aggiungere dei brani alla tua lista!",Toast.LENGTH_LONG).show();
-                    tv_mainActivity_log.setText("Non ha ancora studiato nessun brano...");
-                }
-                else
-                    tv_mainActivity_log.setText("Totale brani: "+ArrayAdapterListaBrani.getCount());
-            } else {
-                ArrayAdapterListaBrani.notifyDataSetChanged();
-            }
-            ListViewXmlListaBrani.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Brano selezione = braniUtente.get(position);
-                    Intent aperturaDettagliBrano = new Intent(getApplicationContext(), Dettagli_Brano_Activity.class);
-                    aperturaDettagliBrano.putExtra("id_brano", selezione.getIdBrano());
-                    aperturaDettagliBrano.putExtra("id_utente", utente.getIdUtente());
-                    startActivity(aperturaDettagliBrano);
-                }
-            });
-
-            setTitle(utente.getNickName());
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+            ChooseUserDialog dg = new ChooseUserDialog();
+            dg.show(getFragmentManager(), "Login");
         }
     }
 
