@@ -35,6 +35,7 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
     Utente utente = null;
     ImageView imgProfilo;
     TextView tw_log_pagUser;
+    TextView tvPUmax;
     Button btnChangeStr;
     Button btnConsigliUtente;
     TextView tbStrum;
@@ -67,22 +68,32 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
         }
 
         utente.braniUtente = funzioniDatabase.braniUtente(utente.idUtente);     //AGGIORNA STATISTICHE
-        TextView tbPuntMax = (TextView) findViewById(R.id.textViewPU1);
-        int max = 0; int media = 0; int tot = 0;
+        //TextView tbPuntMax = (TextView) findViewById(R.id.textViewPU1);
+        /*int max = 0; int media = 0; int tot = 0;
         for(int i =0; i<utente.braniUtente.size();i++){
             tot++;
             media+=utente.braniUtente.get(i).difficoltà;
             if(utente.braniUtente.get(i).difficoltà>max){
                 max = utente.braniUtente.get(i).difficoltà;
                 tbPuntMax.setText("Punteggio massimo: "+ Integer.toString(max)+" - "+utente.braniUtente.get(i).getTitolo());  }
-        }
+        }*/
 
         TextView tbPuntMedio = (TextView) findViewById(R.id.textViewPU2);
-        /*if(tot!= 0)
-            { media/=tot; } */
         tbPuntMedio.append(Integer.toString(utente.punteggioMedio));
         TextView tvBRaniTot = (TextView) findViewById(R.id.textViewPU3);
-            tvBRaniTot.append(Integer.toString(tot));
+            tvBRaniTot.append(Integer.toString(utente.braniUtente.size()));
+
+        TextView tvPUmax = (TextView) findViewById(R.id.tvPUmax);
+        if(utenteCorrente.getPunteggioMassimo()>5) {
+            tvPUmax.setText("Pungeggio massimo: "+utenteCorrente.getPunteggioMassimo());
+            if(utenteCorrente.getPunteggioMassimo() > 2000)
+                tw_log_pagUser.setText("livello utente: base");
+            if(utenteCorrente.getPunteggioMassimo() > 10*1000)
+                tw_log_pagUser.setText("livello utente: intermedio");
+            if(utenteCorrente.getPunteggioMassimo() > 50*1000)
+                tw_log_pagUser.setText("livello utente:  sei master ....complimenti!");
+        }
+        else tvPUmax.setText("Pungeggio massimo non aggiornato");
 
         btnChangeStr = (Button) findViewById(R.id.btnChangeStr);        // STRUMENTO
         tbStrum = (TextView)findViewById(R.id.tbStrum);

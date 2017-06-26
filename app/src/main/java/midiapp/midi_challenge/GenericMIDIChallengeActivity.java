@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class GenericMIDIChallengeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -240,5 +241,20 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity implements N
         else{
             Snackbar.make(getWindow().getDecorView().getRootView(), "Il file "+ b.getTitolo()+" è gia presente nel DataBase!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
         }
+    }
+    void debugggerDb(){
+        String debugTag= "debug_db";
+        for(int i =0;i<5;i++)Log.i(debugTag,"======================================================" );
+
+        List<Brano> lb = db.prendiTuttiBrani();
+        List<Utente> lu = db.prendiTuttiUtenti();
+        for (Brano b : lb ) {
+            Log.i(debugTag,"Brano: "+b.getTitolo() + "\t\t\t\t\t auth: "+b.getAutore()+"\t\tdiff: "+b.getDifficoltà()+"\t\t\tid: "+b.getIdBrano()+"\t\tautoval:" +b.getAutovalutazione() );
+        }
+        for (Utente x : lu ) {
+            Log.i(debugTag,"Utente id: "+x.getIdUtente() + "\t nome: "+x.getNickName()+"\t\t strum: "+x.getStrumento()
+                    +"\t\tmaxP: "+x.getPunteggioMassimo()+"\t\tmedioP:" +x.getPunteggioMedio()+"\t\ttotbrani: "+x.getBraniUtente().size() );
+        }
+        for(int i =0;i<5;i++)Log.i(debugTag,"======================================================" );
     }
 }

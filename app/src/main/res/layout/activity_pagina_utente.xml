@@ -36,6 +36,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
@@ -49,7 +50,7 @@
             <Button
                 android:id="@+id/btnChangeStr"
                 android:layout_width="30dp"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
                 android:layout_weight="8"
                 android:background="@mipmap/edit_text_pencil_icon"
                 android:textColor="@android:color/white" />
@@ -66,7 +67,7 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/textViewPU1"
+            android:id="@+id/tvPUmax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -81,6 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:layout_marginTop="20dp"
             android:text="Totale Brani: "
             android:textSize="24sp" />
 
@@ -90,16 +92,20 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:text="..." />
+            android:layout_marginTop="10dp"
+            android:text="..."
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabCancellaBrani"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="bottom|end"
+            android:layout_marginTop="50dp"
             android:background="@drawable/ic_remove"
             android:onClick="AltDlgCancellaTuttiBrani"
-            app:backgroundTint="@android:color/holo_red_light"
+            app:backgroundTint="@android:color/holo_blue_dark"
             app:elevation="0dp"
             app:srcCompat="@drawable/ic_remove" />
 
