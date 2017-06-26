@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompatSideChannelService;
 import android.support.v4.view.GravityCompat;
@@ -27,6 +28,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class GenericMIDIChallengeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -205,5 +209,34 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity implements N
             }
         }
 
+    }
+
+    public void creaDbBraniFromResources(){
+        InputStream in = getResources().openRawResource(R.raw.liszt_campanella);
+        byte[] buff = new byte[1024];
+        int read = 0;
+        try{
+            FileOutputStream out = new FileOutputStream(getCartellaPredefinita().getAbsolutePath());
+            try {
+                while ((read = in.read(buff)) > 0) {
+                    out.write(buff, 0, read);
+                }
+            } finally {
+                in.close();
+                out.close();
+            }
+        }
+        catch(IOException ioex){
+            ioex.printStackTrace();
+            Snackbar.make(getWindow().getDecorView().getRootView(), "Non riesco a creare db nella cartella", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        }
+        File file = new File("res/raw/liszt_campanella.mid");
+        Brano b = new Brano(file.getName(),file,-1); //titolo , percorso , difficolta
+        if(db.trovaBrano(b.getTitolo()) == null) {
+            db.inserisci(b);
+        }
+        else{
+            Snackbar.make(getWindow().getDecorView().getRootView(), "Il file "+ b.getTitolo()+" è gia presente nel DataBase!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package midiapp.midi_challenge;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -106,6 +107,15 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
                 if (braniUtente.isEmpty()) {
                     Toast.makeText(getBaseContext(),"Clicca su + per aggiungere dei brani alla tua lista!",Toast.LENGTH_LONG).show();
                     tv_mainActivity_log.setText("Non ha ancora studiato nessun brano...");
+
+                    showMessageOKCancel("Vuoi importare dei brani nell'app? ",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    try{ creaDbBraniFromResources(); }
+                                    catch(Exception ex){ ex.printStackTrace(); }
+                                }
+                            });
                 }
                 else
                     tv_mainActivity_log.setText("Totale brani: "+ArrayAdapterListaBrani.getCount());
@@ -146,5 +156,14 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
         if(ArrayAdapterListaBrani!=null)
             ArrayAdapterListaBrani.notifyDataSetChanged();
         else {}
+    }
+
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new android.support.v7.app.AlertDialog.Builder(this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
     }
 }
