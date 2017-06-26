@@ -103,7 +103,7 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
                 });
 
         utente = utenteCorrente;
-        if (utente.getIdUtente() == -1) {
+        if (utente.getIdUtente() == -1 || utente == null) {
             ChooseUserDialog dg = new ChooseUserDialog();
             dg.show(getFragmentManager(), "Login");
         }
