@@ -154,6 +154,10 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 txt_dettagliAlgo.setText("Livello di difficoltà brano: "+brano.getDifficoltà()+"\n");
                 for(String x : out)
                     txt_dettagliAlgo.append(x+"\n");
+                Long l = alMidi.getPunteggioFinale();
+                int prova = Integer.valueOf(l.intValue());
+                utenteCorrente.aggiornaPunteggioMedio(prova); //may the gods forgive us
+                db.aggiornaUtente(utenteCorrente);
             }
             }
         });

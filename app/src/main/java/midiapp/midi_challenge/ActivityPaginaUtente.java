@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -93,6 +94,9 @@ public class ActivityPaginaUtente extends GenericMIDIChallengeActivity {
                     AltDlgCambiaStrum();
             }
         });
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         /*btnConsigliUtente = (Button) findViewById(R.id.btnConsigliUtente);
         btnConsigliUtente.setOnClickListener(new View.OnClickListener() {
