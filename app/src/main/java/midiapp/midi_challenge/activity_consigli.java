@@ -3,6 +3,7 @@ package midiapp.midi_challenge;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -134,6 +135,8 @@ public class activity_consigli extends GenericMIDIChallengeActivity {
         if(utenteCorrente.getPunteggioMedio()<100){
             tv_logConsigli.setText("Per adesso i pezzi salvati sono troppo difficili, esercitati solo primo brano!");
         }
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new android.support.v7.app.AlertDialog.Builder(this)

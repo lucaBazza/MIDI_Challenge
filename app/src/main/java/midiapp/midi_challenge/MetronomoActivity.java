@@ -42,6 +42,9 @@ public class MetronomoActivity extends GenericMIDIChallengeActivity {
                 play();
             }
         });
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
 
