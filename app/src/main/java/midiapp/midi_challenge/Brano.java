@@ -56,8 +56,11 @@ public class Brano {
 
 
     public Brano(String nomeFile, int difficoltà) {
+        File f = new File(nomeFile);
         this.idBrano = -1;
-        this.fileBrano = new File(nomeFile);
+        this.fileBrano = f;
+        this.titolo = f.getName();
+        this.autore = "sconosciuto";
         this.difficoltà = difficoltà;
         this.autovalutazione = -1;
         this.arraySpartiti = new ArrayList<>();
@@ -66,8 +69,19 @@ public class Brano {
     public Brano(String titolo, File path, int difficoltà) {
         this.idBrano = -1;
         this.titolo = titolo;
+        this.autore = "sconosciuto";
         this.fileBrano = path;
         this.difficoltà = difficoltà;
+        this.autovalutazione = -1;
+        this.arraySpartiti = new ArrayList<>();
+    }
+
+    public Brano(File path) {
+        this.idBrano = -1;
+        this.titolo = path.getName();
+        this.autore = "sconosciuto";
+        this.fileBrano = path;
+        this.difficoltà = -1;
         this.autovalutazione = -1;
         this.arraySpartiti = new ArrayList<>();
     }
@@ -78,7 +92,6 @@ public class Brano {
             return titolo;
         else
             return fileBrano.getName();
-        //return  getTitolo();
     }
 
     @Override

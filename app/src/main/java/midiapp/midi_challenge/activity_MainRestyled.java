@@ -92,6 +92,16 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
         if (!cartellaPredefinita.exists())
             cartellaPredefinita.mkdir();
 
+        if(db.prendiTuttiBrani().size()<1)
+            showMessageOKCancel("Vuoi importare dei brani nell'app? ",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try{ creaDbBraniFromResources(); }
+                        catch(Exception ex){ ex.printStackTrace(); }
+                    }
+                });
+
         utente = utenteCorrente;
         if (utente == null) {
             ChooseUserDialog dg = new ChooseUserDialog();
@@ -100,22 +110,12 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
         else{
             final ListView ListViewXmlListaBrani = (ListView) findViewById(R.id.lista_brani_utente);
             final List<Brano> braniUtente = funzioniDatabase.braniUtente(utente.getIdUtente());
-
             if (braniUtente != null) {
                 ArrayAdapterListaBrani = new ArrayAdapter<Brano>(this, R.layout.brani_list_element, braniUtente);
                 ListViewXmlListaBrani.setAdapter(ArrayAdapterListaBrani);
                 if (braniUtente.isEmpty()) {
                     Toast.makeText(getBaseContext(),"Clicca su + per aggiungere dei brani alla tua lista!",Toast.LENGTH_LONG).show();
                     tv_mainActivity_log.setText("Non ha ancora studiato nessun brano...");
-
-                    showMessageOKCancel("Vuoi importare dei brani nell'app? ",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    try{ creaDbBraniFromResources(); }
-                                    catch(Exception ex){ ex.printStackTrace(); }
-                                }
-                            });
                 }
                 else
                     tv_mainActivity_log.setText("Totale brani: "+ArrayAdapterListaBrani.getCount());

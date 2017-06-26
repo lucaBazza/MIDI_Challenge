@@ -212,11 +212,12 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity implements N
     }
 
     public void creaDbBraniFromResources(){
+        File file = new File("res/raw/liszt_campanella.mid");
         InputStream in = getResources().openRawResource(R.raw.liszt_campanella);
         byte[] buff = new byte[1024];
         int read = 0;
         try{
-            FileOutputStream out = new FileOutputStream(getCartellaPredefinita().getAbsolutePath());
+            FileOutputStream out = new FileOutputStream(getCartellaPredefinita()+file.getName());
             try {
                 while ((read = in.read(buff)) > 0) {
                     out.write(buff, 0, read);
@@ -230,10 +231,11 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity implements N
             ioex.printStackTrace();
             Snackbar.make(getWindow().getDecorView().getRootView(), "Non riesco a creare db nella cartella", Snackbar.LENGTH_LONG).setAction("Action", null).show();
         }
-        File file = new File("res/raw/liszt_campanella.mid");
-        Brano b = new Brano(file.getName(),file,-1); //titolo , percorso , difficolta
-        if(db.trovaBrano(b.getTitolo()) == null) {
+
+        Brano b = new Brano(file); //titolo , percorso , difficolta
+        if(db.trovaBrano(b.idBrano) == null) {
             db.inserisci(b);
+            Snackbar.make(getWindow().getDecorView().getRootView(), "Il file "+ b.getTitolo()+" è stato inserito nel db!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
         }
         else{
             Snackbar.make(getWindow().getDecorView().getRootView(), "Il file "+ b.getTitolo()+" è gia presente nel DataBase!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
