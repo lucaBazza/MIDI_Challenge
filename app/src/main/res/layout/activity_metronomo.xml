@@ -21,6 +21,15 @@
     android:orientation="vertical"
     tools:context="midiapp.midi_challenge.MetronomoActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/metronomo_icona"
+        android:layout_marginTop="13dp"
+        android:layout_below="@+id/tv_metronomoLog"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:id="@+id/tv_metronomoLog"
         android:layout_width="wrap_content"
