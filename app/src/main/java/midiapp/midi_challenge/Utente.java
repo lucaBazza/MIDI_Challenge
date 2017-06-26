@@ -45,6 +45,19 @@ public class Utente {
         this.setStrumento(strumento);
     }
 
+    public void aggiornaPunteggioMedio(int punteggio){
+        this.punteggioMedio = (punteggioMedio + punteggio) / 2;
+    }
+
+    public void aggiornaPunteggioMedio(List<Integer> punteggio){
+        int sum = 0;
+        for(int p : punteggio){
+            sum += p;
+        }
+        int media = sum / punteggio.size();
+        this.punteggioMedio = (this.punteggioMedio + media) / 2;
+    }
+
     @Override
     public String toString() {
         return nickName.toUpperCase();
