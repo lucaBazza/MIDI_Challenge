@@ -39,9 +39,11 @@ public class FunzioniDatabase {
     //resetta il db. Usare con cautela.
     public boolean dropAllTables(){
         try {
+            /*
             database.execSQL("DROP TABLE IF EXISTS utente");
             database.execSQL("DROP TABLE IF EXISTS brano");
-            database.execSQL("DROP TABLE IF EXISTS relUtenteBrano");
+            database.execSQL("DROP TABLE IF EXISTS relUtenteBrano");*/
+            dbHelper.onUpgrade(database,0,0);
             return true;
         }
         catch (SQLException e){

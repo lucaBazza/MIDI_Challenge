@@ -102,6 +102,8 @@ public class Impostazioni_Activity extends GenericMIDIChallengeActivity implemen
                     db.dropAllTables();
                     if (db.dropAllTables()) {
                         Snackbar.make(getWindow().getDecorView().getRootView(),"DATABASE ELIMINATO!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                        Intent mainActivityIntent = new Intent(getBaseContext(),activity_MainRestyled.class);
+                        startActivity(mainActivityIntent);
                     } else {
                         Snackbar.make(getWindow().getDecorView().getRootView(), "DATABASE NON ELIMINATO!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     }

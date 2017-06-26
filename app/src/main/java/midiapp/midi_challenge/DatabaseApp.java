@@ -42,7 +42,9 @@ public class DatabaseApp extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE utente, brano, relUtentiBrano;");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS utente;");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS brano;");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS relUtentiBrano;");
         onCreate(sqLiteDatabase);
     }
 
