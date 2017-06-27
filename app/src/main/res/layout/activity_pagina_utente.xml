@@ -63,6 +63,7 @@
             android:layout_alignBottom="@+id/textViewPU3"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="5dp"
+            android:layout_marginTop="15dp"
             android:text="Punteggio medio: "
             android:textSize="24sp" />
 
@@ -72,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/btnChangeStr"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:text="Punteggio massimo: "
             android:textSize="24sp" />
 
