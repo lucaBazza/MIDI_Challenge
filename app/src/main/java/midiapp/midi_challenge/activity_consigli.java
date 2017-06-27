@@ -121,7 +121,13 @@ public class activity_consigli extends GenericMIDIChallengeActivity {
         }*/
 
         if (braniDb != null) {
-            ArrayAdapterListaBrani = new ArrayAdapter<Brano>(this, R.layout.brani_list_element, braniConsigliatiDb);
+            List<Brano> tmp;
+            if(braniConsigliatiDb.size() > 4){
+                tmp =  braniConsigliatiDb.subList(0,3);
+            }else{
+                tmp = braniConsigliatiDb;
+            }
+            ArrayAdapterListaBrani = new ArrayAdapter<Brano>(this, R.layout.brani_list_element, tmp);
             lista_braniSuggeriti.setAdapter(ArrayAdapterListaBrani);
             if (braniConsigliatiDb.isEmpty()) {
                 Toast.makeText(getBaseContext(),"Non ci sono titoli adatti!",Toast.LENGTH_LONG).show();

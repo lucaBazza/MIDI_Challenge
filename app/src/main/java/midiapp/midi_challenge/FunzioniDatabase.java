@@ -85,9 +85,12 @@ public class FunzioniDatabase {
     public Utente trovaUtente(long id){
         String[] colums = {"idUtente","nickname","foto","strumento","punteggioMassimo","punteggioMedio"};
         Cursor res = database.query(true,"utente",colums,"idUtente = ?",new String[] {Long.toString(id)},"","","","");
+        List<Brano> l = braniUtente(id);
 
         if (res.moveToFirst()){
-            return new Utente(res.getInt(0),res.getString(1),res.getString(2),res.getString(3),res.getInt(4),res.getInt(5));
+            Utente tmp =  new Utente(res.getInt(0),res.getString(1),res.getString(2),res.getString(3),res.getInt(4),res.getInt(5));
+            tmp.setBraniUtente(l);
+            return tmp;
         }else{
             return  new Utente(-1,"","","",0,0);
         }

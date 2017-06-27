@@ -97,7 +97,8 @@ public class Brano {
     @Override
     public boolean equals(Object obj) {
         Brano b = (Brano) obj;
-        return this.fileBrano.equals(b) || this.fileBrano.getName() == b.fileBrano.getName();
+        //return this.fileBrano.getName() == b.fileBrano.getName();
+        return true;
     }
 
     public void setTitolo(String titolo) {

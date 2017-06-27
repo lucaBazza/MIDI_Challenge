@@ -71,8 +71,6 @@ public class Aggiunta_Brano_Activity extends GenericMIDIChallengeActivity{
         file_list_adapter = new ArrayAdapter<Brano>(this,R.layout.checkbox_item_multiple_selection,R.id.textview_multiple_selection_item);
         final ListView lv = (ListView)findViewById(R.id.lista_brani_trovati);
 
-        lv.setAdapter(file_list_adapter);
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -109,11 +107,12 @@ public class Aggiunta_Brano_Activity extends GenericMIDIChallengeActivity{
         final File[] midiFiles = downloadFolderPath.listFiles(midiFilter);
         if(midiFiles != null){
             for(File f : midiFiles){
-                if(! braniUtente.contains(f)) {
+                if(! braniUtente.contains(new Brano(f))) {
                     file_list_adapter.add(new Brano(f.getName(),0));
                 }
             }
             file_list_adapter.notifyDataSetChanged();
+            lv.setAdapter(file_list_adapter);
         }
 
         for(File f : midiFiles){

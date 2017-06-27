@@ -162,8 +162,8 @@ public class activity_MainRestyled extends GenericMIDIChallengeActivity   implem
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new android.support.v7.app.AlertDialog.Builder(this)
                 .setMessage(message)
-                .setPositiveButton("OK", okListener)
-                .setNegativeButton("Cancel", null)
+                .setPositiveButton("Si", okListener)
+                .setNegativeButton("No", null)
                 .create()
                 .show();
     }
