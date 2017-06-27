@@ -1,6 +1,7 @@
 package midiapp.midi_challenge;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -101,6 +102,10 @@ public class Impostazioni_Activity extends GenericMIDIChallengeActivity implemen
                 public void onClick(DialogInterface dialog, int which) {
                     db.dropAllTables();
                     if (db.dropAllTables()) {
+                        SharedPreferences sp = getPreferences(MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.clear();
+                        editor.apply();
                         Snackbar.make(getWindow().getDecorView().getRootView(),"DATABASE ELIMINATO!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         Intent mainActivityIntent = new Intent(getBaseContext(),activity_MainRestyled.class);
                         startActivity(mainActivityIntent);

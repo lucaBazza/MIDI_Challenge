@@ -73,7 +73,7 @@ public class GenericMIDIChallengeActivity extends AppCompatActivity implements N
             utenteCorrente = db.trovaUtente(getIntent().getLongExtra("id_utente", -1));
             SharedPreferences.Editor editor = sp.edit();
             editor.putLong("id_utente", utenteCorrente.getIdUtente());
-            editor.commit();
+            editor.apply();
         }
 
         if (sp.contains("id_utente")) {

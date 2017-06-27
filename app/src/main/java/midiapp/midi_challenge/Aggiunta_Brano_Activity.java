@@ -182,8 +182,8 @@ public class Aggiunta_Brano_Activity extends GenericMIDIChallengeActivity{
 
 
         sp.setSelection(2);                                                 //BAZZA
-        /*tv_addBraniDb = (TextView) findViewById(R.id.tv_addBraniDb);
-        final ListView lista_brani_trovatiDB = (ListView)findViewById(R.id.lista_brani_trovatiDB);
+       
+        final ListView lista_brani_trovatiDB = (ListView)findViewById(R.id.lista_brani_recenti);
         final List<Brano> braniDb = activity_MainRestyled.funzioniDatabase.prendiTuttiBrani();
         ArrayAdapter ArrayAdapterListaBrani = null;
         if (braniDb != null) {
@@ -191,10 +191,7 @@ public class Aggiunta_Brano_Activity extends GenericMIDIChallengeActivity{
             lista_brani_trovatiDB.setAdapter(ArrayAdapterListaBrani);
             if (braniDb.isEmpty()) {
                 Toast.makeText(getBaseContext(),"Non ci sono titoli adatti!",Toast.LENGTH_LONG).show();
-                tv_addBraniDb.setText("Non ha ancora studiato nessun brano...");
             }
-            else
-                tv_addBraniDb.setText("Totale brani nel db: "+ArrayAdapterListaBrani.getCount());
         } else {
             ArrayAdapterListaBrani.notifyDataSetChanged();
         }
@@ -219,7 +216,7 @@ public class Aggiunta_Brano_Activity extends GenericMIDIChallengeActivity{
                 //Toast.makeText(getBaseContext(),"selezionato brano: "+position,Toast.LENGTH_LONG).show();
             }
         });
-        */
+
     }
 
 
