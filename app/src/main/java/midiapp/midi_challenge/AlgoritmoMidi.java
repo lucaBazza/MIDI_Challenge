@@ -69,7 +69,7 @@ public class AlgoritmoMidi {
                 contatorenNoteTotale++;
                 contNoteMod12[EveNota.getNoteValue()%11]++;
 
-                Log.println(Log.ASSERT," Algoritmo midi","Nota: "+nota+" \t- "+convIntStrNota(EveNota.getNoteValue())+ " \t\t tick: "+EveNota.getTick()+" \t\t delta: "+EveNota.getDelta()); //DEBUG
+                //Log.println(Log.ASSERT," Algoritmo midi","Nota: "+nota+" \t- "+convIntStrNota(EveNota.getNoteValue())+ " \t\t tick: "+EveNota.getTick()+" \t\t delta: "+EveNota.getDelta()); //DEBUG
 
                 puntTemp +=  punteggioVelocita() * punteggioMelArm();
                 if(puntTemp>bestPuntTemp)  {
@@ -87,20 +87,20 @@ public class AlgoritmoMidi {
             else contatoreEventsNotNote++;
         }
 
-        Log.println(Log.ASSERT,"Algoritmo midi","punteggio pre raffinazione: "+punteggio);
-        Log.println(Log.ASSERT,"Algoritmo midi","Bias tonalita: "+calcolaBiasTonalità());
         punteggio *= calcolaBiasTonalità();
         punteggio /= 1000*1000;            //miniaturizzazione
 
         Log.println(Log.ASSERT,"Algoritmo midi","==================================");
         Log.println(Log.ASSERT,"Algoritmo midi","==========  Conclusioni   ========");
         Log.println(Log.ASSERT,"Algoritmo midi","==================================");
+        Log.println(Log.ASSERT,"Algoritmo midi","punteggio pre raffinazione: "+punteggio);
+        Log.println(Log.ASSERT,"Algoritmo midi","Bias tonalita: "+calcolaBiasTonalità());
         if(contatoreEventsNotNote > midiTrack.getEventCount()/4){
             String msg = "Alto numero di eventi != note: "+contatoreEventsNotNote + " su eventi totali:"+ midiTrack.getEventCount();
             Log.println(Log.ASSERT,"Algoritmo midi",msg);
             outPut.add(msg);
         }
-        outPut.add("Punteggio totale realizzato: \t"+ Long.toString(punteggio));
+        //outPut.add("Punteggio totale realizzato: \t"+ Long.toString(punteggio));
         Log.println(Log.ASSERT,"Algoritmo midi","numero di note in totale: "+contatorenNoteTotale);
         Log.println(Log.ASSERT,"Algoritmo midi","numero di appoggiature in totale: "+contatoreAppoggiature);
         Log.println(Log.ASSERT,"Algoritmo midi","numero di accordi in totale: "+contatoreAccordi);

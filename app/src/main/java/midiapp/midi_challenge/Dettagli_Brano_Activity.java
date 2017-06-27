@@ -72,15 +72,16 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
     TextView txt_dettagliAlgo;
     TextView txt_TitoloBrano;
     TextView txt_TitoloAutore;
+    TextView tv_dettagliPunteggio;
     //TextView tvInfo2;
     ImageButton imgBtnDeleteSpartiti;
     Button btnBrano;
     Button btn_cambiaAutoreBrano;
     Button btn_autovalutazione;
-    FloatingActionButton fab_share_dettagli_brano;
+    //FloatingActionButton fab_share_dettagli_brano;
     FloatingActionButton fab_playmidi;
     boolean isPlayingMidi = false;
-    Button btnShareMidi;
+    //Button btnShareMidi;
     MediaPlayer mediaPlayerForMidi = null;
 
     Camera camera;
@@ -88,7 +89,7 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
     private static final int REQUEST_GET_ACCOUNT = 112;
     private static final int PERMISSION_REQUEST_CODE = 200;
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final int REQUEST_TAKE_PHOTO = 1;
+    //static final int REQUEST_TAKE_PHOTO = 1;
 
     private static FunzioniDatabase funzioniDatabase = null;
     private ShareActionProvider mShareActionProvider;
@@ -99,8 +100,6 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         inf.inflate(R.menu.opzioni_condivisione_brano,menu);
         return true;
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +115,7 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
         }
 
         tvLog = (TextView)findViewById(R.id.tvLog);
+        tv_dettagliPunteggio = (TextView)findViewById(R.id.tv_dettagliPunteggio);
         txt_TitoloBrano = (TextView) findViewById(R.id.txt_TitoloBrano);
         txt_dettagliAlgo = (TextView)findViewById(R.id.txt_dettagliAlgo);
         txt_TitoloAutore = (TextView)findViewById(R.id.txt_TitoloAutore);
@@ -183,10 +183,19 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 CancellaArraySpartiti();
             }
         });
-        if(brano!=null) setTitle(brano.getTitolo());
+        if(brano!=null){
+            setTitle(brano.getTitolo());
+            txt_TitoloBrano.setText(brano.getTitolo());
+            txt_TitoloAutore.setText(brano.getAutore());
+            if(brano.getDifficoltà()>0)
+                tv_dettagliPunteggio.setText("Punteggio: "+brano.getDifficoltà());
+            else
+                tv_dettagliPunteggio.setText("Punteggio non ancora calcolato!");
+        }
         else setTitle("Dettagli brano: non disponibile!");
-        txt_TitoloBrano.setText(brano.getTitolo());
-        txt_TitoloAutore.setText(brano.getAutore());
+
+
+
 
         ImageView imgViewSpartitoDemo = (ImageView) findViewById(R.id.imgViewSpartitoDemo);    // CARICA FOTO spartito
         if(!brano.arraySpartiti.isEmpty() ) { //&& !brano.arraySpartiti.isEmpty()

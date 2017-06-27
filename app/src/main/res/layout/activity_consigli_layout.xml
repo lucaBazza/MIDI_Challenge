@@ -96,6 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/btnLinkJazzAdvice"
             android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="23dp"
             android:layout_weight="1"
             android:text="..." />
