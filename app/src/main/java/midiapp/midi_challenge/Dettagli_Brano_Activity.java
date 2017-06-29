@@ -148,10 +148,11 @@ public class Dettagli_Brano_Activity extends GenericMIDIChallengeActivity {
                 }
                 alMidi = new AlgoritmoMidi(midiFile,tracciaSelezionata); //default 0, ma se ci sono più tracce va cambiato!
                 List<String> out = alMidi.calcolaAlgoritmo();
+                txt_dettagliAlgo.clearComposingText();
                 brano.setDifficoltà((int)alMidi.getPunteggioFinale());
                 funzioniDatabase.aggiornaBrano(brano);
                 tvLog.setText("Traccia: "+tracciaSelezionata+" Algoritmo concluso!");
-                txt_dettagliAlgo.setText("Livello di difficoltà brano: "+brano.getDifficoltà()+"\n");
+                //txt_dettagliAlgo.setText("Livello di difficoltà brano: "+brano.getDifficoltà()+"\n");
                 for(String x : out)
                     txt_dettagliAlgo.append(x+"\n");
                 Long l = alMidi.getPunteggioFinale();

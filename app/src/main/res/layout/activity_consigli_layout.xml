@@ -31,19 +31,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="112dp"
-        android:layout_weight="1.54"
+        android:layout_height="150dp"
+        android:layout_weight="162.54"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/btnLinkJazzAdvice"
-            android:layout_width="298dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
             android:layout_alignStart="@+id/btnLinkJazzitalia"
             android:layout_below="@+id/btnLinkJazzitalia"
             android:layout_marginTop="21dp"
-            android:layout_weight="0.05"
             android:background="@drawable/roundcorner"
             android:text="Link to Jazz Advice Lessions"
             android:textColor="@android:color/white"
@@ -51,14 +50,25 @@
 
         <Button
             android:id="@+id/btnLinkJazzitalia"
-            android:layout_width="275dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="42dp"
-            android:layout_weight="0.05"
             android:background="@drawable/roundcorner"
             android:text="link to jazzitalia lessions"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btnLinkShopSheets"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="42dp"
+            android:background="@drawable/roundcorner"
+            android:text="link to shop music sheets"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 

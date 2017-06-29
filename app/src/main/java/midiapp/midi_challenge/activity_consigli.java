@@ -30,6 +30,7 @@ public class activity_consigli extends GenericMIDIChallengeActivity {
 
     Button btnLinkJazzAdvice;
     Button btnLinkJazzitalia;
+    Button btnLinkShopSheets;
     ListView lista_braniSuggeriti;
     TextView tv_logConsigli;
     Utente utente;
@@ -72,25 +73,25 @@ public class activity_consigli extends GenericMIDIChallengeActivity {
                 startActivity(i);
             }
         });
+        btnLinkShopSheets = (Button)findViewById(R.id.btnLinkShopSheets);
+        btnLinkShopSheets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "http://www.sheetmusicplus.com/";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
 
         lista_braniSuggeriti = (ListView) findViewById(R.id.lista_braniSuggeriti);
         List <Brano> braniConsigliatiDb = new ArrayList<>();
         final List<Brano> braniDb = activity_MainRestyled.funzioniDatabase.prendiTuttiBrani();     //occorre creare lista filtrata di brani con difficolta simile a quella dell'utente
-        /*Collections.sort(braniDb, new Comparator<Brano>() {
-            public int compare(Brano c1, Brano c2) {
-                if (c1.getDifficoltà() > c2.getDifficoltà()) return 1;  //ordinati con difficolta crescente
-                if (c1.getDifficoltà() < c2.getDifficoltà()) return -1;
-                //if((c1.getDifficoltà()-c2.getDifficoltà()) > utenteCorrente.getPunteggioMedio() ) return 1;
-                //if((c1.getDifficoltà()-c2.getDifficoltà()) <= utenteCorrente.getPunteggioMedio() ) return -1;
-                return 0;
-            }
-        }); */
+
         Log.i("cons_log","Punteggio medio utente: "+utenteCorrente.getPunteggioMedio());
         for(Brano b : braniDb){
-            if(b.getDifficoltà()==-1) continue;
-            //int delta = b.getDifficoltà()-utenteCorrente.getPunteggioMedio();
-            //Log.i("cons_log",b.getTitolo()+"\t\t\t\t\t\t\t\t\t\tdiff: "+b.getDifficoltà()+"\t\t delta: "+delta);
-            braniConsigliatiDb.add(b);
+            if(b.getDifficoltà()< utenteCorrente.getPunteggioMedio()) continue;     // if(b.getDifficoltà()==-1) continue;  //int delta = b.getDifficoltà()-utenteCorrente.getPunteggioMedio();
+            braniConsigliatiDb.add(b);  //Log.i("cons_log",b.getTitolo()+"\t\t\t\t\t\t\t\t\t\tdiff: "+b.getDifficoltà()+"\t\t delta: "+delta);
         }
         Collections.sort(braniConsigliatiDb, new Comparator<Brano>() {
             @Override
@@ -107,19 +108,6 @@ public class activity_consigli extends GenericMIDIChallengeActivity {
             Log.i("cons_log","diff ordinata: "+ b.getDifficoltà());
         }
 
-
-        /*int deltaDiff = 1;
-        for(Brano x : braniDb){
-            if(x.difficoltà>1)
-            {
-                Log.i("cons_log","Consigli: "+x.fileBrano.getName()+"\t\t\t\t livello user: "+utenteCorrente.getPunteggioMedio()+ "\t difficolta: "+x.getDifficoltà()+"\t\t delta diff: "+(utenteCorrente.getPunteggioMedio()-x.getDifficoltà()));
-                if((utenteCorrente.getPunteggioMedio()-x.getDifficoltà())>deltaDiff){
-                    deltaDiff = (utenteCorrente.getPunteggioMedio()-x.getDifficoltà());
-                    Log.i("cons_log","Consigli: aumento diff!");
-                }
-            }
-        }*/
-
         if (braniDb != null) {
             List<Brano> tmp;
             if(braniConsigliatiDb.size() > 4){
@@ -134,7 +122,7 @@ public class activity_consigli extends GenericMIDIChallengeActivity {
                 tv_logConsigli.setText("Non ha ancora studiato nessun brano...");
             }
             else
-                tv_logConsigli.setText("Totale brani nel db: "+ArrayAdapterListaBrani.getCount());
+                tv_logConsigli.setText("Brani che potresti imparare "+ArrayAdapterListaBrani.getCount());
         } else {
             ArrayAdapterListaBrani.notifyDataSetChanged();
         }
@@ -142,7 +130,14 @@ public class activity_consigli extends GenericMIDIChallengeActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Brano selezione = braniDb.get(position);
-                showMessageOKCancel("Vuoi inserire questo brano consigliato fra i tuoi? "+selezione.fileBrano.getName(),
+                String difficoltaFromUser = null;
+                if( (selezione.getDifficoltà()-utenteCorrente.getPunteggioMedio())<500)     difficoltaFromUser = "\n\n difficoltà rispetto al tuo livello: bassa, puoi impararlo in breve tempo!";
+                if( (selezione.getDifficoltà()-utenteCorrente.getPunteggioMedio())<3000)    difficoltaFromUser = "\n\n difficoltà rispetto al tuo livello: media, puoi impararlo studiando bene!";
+                if( (selezione.getDifficoltà()-utenteCorrente.getPunteggioMedio())>=3000)   difficoltaFromUser = "\n\n difficoltà rispetto al tuo livello: alta, " +
+                                                                                                                    "attenzione c'è il rischio che la sfida sia oltre le tue attuali capacità!";
+
+                showMessageOKCancel(    "Vuoi inserire questo brano consigliato fra i tuoi? "+selezione.fileBrano.getName()+
+                                        difficoltaFromUser,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -153,7 +148,6 @@ public class activity_consigli extends GenericMIDIChallengeActivity {
                                     Snackbar.make(getWindow().getDecorView().getRootView(),"errore inserimento db", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                     sqlex.printStackTrace();
                                 }
-
                             }
                         });
             }

@@ -40,6 +40,7 @@ public class AlgoritmoMidi {
     int contatoreAccordi =0;
     int contatoreEventsNotNote = 0;
     long bestPuntTemp = 0;
+    long worstPuntTemp = 0;
 
     AlgoritmoMidi(MidiFile x, int nTracca){
         resetValori();
@@ -74,8 +75,13 @@ public class AlgoritmoMidi {
                 puntTemp +=  punteggioVelocita() * punteggioMelArm();
                 if(puntTemp>bestPuntTemp)  {
                     bestPuntTemp = puntTemp;
-                    if(!outPut.contains("Fraseggio difficile a: " + when/1000+" sec.")) //se non è gia presente
-                        outPut.add("Fraseggio difficile a: " + when/1000+" sec.");
+                    if(!outPut.contains("Fraseggio difficile a: " + when/1000+" sec.")) { //se non è gia presente
+                        outPut.add("Fraseggio difficile a: " + when / 1000 + " sec.");
+                        worstPuntTemp = 0;
+                    }
+                }
+                if( (puntTemp*2) < worstPuntTemp){      //un contatore di punteggio "basso" evita che il bestPuntTempo sia per forza crescente
+                    bestPuntTemp = Math.round(puntTemp/2);
                 }
                 int pma = punteggioMelArm();
                 double pv = punteggioVelocita();
@@ -216,7 +222,6 @@ public class AlgoritmoMidi {
         contatoreEventsNotNote = 0;
         bestPuntTemp = 0;
     }
-
 }
 
 /*private void aggiornaTonalita(){    //confronta l'ultima nota inserita con il vettore ton e dopo il vettore last, e decide se una nota è diatonica, non, o se è avvenuto un cambio ton
